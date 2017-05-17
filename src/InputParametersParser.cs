@@ -61,7 +61,28 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> Litter = new InputVar<string>("Litter");
             InputVar<string> AgeDistribution = new InputVar<string>("AgeDistribution");
             InputVar<string> CohortBalance = new InputVar<string>("CohortBalance");
-           
+
+            List<string> OutputList = new List<string>();
+            OutputList.Add(biomass.Name);
+            OutputList.Add(abovegroundBiomass.Name);
+            OutputList.Add(woodySenescence.Name);
+            OutputList.Add(foliageSenescence.Name);
+            OutputList.Add(LeafAreaIndex.Name);
+            OutputList.Add(Establishment.Name);
+            OutputList.Add(EstablishmentProbability.Name);
+            OutputList.Add(MonthlyNetPsn.Name);
+            OutputList.Add(MonthlyFolResp.Name);
+            OutputList.Add(MonthlyGrossPsn.Name);
+            OutputList.Add(MonthlyMaintResp.Name);
+            OutputList.Add(Water.Name);
+            OutputList.Add(SubCanopyPAR.Name);
+            OutputList.Add(BelowgroundBiomass.Name);
+            OutputList.Add(CohortsPerSpecies.Name);
+            OutputList.Add(AnnualPsn.Name);
+            OutputList.Add(WoodyDebris.Name);
+            OutputList.Add(Litter.Name);
+            OutputList.Add(AgeDistribution.Name);
+            OutputList.Add(CohortBalance.Name);
            
             int lineNumber = LineNumber;
             ReadVar(speciesName);
@@ -84,7 +105,7 @@ namespace Landis.Extension.Output.PnET
                 Dictionary<string, int> lineNumbers = new Dictionary<string, int>();
                 lineNumbers[species.Name] = lineNumber;
 
-                while (!AtEndOfInput && CurrentName != biomass.Name)
+                while (!AtEndOfInput && !(OutputList.Contains(CurrentName)))
                 {
                     StringReader currentLine = new StringReader(CurrentLine);
 
@@ -97,6 +118,7 @@ namespace Landis.Extension.Output.PnET
                     lineNumbers[species.Name] = LineNumber;
 
                     selectedSpecies.Add(species);
+                    parameters.SelectedSpecies = selectedSpecies;
                     CheckNoDataAfter("the species name", currentLine);
                     GetNextLine();
                 }
