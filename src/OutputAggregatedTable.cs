@@ -5,8 +5,8 @@ using Landis.SpatialModeling;
 
 namespace Landis.Extension.Output.PnET
 {
-    
-    class OutputAggregatedTable
+   
+    public class OutputAggregatedTable
     {
         static List<string> FileContent = null;
         private static string FileName;

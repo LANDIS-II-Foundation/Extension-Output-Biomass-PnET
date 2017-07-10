@@ -183,7 +183,10 @@ namespace Landis.Extension.Output.PnET
             if (parameters.AnnualPsn != null) AnnualPsn = new OutputVariable(parameters.AnnualPsn, "g/m2");
             if (parameters.CohortBalance != null) overalloutputs = new OutputAggregatedTable(parameters.CohortBalance);
 
-            
+            MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass, EstablishmentProbability,
+                                               SpeciesWasThere, AnnualPsn, BelowGround, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
+                                               WoodyDebris, AgeDistribution, MonthlyFolResp, MonthlyGrossPsn, MonthlyNetPsn, MonthlyMaintResp,
+                                               SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
         }
 
         

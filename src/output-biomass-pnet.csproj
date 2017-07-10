@@ -52,8 +52,12 @@
     <Reference Include="Landis.Library.Cohorts">
       <HintPath>..\..\Support-Library-Dlls\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
+    <Reference Include="Landis.Library.Metadata, Version=1.0.1.31296, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Landis.Library.Parameters-v1, Version=1.0.5612.15043, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     <Reference Include="Landis.Library.Parameters-v1">
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.Parameters-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
       <HintPath>..\..\Support-Library-Dlls\Landis.SpatialModeling.dll</HintPath>
@@ -68,6 +72,7 @@
   <ItemGroup>
     <Compile Include="ISiteVar.cs" />
     <Compile Include="MapComparison.cs" />
+    <Compile Include="MetadataHandler.cs" />
     <Compile Include="OutputAggregatedTable.cs" />
     <Compile Include="OutputHistogramCohort.cs" />
     <Compile Include="OutputFilePerTStepPerSpecies.cs" />
