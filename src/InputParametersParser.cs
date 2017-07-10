@@ -45,6 +45,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> abovegroundBiomass = new InputVar<string>("AbovegroundBiomass");
             InputVar<string> woodySenescence = new InputVar<string>("WoodySenescence");
             InputVar<string> foliageSenescence = new InputVar<string>("FoliageSenescence");
+            InputVar<string> aetAvg = new InputVar<string>("AET");
             InputVar<string> LeafAreaIndex = new InputVar<string>("LeafAreaIndex");
             InputVar<string> Establishment = new InputVar<string>("Establishment");
             InputVar<string> EstablishmentProbability = new InputVar<string>("EstablishmentProbability");
@@ -67,6 +68,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(abovegroundBiomass.Name);
             OutputList.Add(woodySenescence.Name);
             OutputList.Add(foliageSenescence.Name);
+            OutputList.Add(aetAvg.Name);
             OutputList.Add(LeafAreaIndex.Name);
             OutputList.Add(Establishment.Name);
             OutputList.Add(EstablishmentProbability.Name);
@@ -145,6 +147,11 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(foliageSenescence))
                 {
                     parameters.SpeciesFoliageSenescence = foliageSenescence.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(aetAvg))
+                {
+                    parameters.AETAvg = aetAvg.Value;
                     continue;
                 }
                 if (ReadOptionalVar(MonthlyNetPsn))

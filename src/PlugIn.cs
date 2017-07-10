@@ -40,6 +40,7 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable AbovegroundBiomass;
         static OutputVariable WoodySenescence;
         static OutputVariable FoliageSenescence;
+        static OutputVariable AETAvg;
         static  OutputVariable CohortsPerSpc;
         static  OutputVariable NonWoodyDebris;
         static  OutputVariable WoodyDebris;
@@ -128,6 +129,11 @@ namespace Landis.Extension.Output.PnET
             {
                 FoliageSenescence = new OutputVariable(parameters.SpeciesFoliageSenescence, "g/m2");
                 FoliageSenescence.output_table_ecoregions = new OutputTableEcoregions(FoliageSenescence.MapNameTemplate);
+            }
+            if (parameters.AETAvg != null)
+            {
+                AETAvg = new OutputVariable(parameters.AETAvg, "");
+                AETAvg.output_table_ecoregions = new OutputTableEcoregions(AETAvg.MapNameTemplate);
             }
             if (parameters.BelowgroundBiomass != null)
             {
@@ -294,6 +300,12 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float> Senescence_site = cohorts.GetIsiteVar(x => x.FoliageSenescenceSum);
 
                 FoliageSenescence.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, Senescence_site);
+            }
+            if (AETAvg != null)
+            {
+                ISiteVar<float> AET_site = cohorts.GetIsiteVar(x => x.AETSum);
+
+                AETAvg.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, AET_site);
             }
             if (MonthlyFolResp != null)
             {
