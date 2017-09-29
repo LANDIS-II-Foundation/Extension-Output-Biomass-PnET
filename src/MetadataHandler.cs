@@ -34,6 +34,26 @@ namespace Landis.Extension.Output.PnET
                 TimeInterval = Timestep,
                 ScenarioReplicationMetadata = scenRep
             };
+            //---------------------------------------
+            //          table outputs:   
+            //---------------------------------------
+            if (overalloutputs != null)
+            {
+                PlugIn.ModelCore.UI.WriteLine("   Generating summary table...");
+                CreateDirectory(OutputTableMap);
+
+                OutputMetadata tblOut_OverallOutputs = new OutputMetadata()
+                {
+                    Type = OutputType.Table,
+                    Name = Path.GetFileName(OutputTableMap),
+                    FilePath = OutputTableMap,
+                    Map_DataType = MapDataType.Continuous,
+                    Visualize = true,
+                };
+                tblOut_OverallOutputs.RetriveFields(typeof(OutputAggregatedTable));
+                Extension.OutputMetadatas.Add(tblOut_OverallOutputs);
+            }
+
 
             //---------------------------------------            
             //          map outputs:         
@@ -306,19 +326,6 @@ namespace Landis.Extension.Output.PnET
                     //Map_Unit = "categorical",
                 };
                 Extension.OutputMetadatas.Add(mapOut_AgeDistribution);
-            }
-            if(overalloutputs != null)
-            {
-                OutputMetadata tblOut_OverallOutputs = new OutputMetadata()
-                {
-                    Type = OutputType.Table,
-                    Name = FileNames.ReplaceTemplateVars(OutputTableMap, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".txt"),
-                    FilePath = FileNames.ReplaceTemplateVars(OutputTableMap, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".txt"),
-                    Map_DataType = MapDataType.Continuous,
-                    Visualize = true,
-                    //Map_Unit = "categorical",
-                };
-                Extension.OutputMetadatas.Add(tblOut_OverallOutputs);
             }
 
             //---------------------------------------
