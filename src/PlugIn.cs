@@ -250,7 +250,7 @@ namespace Landis.Extension.Output.PnET
                     new OutputMapSpecies(AGBiom_spc, spc, AbovegroundBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(AbovegroundBiomass.MapNameTemplate, Biomass.units, PlugIn.ModelCore.CurrentTime, AGBiom);
+                OutputFilePerTStepPerSpecies.Write<int>(AbovegroundBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, AGBiom);
 
                 ISiteVar<float> AGBiomass_site = cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
 
