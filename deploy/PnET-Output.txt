@@ -1,10 +1,10 @@
 LandisData   Extension
 
 Name         "Output-PnET"
-Version      2.1.1.1
+Version      3.0 (release candidate 1)
 Type         output
 Assembly     Landis.Extension.Output.PnET
 Class        Landis.Extension.Output.PnET.PlugIn
 Description  "Output-PnET"
-UserGuide    "LANDIS-II PnET-Succession v2.1 User Guide.pdf"
+UserGuide    "LANDIS-II PnET-Succession v3.0 User Guide.pdf"
 CoreVersion  6.2

@@ -25,7 +25,7 @@ Litter	output/NonWoodyDebris/Litter{timestep}.img
 
 AgeDistribution output/AgeDist/Age{timestep}.img
 
-CohortBalance	output/TotalCohorts.txt
+CohortBalance	"output/TotalCohorts.txt"
 
 MonthlyNetPsn output/MonthlyNetPsn/{species}/MonthlyNetPsn{timestep}.img
 
