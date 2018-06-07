@@ -32,38 +32,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
-      <HintPath>..\..\Support-Library-Dlls\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Core">
-      <HintPath>..\..\Support-Library-Dlls\Landis.Core.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Landis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Extension.Succession.BiomassPnET, Version=2.1.2.25137, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.Succession.BiomassPnET.dll</HintPath>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET.LUv2.0">
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.Succession.BiomassPnET.LUv2.0.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts">
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Biomass-v1.0.1, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Biomass-v1.0.1.dll</HintPath>
+    <Reference Include="Landis.Library.Biomass-v1.0.1">
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Biomass-v1.0.1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassCohorts-v2.0.1">
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.BiomassCohorts-v2.0.1.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassCohorts-v2.0.1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Cohorts">
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.Cohorts.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Metadata, Version=1.0.1.31296, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.Metadata.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Parameters-v1, Version=1.0.5612.15043, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.Parameters-v1.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Parameters-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
-      <HintPath>..\..\Support-Library-Dlls\Landis.SpatialModeling.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Landis.SpatialModeling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
