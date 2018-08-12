@@ -1,0 +1,9 @@
+LandisData   Extension
+
+Name         "Output-PnET"
+Version      "4.0"
+Type         output
+Assembly     Landis.Extension.Output.PnET
+Class        Landis.Extension.Output.PnET.PlugIn
+Description  "Output-PnET"
+CoreVersion  7.0

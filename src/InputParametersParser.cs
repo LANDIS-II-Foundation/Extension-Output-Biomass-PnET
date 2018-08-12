@@ -1,9 +1,9 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Arjan de Bruijn 
 
 using Landis.Core;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using System.Collections.Generic;
+using Landis.Library.Parameters;
 
 namespace Landis.Extension.Output.PnET
 {
@@ -11,7 +11,7 @@ namespace Landis.Extension.Output.PnET
     /// A parser that reads the plug-in's parameters from text input.
     /// </summary>
     public class InputParametersParser
-        : Edu.Wisc.Forest.Flel.Util.TextParser<InputParameters>
+        : Landis.Utilities.TextParser<InputParameters>
     {
 
         //---------------------------------------------------------------------
