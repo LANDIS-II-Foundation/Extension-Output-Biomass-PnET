@@ -176,7 +176,7 @@ namespace Landis.Extension.Output.PnET
                 Water = new OutputVariable(parameters.Water, "mm");
                 Water.output_table_ecoregions = new OutputTableEcoregions(Water.MapNameTemplate);
             }
-            if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR,  "W/m2 pr mmol/m2");
+            if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR,  "W/m2 or mmol/m2");
             if (parameters.Litter != null) NonWoodyDebris = new OutputVariable(parameters.Litter, "g/m2");
             if (parameters.WoodyDebris != null) WoodyDebris = new OutputVariable(parameters.WoodyDebris,  "g/m2");
             if (parameters.AgeDistribution != null) AgeDistribution = new OutputVariable(parameters.AgeDistribution,"yr");
