@@ -32,44 +32,42 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>obj\bin\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Core">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>obj\bin\Landis.Core.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Extension.Succession.BiomassPnET.LUv2.0">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Extension-PnET-Succession\src\obj\Release\Landis.Extension.Succession.BiomassPnET.LUv2.0.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.AgeOnlyCohorts">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+    <Reference Include="Landis.Library.AgeOnlyCohorts, Version=2.1.5520.27591, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.AgeOnlyCohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Biomass-v1">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.Biomass-v1.dll</HintPath>
+      <HintPath>bin\Debug\Landis.Library.Biomass-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassCohorts-v2">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.BiomassCohorts-v2.dll</HintPath>
+      <HintPath>bin\Debug\Landis.Library.BiomassCohorts-v2.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Cohorts">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.Cohorts.dll</HintPath>
+    <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Metadata">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.Metadata.dll</HintPath>
+    <Reference Include="Landis.Library.Metadata, Version=1.0.1.31296, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Parameters-v1">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.Library.Parameters-v1.dll</HintPath>
+    <Reference Include="Landis.Library.Parameters-v1, Version=1.0.5504.21730, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.Parameters-v1.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.SpatialModeling">
-	  <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\bin\Landis.SpatialModeling.dll</HintPath>
+    <Reference Include="Landis.SpatialModeling, Version=1.0.4815.34359, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.SpatialModeling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
