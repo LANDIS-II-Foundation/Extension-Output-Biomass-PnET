@@ -2,7 +2,7 @@
 //  Authors:  Arjan de Bruijn 
 
 using Landis.Core;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using System.Collections.Generic;
 
 namespace Landis.Extension.Output.PnET
