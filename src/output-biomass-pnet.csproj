@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>Landis.Extension.Output.PnET</RootNamespace>
-    <AssemblyName>Landis.Extension.Output.PnET-v3</AssemblyName>
+    <AssemblyName>Landis.Extension.Output.PnET-v3-LU</AssemblyName>
     <AssemblyTitle>Landis.Extension.Output.PnET-v4</AssemblyTitle>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
-    <AssemblyVersion>3.1</AssemblyVersion>
+    <AssemblyVersion>3.2</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET</RepositoryUrl>
@@ -16,11 +16,11 @@
     <Authors>Brian Miranda, Arjan de Bruijn</Authors>
     <Product>Landis.Extension.Output.PnET</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>3.1</Version>
+    <Version>3.2</Version>
     <PackageTags>LANDIS-II;Landis;Extension;output;PnET</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>3.1</FileVersion>
+    <FileVersion>3.2</FileVersion>
     <Company>USDA Forest Service</Company>
   </PropertyGroup>
 
@@ -30,11 +30,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Reference Include="Landis.Extension.Succession.BiomassPnET-v3">
-      <HintPath>lib\Landis.Extension.Succession.BiomassPnET-v3.dll</HintPath>
-    </Reference>
-    <Reference Include="Landis.Extension.Succession.BiomassPnET-v4">
-      <HintPath>lib\Landis.Extension.Succession.BiomassPnET-v4.dll</HintPath>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET-v3-LU">
+      <HintPath>..\..\Extension-PnET-Succession-Core-v7\src\bin\Release\netstandard2.0\Landis.Extension.Succession.BiomassPnET-v3-LU.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>lib\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
