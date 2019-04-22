@@ -63,6 +63,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> AgeDistribution = new InputVar<string>("AgeDistribution");
             InputVar<string> CohortBalance = new InputVar<string>("CohortBalance");
             InputVar<string> EstablishmentTable = new InputVar<string>("EstablishmentTable");
+            InputVar<string> MortalityTable = new InputVar<string>("MortalityTable");
 
             List<string> OutputList = new List<string>();
             OutputList.Add(biomass.Name);
@@ -87,6 +88,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(AgeDistribution.Name);
             OutputList.Add(CohortBalance.Name);
             OutputList.Add(EstablishmentTable.Name);
+            OutputList.Add(MortalityTable.Name);
 
             int lineNumber = LineNumber;
             ReadVar(speciesName);
@@ -242,6 +244,11 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(EstablishmentTable))
                 {
                     parameters.EstablishmentTable = EstablishmentTable.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MortalityTable))
+                {
+                    parameters.MortalityTable = MortalityTable.Value;
                     continue;
                 }
 

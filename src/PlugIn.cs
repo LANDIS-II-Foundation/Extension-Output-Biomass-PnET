@@ -58,6 +58,7 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable SubCanopyPAR;
         static OutputAggregatedTable overalloutputs;
         static OutputEstablishmentTable establishmentTable;
+        static OutputMortalityTable mortalityTable;
 
         ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere;
         ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> LastBiom;
@@ -184,6 +185,7 @@ namespace Landis.Extension.Output.PnET
             if (parameters.AnnualPsn != null) AnnualPsn = new OutputVariable(parameters.AnnualPsn, "g/m2");
             if (parameters.CohortBalance != null) overalloutputs = new OutputAggregatedTable(parameters.CohortBalance);
             if (parameters.EstablishmentTable != null) establishmentTable = new OutputEstablishmentTable(parameters.EstablishmentTable);
+            if (parameters.MortalityTable != null) mortalityTable = new OutputMortalityTable(parameters.MortalityTable);
 
 
             MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass, EstablishmentProbability,
@@ -562,8 +564,13 @@ namespace Landis.Extension.Output.PnET
             }
             if (establishmentTable != null)
             {
-                System.Console.WriteLine("Updating output variable: etablishmentTable");
+                System.Console.WriteLine("Updating output variable: establishmentTable");
                 OutputEstablishmentTable.WriteEstablishmentTable();
+            }
+            if (mortalityTable != null)
+            {
+                System.Console.WriteLine("Updating output variable: MortalityTable");
+                OutputMortalityTable.WriteMortalityTable();
             }
         }
 

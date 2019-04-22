@@ -22,6 +22,8 @@ namespace Landis.Extension.Output.PnET
 
         public string EstablishmentTable;
 
+        public string MortalityTable;
+
         public IEnumerable<ISpecies> SelectedSpecies;
 
         public string WoodyDebris;
