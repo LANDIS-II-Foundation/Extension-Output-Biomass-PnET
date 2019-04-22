@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Landis.SpatialModeling;
- 
+
 
 namespace Landis.Extension.Output.PnET
 {
@@ -21,8 +21,8 @@ namespace Landis.Extension.Output.PnET
         public static ISiteVar<Landis.Extension.Succession.BiomassPnET.ISiteCohorts> cohorts;
         public static ISiteVar<Landis.Library.Biomass.Pool> woodyDebris;
         public static ISiteVar<Landis.Library.Biomass.Pool> litter;
-        
-        
+
+
 
         private static int tstep;
         public static int TStep
@@ -36,27 +36,28 @@ namespace Landis.Extension.Output.PnET
         static ICore modelCore;
 
         static IEnumerable<ISpecies> selectedspecies;
-        static  OutputVariable Biomass;
+        static OutputVariable Biomass;
         static OutputVariable AbovegroundBiomass;
         static OutputVariable WoodySenescence;
         static OutputVariable FoliageSenescence;
         static OutputVariable AETAvg;
-        static  OutputVariable CohortsPerSpc;
-        static  OutputVariable NonWoodyDebris;
-        static  OutputVariable WoodyDebris;
-        static  OutputVariable AgeDistribution;
+        static OutputVariable CohortsPerSpc;
+        static OutputVariable NonWoodyDebris;
+        static OutputVariable WoodyDebris;
+        static OutputVariable AgeDistribution;
         static OutputVariable AnnualPsn;
-        static  OutputVariable BelowGround;
-        static  OutputVariable LAI;
-        static  OutputVariable SpeciesEstablishment;
+        static OutputVariable BelowGround;
+        static OutputVariable LAI;
+        static OutputVariable SpeciesEstablishment;
         static OutputVariable EstablishmentProbability;
         static OutputVariable MonthlyNetPsn;
         static OutputVariable MonthlyFolResp;
         static OutputVariable MonthlyGrossPsn;
         static OutputVariable MonthlyMaintResp;
-        static  OutputVariable Water;
-        static  OutputVariable SubCanopyPAR;
+        static OutputVariable Water;
+        static OutputVariable SubCanopyPAR;
         static OutputAggregatedTable overalloutputs;
+        static OutputEstablishmentTable establishmentTable;
 
         ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere;
         ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> LastBiom;
@@ -160,29 +161,30 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyNetPsn = new OutputVariable(parameters.MonthlyNetPsn, "gC/mo");
             }
-            
+
             if (parameters.EstablishmentProbability != null)
             {
                 EstablishmentProbability = new OutputVariable(parameters.EstablishmentProbability, "");
-               
+
             }
             if (parameters.SpeciesEst != null)
             {
                 SpeciesEstablishment = new OutputVariable(parameters.SpeciesEst, "");
-               
+
             }
             if (parameters.Water != null)
             {
                 Water = new OutputVariable(parameters.Water, "mm");
                 Water.output_table_ecoregions = new OutputTableEcoregions(Water.MapNameTemplate);
             }
-            if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR,  "W/m2 pr mmol/m2");
+            if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR, "W/m2 pr mmol/m2");
             if (parameters.Litter != null) NonWoodyDebris = new OutputVariable(parameters.Litter, "g/m2");
-            if (parameters.WoodyDebris != null) WoodyDebris = new OutputVariable(parameters.WoodyDebris,  "g/m2");
-            if (parameters.AgeDistribution != null) AgeDistribution = new OutputVariable(parameters.AgeDistribution,"yr");
+            if (parameters.WoodyDebris != null) WoodyDebris = new OutputVariable(parameters.WoodyDebris, "g/m2");
+            if (parameters.AgeDistribution != null) AgeDistribution = new OutputVariable(parameters.AgeDistribution, "yr");
             if (parameters.AnnualPsn != null) AnnualPsn = new OutputVariable(parameters.AnnualPsn, "g/m2");
             if (parameters.CohortBalance != null) overalloutputs = new OutputAggregatedTable(parameters.CohortBalance);
-       
+            if (parameters.EstablishmentTable != null) establishmentTable = new OutputEstablishmentTable(parameters.EstablishmentTable);
+
 
             MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass, EstablishmentProbability,
                                                SpeciesWasThere, AnnualPsn, BelowGround, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
@@ -190,10 +192,10 @@ namespace Landis.Extension.Output.PnET
                                                SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
         }
 
-        
+
         public override void Run()
         {
-            
+
             if (LAI != null)
             {
                 System.Console.WriteLine("Updating output variable: LAI");
@@ -276,7 +278,7 @@ namespace Landis.Extension.Output.PnET
                 }
                 */
                 OutputFilePerTStepPerSpecies.Write<int>(WoodySenescence.MapNameTemplate, WoodySenescence.units, PlugIn.ModelCore.CurrentTime, Senes);
-                
+
                 ISiteVar<float> Senescence_site = cohorts.GetIsiteVar(x => x.WoodySenescenceSum);
 
                 WoodySenescence.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, Senescence_site);
@@ -300,7 +302,7 @@ namespace Landis.Extension.Output.PnET
                 }
                 */
                 OutputFilePerTStepPerSpecies.Write<int>(FoliageSenescence.MapNameTemplate, FoliageSenescence.units, PlugIn.ModelCore.CurrentTime, Senes);
-                
+
                 ISiteVar<float> Senescence_site = cohorts.GetIsiteVar(x => x.FoliageSenescenceSum);
 
                 FoliageSenescence.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, Senescence_site);
@@ -344,14 +346,14 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(BelowGround.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<uint, uint>(FileName, values, o => o);
-                
+
             }
             if (CohortsPerSpc != null)
             {
                 System.Console.WriteLine("Updating output variable: CohortsPerSpc");
                 // Nr of Cohorts per site and per species
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> cps =  cohorts.GetIsiteVar(x => x.CohortCountPerSpecies);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> cps = cohorts.GetIsiteVar(x => x.CohortCountPerSpecies);
 
                 new OutputHistogramCohort<int>(CohortsPerSpc.MapNameTemplate, "CohortsPerSpcPerSite", 10).WriteOutputHist(cps);
 
@@ -362,7 +364,7 @@ namespace Landis.Extension.Output.PnET
                     new OutputMapSiteVar<Landis.Library.Parameters.Species.AuxParm<int>, int>(FileName, cps, o => o[spc]);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(CohortsPerSpc.MapNameTemplate, CohortsPerSpc.units, PlugIn.ModelCore.CurrentTime, cps); 
+                OutputFilePerTStepPerSpecies.Write<int>(CohortsPerSpc.MapNameTemplate, CohortsPerSpc.units, PlugIn.ModelCore.CurrentTime, cps);
             }
             if (EstablishmentProbability != null)
             {
@@ -389,7 +391,7 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesIsThere = cohorts.GetIsiteVar(o => o.SpeciesPresent);
 
-                if (SpeciesWasThere != null)  
+                if (SpeciesWasThere != null)
                 {
                     foreach (ISpecies spc in PlugIn.modelCore.Species)
                     {
@@ -409,15 +411,15 @@ namespace Landis.Extension.Output.PnET
                         }
 
 
-                        OutputMapSpecies output_map =  new OutputMapSpecies(comp, spc, SpeciesEstablishment.MapNameTemplate);
+                        OutputMapSpecies output_map = new OutputMapSpecies(comp, spc, SpeciesEstablishment.MapNameTemplate);
 
                         // map label text
                         m.PrintLabels(SpeciesEstablishment.MapNameTemplate, spc);
 
-                        
+
                     }
                 }
-                else 
+                else
                 {
                     SpeciesWasThere = modelCore.Landscape.NewSiteVar<Landis.Library.Parameters.Species.AuxParm<bool>>();
 
@@ -432,10 +434,10 @@ namespace Landis.Extension.Output.PnET
                 Landis.Library.Parameters.Species.AuxParm<int> Est_Sum = new Landis.Library.Parameters.Species.AuxParm<int>(PlugIn.modelCore.Species);
 
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-                { 
-                    foreach(ISpecies spc in PlugIn.modelCore.Species)
+                {
+                    foreach (ISpecies spc in PlugIn.modelCore.Species)
                     {
-                        if(Established_spc[site][spc] ==true)
+                        if (Established_spc[site][spc] == true)
                         {
                             Est_Sum[spc]++;
                         }
@@ -443,7 +445,7 @@ namespace Landis.Extension.Output.PnET
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(SpeciesEstablishment.MapNameTemplate, SpeciesEstablishment.units, PlugIn.ModelCore.CurrentTime, Est_Sum);
-                
+
             }
             if (AnnualPsn != null)
             {
@@ -485,7 +487,7 @@ namespace Landis.Extension.Output.PnET
                 }
 
             }
-            
+
             if (Water != null)
             {
                 System.Console.WriteLine("Updating output variable: Water");
@@ -498,7 +500,7 @@ namespace Landis.Extension.Output.PnET
 
                 Water.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, Water_site);
             }
-            
+
             if (SubCanopyPAR != null)
             {
                 System.Console.WriteLine("Updating output variable: SubCanopyPAR");
@@ -509,7 +511,7 @@ namespace Landis.Extension.Output.PnET
 
                 new OutputMapSiteVar<float, float>(FileName, SubCanopyRadiation, o => o);
 
-                 
+
             }
             if (NonWoodyDebris != null)
             {
@@ -520,9 +522,9 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(NonWoodyDebris.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<double, double>(FileName, Litter, o => o);
-              
+
             }
-            
+
             if (WoodyDebris != null)
             {
                 System.Console.WriteLine("Updating output variable: WoodyDebris");
@@ -534,7 +536,7 @@ namespace Landis.Extension.Output.PnET
                 new OutputMapSiteVar<double, double>(FileName, woody_debris, o => o);
 
             }
-            
+
             if (AgeDistribution != null)
             {
                 System.Console.WriteLine("Updating output variable: AgeDistribution");
@@ -542,7 +544,7 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<List<ushort>>> values = cohorts.GetIsiteVar(o => o.CohortAges);
 
                 new OutputHistogramCohort<ushort>(AgeDistribution.MapNameTemplate, "NrOfCohortsAtAge", 10).WriteOutputHist(values);
-                 
+
 
                 System.Console.WriteLine("Updating output variable: MaxAges");
 
@@ -551,15 +553,18 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(AgeDistribution.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<int, int>(FileName, maxage, o => o);
-                 
+
             }
             if (overalloutputs != null)
             {
                 System.Console.WriteLine("Updating output variable: overalloutputs");
                 OutputAggregatedTable.WriteNrOfCohortsBalance();
             }
-
-          
+            if (establishmentTable != null)
+            {
+                System.Console.WriteLine("Updating output variable: etablishmentTable");
+                OutputEstablishmentTable.WriteEstablishmentTable();
+            }
         }
 
         private static void WriteMonthlyOutput(ISiteVar<int[]> montly, string MapNameTemplate)
@@ -583,8 +588,8 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
-        
-       
-        
+
     }
+
 }
+
