@@ -366,7 +366,7 @@ namespace Landis.Extension.Output.PnET
                     new OutputMapSiteVar<Landis.Library.Parameters.Species.AuxParm<int>, int>(FileName, cps, o => o[spc]);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(CohortsPerSpc.MapNameTemplate, CohortsPerSpc.units, PlugIn.ModelCore.CurrentTime, cps);
+                OutputFilePerTStepPerSpecies.WriteSum<int>(CohortsPerSpc.MapNameTemplate, CohortsPerSpc.units, PlugIn.ModelCore.CurrentTime, cps);
             }
             if (EstablishmentProbability != null)
             {
