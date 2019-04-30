@@ -20,6 +20,10 @@ namespace Landis.Extension.Output.PnET
 
         public string CohortBalance;
 
+        public string EstablishmentTable;
+
+        public string MortalityTable;
+
         public IEnumerable<ISpecies> SelectedSpecies;
 
         public string WoodyDebris;

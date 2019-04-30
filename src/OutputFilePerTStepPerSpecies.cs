@@ -40,6 +40,8 @@ namespace Landis.Extension.Output.PnET
             sw.Close();
         
         }
+
+        // Average values across sites
         public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values)
         {
             string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt");
@@ -86,6 +88,52 @@ namespace Landis.Extension.Output.PnET
             sw.Close();
              
    
+        }
+
+        // Sum values across sites
+        public static void WriteSum<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values)
+        {
+            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt");
+
+            if (PlugIn.ModelCore.CurrentTime == 0)
+            {
+                FileNames.MakeFolders(FileName);
+                System.IO.File.WriteAllLines(FileName, new string[] { Header(units) });
+            }
+
+            AuxParm<ulong> Values_spc = new AuxParm<ulong>(PlugIn.ModelCore.Species);
+            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
+            {
+                foreach (ISpecies spc in PlugIn.ModelCore.Species)
+                {
+
+                    if (typeof(T) == typeof(bool))
+                    {
+                        if (Values[site][spc].ToString() == bool.TrueString)
+                        {
+                            Values_spc[spc]++;
+                        }
+                    }
+                    else
+                    {
+                        ulong numeric = ulong.Parse(Values[site][spc].ToString());
+                        Values_spc[spc] += numeric;
+                    }
+                }
+            }
+
+            string line = TStep + "\t";
+
+            foreach (ISpecies spc in PlugIn.ModelCore.Species)
+            {
+                line += Values_spc[spc] + "\t";
+            }
+
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
+            sw.WriteLine(line);
+            sw.Close();
+
+
         }
     }
 }

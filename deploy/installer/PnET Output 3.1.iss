@@ -1,12 +1,12 @@
 ; LANDIS-II Extension infomation
 #define CoreRelease "LANDIS-II-V7"
 #define ExtensionName "Output-PnET"
-#define AppVersion "3.1"
+#define AppVersion "3.1.2"
 #define AppPublisher "LANDIS-II Foundation"
 #define AppURL "http://www.landis-ii.org/"
 
 ; Build directory
-#define BuildDir "..\..\src\bin\Debug\"
+#define BuildDir "..\..\src\bin\Debug"
 
 ; LANDIS-II installation directories
 #define ExtDir "C:\Program Files\LANDIS-II-v7\extensions"
@@ -50,6 +50,8 @@ Source: {#BuildDir}\Landis.Extension.Output.PnET-v3.dll; DestDir: {#ExtDir}; Fla
 ; Requisite auxiliary libraries
 ; All installed by succession extension
 ; NB. These libraries are used by other extensions and thus are never uninstalled.
+; This output extension is dependent on Succession.BiomassPnET, which also installs all of the other necessary libraries
+;Source: {#BuildDir}\Landis.Extension.Succession.BiomassPnET-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.AgeOnlyCohorts-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.Cohorts-v2.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.BiomassCohorts-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion

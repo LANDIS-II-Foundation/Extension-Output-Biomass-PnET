@@ -16,11 +16,11 @@
     <Authors>Brian Miranda, Arjan de Bruijn</Authors>
     <Product>Landis.Extension.Output.PnET</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>3.1</Version>
+    <Version>3.1.2</Version>
     <PackageTags>LANDIS-II;Landis;Extension;output;PnET</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>3.1</FileVersion>
+    <FileVersion>3.1.2</FileVersion>
     <Company>USDA Forest Service</Company>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -30,6 +30,20 @@
     <!--<OutputPath>bin\Debug\</OutputPath>-->
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <!--<OutputPath>C:\BRM\LANDIS_II\GitCode\brmiranda\Core-Model-v7\Tool-Console\src\bin\extensions</OutputPath>-->
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="lib\**" />
+    <Compile Remove="packages\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <EmbeddedResource Remove="packages\**" />
+    <None Remove="lib\**" />
+    <None Remove="packages\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Landis.Core" Version="2.0.0" />
     <PackageReference Include="Landis.Core.Implementation" Version="2.0.0" />
@@ -41,21 +55,22 @@
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>lib\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Biomass-v2">
-      <HintPath>lib\Landis.Library.Biomass-v2.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.Biomass-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassCohorts-v3">
-      <HintPath>lib\Landis.Library.BiomassCohorts-v3.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.BiomassCohorts-v3.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Cohorts-v2">
-      <HintPath>lib\Landis.Library.Cohorts-v2.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.Cohorts-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Metadata-v2">
-      <HintPath>lib\Landis.Library.Metadata-v2.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.Metadata-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Parameters-v2">
-      <HintPath>lib\Landis.Library.Parameters-v2.dll</HintPath>
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.Parameters-v2.dll</HintPath>
     </Reference>
 
   </ItemGroup>
