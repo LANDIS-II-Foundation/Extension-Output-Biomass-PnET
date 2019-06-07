@@ -453,41 +453,9 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: AnnualPsn");
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> Biom = cohorts.GetIsiteVar(o => o.BiomassPerSpecies);
-
-                if (LastBiom != null)
-                {
-                    foreach (ISpecies spc in PlugIn.modelCore.Species)
-                    {
-                        ISiteVar<int> comp = PlugIn.modelCore.Landscape.NewSiteVar<int>();
-
-                        MapComparison m = new MapComparison();
-                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
-                        {
-                            if (LastBiom[site] == null)
-                            {
-                                LastBiom[site] = new Library.Parameters.Species.AuxParm<int>(PlugIn.modelCore.Species);
-                            }
-
-                            comp[site] = Biom[site][spc] - LastBiom[site][spc];
-
-                            LastBiom[site][spc] = Biom[site][spc];
-                        }
-
-                        OutputMapSpecies output_map = new OutputMapSpecies(comp, spc, AnnualPsn.MapNameTemplate);
-
-                    }
-                }
-                else
-                {
-                    LastBiom = modelCore.Landscape.NewSiteVar<Landis.Library.Parameters.Species.AuxParm<int>>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
-                    {
-                        LastBiom[site] = new Library.Parameters.Species.AuxParm<int>(PlugIn.modelCore.Species);
-                    }
-                }
-
+                ISiteVar<int> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsnSum);
+                string FileName = FileNames.ReplaceTemplateVars(AnnualPsn.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<int, int>(FileName, monthlyNetPsn, o => o);
             }
 
             if (Water != null)
