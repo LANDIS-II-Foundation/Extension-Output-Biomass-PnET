@@ -1,8 +1,7 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
-//  Authors:  Robert M. Scheller, James B. Domingo
+//  Authors:  Brian Miranda, USFS
 
 using Landis.Core;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using System.Collections.Generic;
 
 namespace Landis.Extension.Output.PnET
@@ -20,6 +19,10 @@ namespace Landis.Extension.Output.PnET
         public string AnnualPsn;
 
         public string CohortBalance;
+
+        public string EstablishmentTable;
+
+        public string MortalityTable;
 
         public IEnumerable<ISpecies> SelectedSpecies;
 
