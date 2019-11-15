@@ -317,25 +317,25 @@ namespace Landis.Extension.Output.PnET
             }
             if (MonthlyFolResp != null)
             {
-                ISiteVar<int[]> monthlyFolResp = cohorts.GetIsiteVar(site => site.FolResp);
+                ISiteVar<float[]> monthlyFolResp = cohorts.GetIsiteVar(site => site.FolResp);
 
                 WriteMonthlyOutput(monthlyFolResp, MonthlyFolResp.MapNameTemplate);
             }
             if (MonthlyGrossPsn != null)
             {
-                ISiteVar<int[]> monthlyGrossPsn = cohorts.GetIsiteVar(site => site.GrossPsn);
+                ISiteVar<float[]> monthlyGrossPsn = cohorts.GetIsiteVar(site => site.GrossPsn);
 
                 WriteMonthlyOutput(monthlyGrossPsn, MonthlyGrossPsn.MapNameTemplate);
             }
             if (MonthlyNetPsn != null)
             {
-                ISiteVar<int[]> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsn);
+                ISiteVar<float[]> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsn);
 
                 WriteMonthlyOutput(monthlyNetPsn, MonthlyNetPsn.MapNameTemplate);
             }
             if (MonthlyMaintResp != null)
             {
-                ISiteVar<int[]> monthlyMaintResp = cohorts.GetIsiteVar(site => site.MaintResp);
+                ISiteVar<float[]> monthlyMaintResp = cohorts.GetIsiteVar(site => site.MaintResp);
 
                 WriteMonthlyOutput(monthlyMaintResp, MonthlyMaintResp.MapNameTemplate);
             }
@@ -453,9 +453,9 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: AnnualPsn");
 
-                ISiteVar<int> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsnSum);
+                ISiteVar<int> annualNetPsn = cohorts.GetIsiteVar(site => (int)site.NetPsnSum);
                 string FileName = FileNames.ReplaceTemplateVars(AnnualPsn.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
-                new OutputMapSiteVar<int, int>(FileName, monthlyNetPsn, o => o);
+                new OutputMapSiteVar<int, int>(FileName, annualNetPsn, o => o);
                             }
 
             if (Water != null)
@@ -542,9 +542,9 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
-        private static void WriteMonthlyOutput(ISiteVar<int[]> montly, string MapNameTemplate)
+        private static void WriteMonthlyOutput(ISiteVar<float[]> monthly, string MapNameTemplate)
         {
-            string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "okt", "nov", "dec" };
+            string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
             for (int mo = 0; mo < months.Count(); mo++)
             {
@@ -552,7 +552,7 @@ namespace Landis.Extension.Output.PnET
 
                 foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                 {
-                    monthlyValue[site] = montly[site][mo];
+                    monthlyValue[site] = (int)monthly[site][mo];
                 }
 
                 string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
