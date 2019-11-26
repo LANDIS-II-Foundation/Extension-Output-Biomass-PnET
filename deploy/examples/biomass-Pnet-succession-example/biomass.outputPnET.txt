@@ -15,6 +15,7 @@ Establishment output/Establishments/{species}/Est{species}{timestep}.img
 
 Water output/SoilWater/water{timestep}.img
 
+MonthlyNetPsn  output/MonthlyNetPsn/NetPsn_{timestep}.img
 
 SubCanopyPAR output/SubCanopyPar/SCpar-{timestep}.img
 
