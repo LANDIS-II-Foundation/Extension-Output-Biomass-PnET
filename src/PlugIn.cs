@@ -462,11 +462,11 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: Water");
 
-                ISiteVar<ushort> Water_site = cohorts.GetIsiteVar(x => x.WaterMax);
+                ISiteVar<float> Water_site = cohorts.GetIsiteVar(x => x.WaterMax);
 
                 string FileName = FileNames.ReplaceTemplateVars(Water.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
-                new OutputMapSiteVar<ushort, ushort>(FileName, Water_site, o => o);
+                new OutputMapSiteVar<float, float>(FileName, Water_site, o => o);
 
                 Water.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, Water_site);
             }
