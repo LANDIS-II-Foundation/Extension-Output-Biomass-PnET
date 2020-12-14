@@ -18,7 +18,7 @@ namespace Landis.Extension.Output.PnET
         {
             FileContent = new List<string>();
             this.NrOfCohorts = NrOfCohorts;
-            FileName = FileNames.ReplaceTemplateVars(filenametemplate, "", PlugIn.ModelCore.CurrentTime).Replace(".img", "Histogram.txt");
+            FileName = FileNames.ReplaceTemplateVars(filenametemplate, "", PlugIn.ModelCore.CurrentTime).Replace(".img", "Histogram.csv").Replace("timestep","AllYears");
              
             this.label = label;
         }
@@ -90,10 +90,10 @@ namespace Landis.Extension.Output.PnET
         }
         private string hdr(string HdrExplanation, List<double> running_cat_min, List<double> running_cat_max)
         {
-            string line= HdrExplanation + "\t";
+            string line= HdrExplanation ;
             for (int f = 0; f < running_cat_min.Count;f++ )
             {
-                line += "[" + running_cat_min[f] + "_" + running_cat_max[f] + "]\t";
+                line += ", " + "[" + running_cat_min[f] + "_" + running_cat_max[f] + "]";
             }
             
             return line;
@@ -133,7 +133,7 @@ namespace Landis.Extension.Output.PnET
              
             foreach (ISpecies species in PlugIn.ModelCore.Species)
             {
-                string line = species.Name + "\t";
+                string line = species.Name ;
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
                 {
                     if (values[site][species] == null) continue;
@@ -156,16 +156,16 @@ namespace Landis.Extension.Output.PnET
 
                 for (int c = 0; c < cat_count.Count(); c++)
                 {
-                    line += cat_count[c].ToString() + "\t";
+                    line += ", " + cat_count[c].ToString();
                     cat_count[c] = 0;
                 }
 
                 FileContent.Add(line);
             }
-            string linetot = "Total\t";
+            string linetot = "Total";
             for (int c = 0; c < cat_count.Count(); c++)
             {
-                linetot += cat_count_tot[c].ToString() + "\t";
+                linetot += ", " + cat_count_tot[c].ToString() ;
                 cat_count[c] = 0;
             }
             FileContent.Add(linetot);
@@ -189,7 +189,7 @@ namespace Landis.Extension.Output.PnET
 
             foreach (ISpecies species in PlugIn.ModelCore.Species)  
             {
-                string line = species.Name + "\t";
+                string line = species.Name;
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
                 {
                     T var = values[site][species];
@@ -208,7 +208,7 @@ namespace Landis.Extension.Output.PnET
 
                 for (int c = 0; c < cat_count.Count();c++ )
                 {
-                    line += cat_count[c].ToString() + "\t";
+                    line += ", " + cat_count[c].ToString();
                     cat_count[c] = 0;
                 }
                 

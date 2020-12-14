@@ -17,10 +17,10 @@ namespace Landis.Extension.Output.PnET
         {
             FileName = Template;
             FileContent = new List<string>();
-            string headerString = "Time" + "\t" + "Method";
+            string headerString = "Time" + ", " + "Method";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                headerString = headerString + "\t"  + spc.Name;
+                headerString = headerString + ", "  + spc.Name;
             }
 
             FileContent.Add(headerString);
@@ -93,61 +93,61 @@ namespace Landis.Extension.Output.PnET
                 }
 
                 // Report Planting
-                string dataString_Plant = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Plant";
+                string dataString_Plant = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Plant";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByPlant.ContainsKey(spc))
                     {
-                        dataString_Plant = dataString_Plant + "\t" + cohortsByPlant[spc];
+                        dataString_Plant = dataString_Plant + ", " + cohortsByPlant[spc];
                     }
                     else
                     {
-                        dataString_Plant = dataString_Plant + "\t" + "0";
+                        dataString_Plant = dataString_Plant + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_Plant);
 
                 // Report Serotiny
-                string dataString_Serotiny = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Serotiny";
+                string dataString_Serotiny = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Serotiny";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsBySerotiny.ContainsKey(spc))
                     {
-                        dataString_Serotiny = dataString_Serotiny + "\t" + cohortsBySerotiny[spc];
+                        dataString_Serotiny = dataString_Serotiny + ", " + cohortsBySerotiny[spc];
                     }
                     else
                     {
-                        dataString_Serotiny = dataString_Serotiny + "\t" + "0";
+                        dataString_Serotiny = dataString_Serotiny + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_Serotiny);
 
                 // Report Resprout
-                string dataString_Resprout = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Resprout";
+                string dataString_Resprout = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Resprout";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByResprout.ContainsKey(spc))
                     {
-                        dataString_Resprout = dataString_Resprout + "\t" + cohortsByResprout[spc];
+                        dataString_Resprout = dataString_Resprout + ", " + cohortsByResprout[spc];
                     }
                     else
                     {
-                        dataString_Resprout = dataString_Resprout + "\t" + "0";
+                        dataString_Resprout = dataString_Resprout + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_Resprout);
 
                 // Report Seed
-                string dataString_Seed = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Seed";
+                string dataString_Seed = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Seed";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsBySeed.ContainsKey(spc))
                     {
-                        dataString_Seed = dataString_Seed + "\t" + cohortsBySeed[spc];
+                        dataString_Seed = dataString_Seed + ", " + cohortsBySeed[spc];
                     }
                     else
                     {
-                        dataString_Seed = dataString_Seed + "\t" + "0";
+                        dataString_Seed = dataString_Seed + ", " + "0";
                     }
                 }
 

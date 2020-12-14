@@ -18,10 +18,10 @@ namespace Landis.Extension.Output.PnET
         {
             FileName = Template;
             FileContent = new List<string>();
-            string headerString = "Time" +"\t" + "Cause";
+            string headerString = "Time" +", " + "Cause";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                headerString = headerString + "\t" + spc.Name;
+                headerString = headerString + ", " + spc.Name;
             }
             FileContent.Add(headerString);
         }
@@ -98,76 +98,76 @@ namespace Landis.Extension.Output.PnET
                 }
 
                 // Report Succession
-                string dataString_succession = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Succession";
+                string dataString_succession = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Succession";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsBySuccession.ContainsKey(spc))
                     {
-                        dataString_succession = dataString_succession + "\t" + cohortsBySuccession[spc];
+                        dataString_succession = dataString_succession + ", " + cohortsBySuccession[spc];
                     }
                     else
                     {
-                        dataString_succession = dataString_succession + "\t" + "0";
+                        dataString_succession = dataString_succession + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_succession);
 
                 // Report Harvest
-                string dataString_harvest = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Harvest";
+                string dataString_harvest = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Harvest";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByHarvest.ContainsKey(spc))
                     {
-                        dataString_harvest = dataString_harvest + "\t" + cohortsByHarvest[spc];
+                        dataString_harvest = dataString_harvest + ", " + cohortsByHarvest[spc];
                     }
                     else
                     {
-                        dataString_harvest = dataString_harvest + "\t" + "0";
+                        dataString_harvest = dataString_harvest + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_harvest);
 
                 // Report Fire
-                string dataString_fire = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Fire";
+                string dataString_fire = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Fire";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByFire.ContainsKey(spc))
                     {
-                        dataString_fire = dataString_fire + "\t" + cohortsByFire[spc];
+                        dataString_fire = dataString_fire + ", " + cohortsByFire[spc];
                     }
                     else
                     {
-                        dataString_fire = dataString_fire + "\t" + "0";
+                        dataString_fire = dataString_fire + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_fire);
 
                 // Report Wind
-                string dataString_wind = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Wind";
+                string dataString_wind = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Wind";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByWind.ContainsKey(spc))
                     {
-                        dataString_wind = dataString_wind + "\t" + cohortsByWind[spc];
+                        dataString_wind = dataString_wind + ", " + cohortsByWind[spc];
                     }
                     else
                     {
-                        dataString_wind = dataString_wind + "\t" + "0";
+                        dataString_wind = dataString_wind + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_wind);
 
                 // Report Other
-                string dataString_Other = PlugIn.ModelCore.CurrentTime.ToString() + "\t" + "Other";
+                string dataString_Other = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Other";
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
                     if (cohortsByOther.ContainsKey(spc))
                     {
-                        dataString_Other = dataString_Other + "\t" + cohortsByOther[spc];
+                        dataString_Other = dataString_Other + ", " + cohortsByOther[spc];
                     }
                     else
                     {
-                        dataString_Other = dataString_Other + "\t" + "0";
+                        dataString_Other = dataString_Other + ", " + "0";
                     }
                 }
                 FileContent.Add(dataString_Other);

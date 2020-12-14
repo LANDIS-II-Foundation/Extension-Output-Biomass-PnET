@@ -14,9 +14,9 @@ namespace Landis.Extension.Output.PnET
         public OutputAggregatedTable(string Template)
         {
             
-            FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".txt");
+            FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".csv");
             FileContent = new List<string>();
-            FileContent.Add("Time" + "\t" + "#Cohorts" + "\t" + "AverageAge" + "\t" + "AverageB(g/m2)" + "\t" + "AverageLAI(m2)" + "\t" + "AverageWater(mm)" + "\t" + "SubCanopyPAR(W/m2)" + "\t" + "Litter(kgDW/m2)" + "\t" + "WoodyDebris(kgDW/m2)" + "\t" + "AverageBelowGround(g/m2)" + "\t" + "AverageFoliage(g/m2)" + "\t" + "AverageNSC(gC/m2)" + "\t" + "AverageAET(mm)");
+            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageB(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm)" + ", " + "SubCanopyPAR(W/m2)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageBelowGround(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
         }
         public static void WriteNrOfCohortsBalance()
         {
@@ -87,7 +87,7 @@ namespace Landis.Extension.Output.PnET
                 string Woody_debris_ave = (Woody_debris_SUM / (float)siteCount).ToString();
                 string AET_ave = (AET_SUM / (float)siteCount).ToString();
 
-                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + "\t" + c + "\t" + CohortAge_av + "\t" + CohortBiom_av + "\t" + LAI_av + "\t" + Water_av + "\t" + SubCanopyRad_av + "\t" + Litter_av + "\t" + Woody_debris_ave + "\t" + BelowGroundBiom_av + "\t" + FoliageBiom_av + "\t" + NSCBiom_av + "\t"+ AET_ave);
+                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + ", " + c + ", " + CohortAge_av + ", " + CohortBiom_av + ", " + LAI_av + ", " + Water_av + ", " + SubCanopyRad_av + ", " + Litter_av + ", " + Woody_debris_ave + ", " + BelowGroundBiom_av + ", " + FoliageBiom_av + ", " + NSCBiom_av + ", "+ AET_ave);
 
                 System.IO.File.WriteAllLines(FileName, FileContent.ToArray());
                  

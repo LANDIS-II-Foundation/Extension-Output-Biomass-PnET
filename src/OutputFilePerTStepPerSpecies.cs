@@ -10,17 +10,17 @@ namespace Landis.Extension.Output.PnET
         static string Header(string units)
         {
 
-            string hdr = "Time" + "\t";
+            string hdr = "Time";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                hdr += spc.Name + units + "\t";
+                hdr += ", " + spc.Name + units;
             }
             return hdr;
             
         }
         public static void Write<T>(string MapNameTemplate, string units, int TStep, Landis.Library.Parameters.Species.AuxParm<T> Values)
         {
-            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt");
+            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv");
 
             if (PlugIn.ModelCore.CurrentTime == 0)
             {
@@ -28,11 +28,11 @@ namespace Landis.Extension.Output.PnET
                 System.IO.File.WriteAllLines(FileName, new string[] { Header(units) });
             }
 
-            string line = TStep + "\t";
+            string line = TStep.ToString();
 
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                line += Values[spc]  + "\t";
+                line += ", " + Values[spc];
             }
 
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
@@ -44,7 +44,7 @@ namespace Landis.Extension.Output.PnET
         // Average values across sites
         public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values)
         {
-            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt");
+            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}","AllYears");
 
             if (PlugIn.ModelCore.CurrentTime  == 0)
             {
@@ -76,11 +76,11 @@ namespace Landis.Extension.Output.PnET
                 }
             }
 
-            string line = TStep + "\t";
+            string line = TStep.ToString() ;
 
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                line += Values_spc[spc] / (float)Values_cnt[spc] + "\t";
+                line += ", " + (Values_spc[spc] / (float)Values_cnt[spc]);
             }
 
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
@@ -93,7 +93,7 @@ namespace Landis.Extension.Output.PnET
         // Sum values across sites
         public static void WriteSum<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values)
         {
-            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt");
+            string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}", "AllYears");
 
             if (PlugIn.ModelCore.CurrentTime == 0)
             {
@@ -122,11 +122,11 @@ namespace Landis.Extension.Output.PnET
                 }
             }
 
-            string line = TStep + "\t";
+            string line = TStep.ToString() ;
 
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                line += Values_spc[spc] + "\t";
+                line += ", " + Values_spc[spc];
             }
 
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);

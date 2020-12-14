@@ -57,25 +57,17 @@ namespace Landis.Extension.Output.PnET
             //---------------------------------------            
             //          map outputs:         
             //---------------------------------------
-
-            //OutputMetadata mapOut_BiomassRemoved = new OutputMetadata()
-            //{
-            //    Type = OutputType.Map,
-            //    Name = "biomass removed",
-            //    FilePath = @HarvestMapName,
-            //    Map_DataType = MapDataType.Continuous,
-            //    Map_Unit = FieldUnits.Mg_ha,
-            //    Visualize = true,
-            //};
-            //Extension.OutputMetadatas.Add(mapOut_BiomassRemoved);
+            
 
             if(LAI != null)
             {
                 OutputMetadata mapOut_LAI = new OutputMetadata()
                 {
                     Type = OutputType.Map,
-                    Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
-                    FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    //Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate),
+                    //FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate),
                     Map_DataType = MapDataType.Continuous,
                     Visualize = true,
                     //Map_Unit = "categorical",
@@ -90,8 +82,8 @@ namespace Landis.Extension.Output.PnET
                     OutputMetadata mapOut_Biomass = new OutputMetadata()
                     {
                         Type = OutputType.Map,
-                        Name = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
-                        FilePath = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
+                        Name = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, spc.Name),
+                        FilePath = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, spc.Name),
                         Map_DataType = MapDataType.Continuous,
                         Visualize = true,
                         //Map_Unit = "categorical",
@@ -106,8 +98,10 @@ namespace Landis.Extension.Output.PnET
                     OutputMetadata mapOut_AbvBiomass = new OutputMetadata()
                     {
                         Type = OutputType.Map,
-                        Name = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
-                        FilePath = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
+                        //Name = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
+                        Name = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name),
+                        //FilePath = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime),
+                        FilePath = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, spc.Name),
                         Map_DataType = MapDataType.Continuous,
                         Visualize = true,
                         //Map_Unit = "categorical",
@@ -120,8 +114,10 @@ namespace Landis.Extension.Output.PnET
                 OutputMetadata mapOut_Monthly = new OutputMetadata()
                 {
                     Type = OutputType.Map,
-                    Name = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
-                    FilePath = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    //Name = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    Name = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate),
+                    //FilePath = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    FilePath = FileNames.ReplaceTemplateVars(MonthlyFolResp.MapNameTemplate),
                     Map_DataType = MapDataType.Continuous,
                     Visualize = true,
                     //Map_Unit = "categorical",
@@ -234,8 +230,8 @@ namespace Landis.Extension.Output.PnET
                 OutputMetadata mapOut_SpeciesE2 = new OutputMetadata()
                 {
                     Type = OutputType.Map,
-                    Name = FileNames.ReplaceTemplateVars(SpeciesEstablishment.MapNameTemplate).Replace(".img", ".txt"),
-                    FilePath = FileNames.ReplaceTemplateVars(SpeciesEstablishment.MapNameTemplate).Replace(".img", ".txt"),
+                    Name = FileNames.ReplaceTemplateVars(SpeciesEstablishment.MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}","AllYears"),
+                    FilePath = FileNames.ReplaceTemplateVars(SpeciesEstablishment.MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}", "AllYears"),
                     Map_DataType = MapDataType.Continuous,
                     Visualize = true,
                     //Map_Unit = "categorical",

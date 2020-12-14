@@ -15,17 +15,17 @@ namespace Landis.Extension.Output.PnET
 
         public OutputTableEcoregions(string MapNameTemplate)
         {
-            FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", "eco.txt").Replace(".gis", "eco.txt");
+            FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", "-eco.csv").Replace(".gis", "-eco.csv").Replace("{timestep}","AllYears");
             FileNames.MakeFolders(FileName);
 
-            string hdr = "Time\t";
-            foreach ( IEcoregion e in PlugIn.ModelCore.Ecoregions) hdr += e.Name + "\t";
+            string hdr = "Time";
+            foreach ( IEcoregion e in PlugIn.ModelCore.Ecoregions) hdr += ", " + e.Name ;
 
             FileContent.Add(hdr);
         }
         public void WriteUpdate<T>(int year,  ISiteVar<T> values)
         {
-            string line = year + "\t";
+            string line = year.ToString();
 
             Landis.Library.Parameters.Ecoregions.AuxParm<double> sum_values_per_ecoregion = new Library.Parameters.Ecoregions.AuxParm<double>(PlugIn.ModelCore.Ecoregions);
             Landis.Library.Parameters.Ecoregions.AuxParm<int> cnt_values_per_ecoregion = new Library.Parameters.Ecoregions.AuxParm<int>(PlugIn.ModelCore.Ecoregions);
@@ -38,7 +38,7 @@ namespace Landis.Extension.Output.PnET
             }
             foreach (IEcoregion e in PlugIn.ModelCore.Ecoregions)
             {
-                line += avg_values_per_ecoregion[e] + "\t";
+                line += ", " + avg_values_per_ecoregion[e];
             }
 
             FileContent.Add(line);

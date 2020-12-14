@@ -11,15 +11,15 @@ namespace Landis.Extension.Output.PnET
         {
             get 
             { 
-                string hdr = "Time\t";
-                foreach (ISpecies species in PlugIn.ModelCore.Species) hdr += species.Name + "\t";
+                string hdr = "Time";
+                foreach (ISpecies species in PlugIn.ModelCore.Species) hdr += ", " + species.Name;
                 return hdr;
             }
         }
 
         public static void WriteUpdate(string MapNameTemplate, int year, AuxParm<int> values)
         {
-            string FileName  = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".txt").Replace(".gis", ".txt");
+            string FileName  = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv").Replace(".gis", ".csv");
             
             if (year == 0)
             {
@@ -27,10 +27,10 @@ namespace Landis.Extension.Output.PnET
                 System.IO.File.WriteAllLines(FileName, new string[]{Header});
             }
              
-            string line = year + "\t";
+            string line = year.ToString();
             foreach (ISpecies species in PlugIn.SelectedSpecies)
             {
-                line += values[species] + "\t";
+                line += ", " + values[species] ;
             }
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName,true);
             sw.WriteLine(line);
