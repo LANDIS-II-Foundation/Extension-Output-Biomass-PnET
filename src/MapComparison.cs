@@ -16,13 +16,13 @@ namespace Landis.Extension.Output.PnET
         }
         public void PrintLabels(string MapNameTemplate, ISpecies Species)
         {
-            string FileName = System.IO.Path.ChangeExtension(FileNames.ReplaceTemplateVars(MapNameTemplate.Replace("{timestep}", "Label"), Species.Name), "txt");
+            string FileName = System.IO.Path.ChangeExtension(FileNames.ReplaceTemplateVars(MapNameTemplate.Replace("{timestep}", "Label"), Species.Name), "csv");
 
             List<string> Content = new List<string>();
 
             foreach (var value in Enum.GetValues(typeof(values)))
             {
-                Content.Add((int)value +"\t" + value.ToString() +"\n");
+                Content.Add((int)value +", " + value.ToString() +"\n");
              
             }
             System.IO.File.WriteAllLines(FileName, Content.ToArray());

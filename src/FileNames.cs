@@ -63,7 +63,7 @@ namespace Landis.Extension.Output.PnET
                                                  string species)
         {
             varValues[SpeciesVar] = species;
-            varValues[TimestepVar] = "";
+            varValues[TimestepVar] = "{timestep}";
 
             string fn = OutputPath.ReplaceTemplateVars(template, varValues);
             MakeFolders(fn);
@@ -74,7 +74,7 @@ namespace Landis.Extension.Output.PnET
         public static string ReplaceTemplateVars(string template)
         {
             varValues[SpeciesVar] = "";
-            varValues[TimestepVar] = "";
+            varValues[TimestepVar] = "{timestep}";
 
             string fn = OutputPath.ReplaceTemplateVars(template, varValues);
             MakeFolders(fn);

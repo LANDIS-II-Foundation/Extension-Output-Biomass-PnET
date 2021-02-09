@@ -1,13 +1,12 @@
 ; LANDIS-II Extension infomation
 #define CoreRelease "LANDIS-II-V7"
 #define ExtensionName "Output-PnET"
-#define AppVersion "4.0"
+#define AppVersion "3.5"
 #define AppPublisher "LANDIS-II Foundation"
 #define AppURL "http://www.landis-ii.org/"
 
 ; Build directory
-;#define BuildDir "..\..\src\bin\Debug"
-#define BuildDir ".."
+#define BuildDir "..\..\src\bin\Debug"
 
 ; LANDIS-II installation directories
 #define ExtDir "C:\Program Files\LANDIS-II-v7\extensions"
@@ -47,12 +46,12 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 ; This .dll IS the extension (ie, the extension's assembly)
 ; NB: Do not put an additional version number in the file name of this .dll
 ; (The name of this .dll is defined in the extension's \src\*.csproj file)
-Source: {#BuildDir}\Landis.Extension.Output.PnET-v4.dll; DestDir: {#ExtDir}; Flags: ignoreversion
+Source: {#BuildDir}\Landis.Extension.Output.PnET-v3.dll; DestDir: {#ExtDir}; Flags: ignoreversion
 
 ; Requisite auxiliary libraries
 ; NB. These libraries are used by other extensions and thus are never uninstalled.
 ; This output extension is dependent on Succession.BiomassPnET, which also installs all of the other necessary libraries
-;Source: {#BuildDir}\Landis.Extension.Succession.BiomassPnET-v4.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
+;Source: {#BuildDir}\Landis.Extension.Succession.BiomassPnET-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.AgeOnlyCohorts-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.Cohorts-v2.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
 ;Source: {#BuildDir}\Landis.Library.BiomassCohorts-v3.dll; DestDir: {#ExtDir}; Flags: uninsneveruninstall replacesameversion
