@@ -2,7 +2,7 @@
 //  Authors:  Arjan de Bruijn 
 
 using Landis.Core;
-
+using Landis.Library.PnETCohorts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace Landis.Extension.Output.PnET
         public static readonly string ExtensionName = "Output-PnET";
 
 
-        public static ISiteVar<Landis.Extension.Succession.BiomassPnET.ISiteCohorts> cohorts;
+        public static ISiteVar<ISiteCohorts> cohorts;
         public static ISiteVar<Landis.Library.Biomass.Pool> woodyDebris;
         public static ISiteVar<Landis.Library.Biomass.Pool> litter;
 
@@ -104,7 +104,7 @@ namespace Landis.Extension.Output.PnET
 
             tstep = parameters.Timestep;
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<Landis.Extension.Succession.BiomassPnET.ISiteCohorts>("Succession.CohortsPnET");
+            cohorts = PlugIn.ModelCore.GetSiteVar<Landis.Library.PnETCohorts.ISiteCohorts>("Succession.CohortsPnET");
             woodyDebris = PlugIn.ModelCore.GetSiteVar<Landis.Library.Biomass.Pool>("Succession.WoodyDebris");
             litter = PlugIn.ModelCore.GetSiteVar<Landis.Library.Biomass.Pool>("Succession.Litter");
 
