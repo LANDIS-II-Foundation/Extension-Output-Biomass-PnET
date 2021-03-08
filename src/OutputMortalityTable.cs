@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Landis.Core;
 using Landis.SpatialModeling;
-using Landis.Extension.Succession.BiomassPnET;
+//using Landis.Extension.Succession.BiomassPnET;
 using System.Linq;
 
 namespace Landis.Extension.Output.PnET
