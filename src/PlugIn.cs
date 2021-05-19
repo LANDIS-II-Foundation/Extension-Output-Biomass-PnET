@@ -203,11 +203,11 @@ namespace Landis.Extension.Output.PnET
                 System.Console.WriteLine("Updating output variable: LAI");
                 // Total LAI per site 
 
-                ISiteVar<byte> values = cohorts.GetIsiteVar(o => o.CanopyLAImax);
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.CanopyLAImax);
 
                 string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
-                new OutputMapSiteVar<byte, byte>(FileName, values, o => o);
+                new OutputMapSiteVar<float, float>(FileName, values, o => o);
 
                 // Values per species each time step
                 LAI.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, values);
