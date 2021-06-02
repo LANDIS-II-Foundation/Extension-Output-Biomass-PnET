@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>Landis.Extension.Output.PnET</RootNamespace>
-    <AssemblyName>Landis.Extension.Output.PnET-v4</AssemblyName>
-    <AssemblyTitle>Landis.Extension.Output.PnET-v4</AssemblyTitle>
+    <AssemblyName>Landis.Extension.Output.PnET-v5</AssemblyName>
+    <AssemblyTitle>Landis.Extension.Output.PnET-v5</AssemblyTitle>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
-    <AssemblyVersion>4.1</AssemblyVersion>
+    <AssemblyVersion>5.0</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET</RepositoryUrl>
@@ -16,11 +16,11 @@
     <Authors>Brian Miranda, Arjan de Bruijn</Authors>
     <Product>Landis.Extension.Output.PnET</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>4.1</Version>
+    <Version>5.0</Version>
     <PackageTags>LANDIS-II;Landis;Extension;output;PnET</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>4.1</FileVersion>
+    <FileVersion>5.0</FileVersion>
     <Company>USDA Forest Service</Company>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -51,8 +51,8 @@
   
 
   <ItemGroup>
-    <Reference Include="Landis.Extension.Succession.BiomassPnET-v4">
-      <HintPath>..\..\Extension-PnET-Succession\src\bin\Debug\Landis.Extension.Succession.BiomassPnET-v4.dll</HintPath>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET-v5">
+      <HintPath>..\..\Extension-PnET-Succession\src\bin\Debug\Landis.Extension.Succession.BiomassPnET-v5.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
