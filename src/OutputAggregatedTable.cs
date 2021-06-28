@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Landis.SpatialModeling;
+using Landis.Library.Metadata;
 
 namespace Landis.Extension.Output.PnET
 {
@@ -11,12 +12,51 @@ namespace Landis.Extension.Output.PnET
         static List<string> FileContent = null;
         private static string FileName;
 
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Simulation Year")]
+        public int Time { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts")]
+        public int Cohorts { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Average Age", Format = "0.00")]
+        public double AverageAge { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Biomass", Format = "0.00")]
+        public double AverageB { set; get; }
+
+        [DataFieldAttribute(Unit = "m-2", Desc = "Average LAI", Format = "0.00")]
+        public double AverageLAI { set; get; }
+
+        [DataFieldAttribute(Unit = "mm m-1", Desc = "Average Water", Format = "0.00")]
+        public double AverageWater { set; get; }
+
+        [DataFieldAttribute(Unit = "W m-2 or mmol m-2)", Desc = "SubcanopyPAR", Format = "0.00")]
+        public double SubcanopyPAR { set; get; }
+
+        [DataFieldAttribute(Unit = "kgDW m-2", Desc = "Litter", Format = "0.00")]
+        public double Litter { set; get; }
+
+        [DataFieldAttribute(Unit = "kgDW m-2", Desc = "Woody Debris", Format = "0.00")]
+        public double WoodyDebris { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Belowground Biomass", Format = "0.00")]
+        public double AverageBelowGround { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Foliage", Format = "0.00")]
+        public double AverageFoliage { set; get; }
+
+        [DataFieldAttribute(Unit = FieldUnits.g_C_m2, Desc = "Average NSC", Format = "0.00")]
+        public double AverageNSC { set; get; }
+
+        [DataFieldAttribute(Unit = "mm-2", Desc = "Average AET", Format = "0.00")]
+        public double AverageAET { set; get; }
+
         public OutputAggregatedTable(string Template)
         {
             
             FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".csv");
             FileContent = new List<string>();
-            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageB(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm)" + ", " + "SubCanopyPAR(W/m2)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageBelowGround(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
+            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageB(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm/m)" + ", " + "SubCanopyPAR(W/m2 or mmol/m2/s)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageBelowGround(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
         }
         public static void WriteNrOfCohortsBalance()
         {
