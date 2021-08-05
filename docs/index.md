@@ -24,7 +24,7 @@ Download the latest [installer](https://github.com/LANDIS-II-Foundation/Extensio
 
 LANDIS-II requires a global parameter file for your scenario, and separate parameter files for each extension.
 
-Example files are [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/deploy/examples/biomass-Pnet-succession-example/PnET-Output-example.zip).
+Example files are [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/raw/master/deploy/examples/biomass-Pnet-succession-example/PnET-Output-example.zip).
 
 # Citation
 
@@ -35,7 +35,7 @@ Arjan de Bruijn, Eric J. Gustafson, Brian R. Sturtevant, Jane R. Foster, Brian R
 If you have a question, please contact Eric Gustafson. 
 You can also ask for help in the [LANDIS-II users group](http://www.landis-ii.org/users).
 
-If you come across any issue or suspected bug, please post about it in the [issue section of the Github repository](https://github.com/LANDIS-II-Foundation/Extension-Root-Rot/issues) (GitID required).
+If you come across any issue or suspected bug, please post about it in the [issue section of the Github repository](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/issues) (GitID required).
 
 # Authors
 
