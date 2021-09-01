@@ -462,7 +462,7 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: Water");
 
-                ISiteVar<float> Water_site = cohorts.GetIsiteVar(x => x.WaterMax);
+                ISiteVar<float> Water_site = cohorts.GetIsiteVar(x => x.WaterAvg * 100);
 
                 string FileName = FileNames.ReplaceTemplateVars(Water.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
