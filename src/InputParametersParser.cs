@@ -53,6 +53,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyFolResp = new InputVar<string>("MonthlyFolResp");
             InputVar<string> MonthlyGrossPsn = new InputVar<string>("MonthlyGrossPsn");
             InputVar<string> MonthlyMaintResp = new InputVar<string>("MonthlyMaintResp");
+            InputVar<string> MonthlyAverageAlbedo = new InputVar<string>("MonthlyAverageAlbedo");
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
             InputVar<string> BelowgroundBiomass = new InputVar<string>("BelowgroundBiomass");
@@ -78,6 +79,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyFolResp.Name);
             OutputList.Add(MonthlyGrossPsn.Name);
             OutputList.Add(MonthlyMaintResp.Name);
+            OutputList.Add(MonthlyAverageAlbedo.Name);
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
             OutputList.Add(BelowgroundBiomass.Name);
@@ -179,7 +181,12 @@ namespace Landis.Extension.Output.PnET
                     parameters.MonthlyMaintResp = MonthlyMaintResp.Value;
                     continue;
                 }
-       
+                if (ReadOptionalVar(MonthlyAverageAlbedo))
+                {
+                    parameters.MonthlyAverageAlbedo = MonthlyAverageAlbedo.Value;
+                    continue;
+                }
+
                 if (ReadOptionalVar(LeafAreaIndex))
                 {
                     parameters.LeafAreaIndex = LeafAreaIndex.Value;

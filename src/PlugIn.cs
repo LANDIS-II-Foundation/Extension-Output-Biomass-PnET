@@ -54,6 +54,7 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable MonthlyFolResp;
         static OutputVariable MonthlyGrossPsn;
         static OutputVariable MonthlyMaintResp;
+        static OutputVariable MonthlyAverageAlbedo;
         static  OutputVariable Water;
         static  OutputVariable SubCanopyPAR;
         static OutputAggregatedTable overalloutputs;
@@ -162,6 +163,10 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyNetPsn = new OutputVariable(parameters.MonthlyNetPsn, "gC/mo");
             }
+            if (parameters.MonthlyAverageAlbedo != null)
+            {
+                MonthlyAverageAlbedo = new OutputVariable(parameters.MonthlyAverageAlbedo, "ratio_W/m2");
+            }
 
             if (parameters.EstablishmentProbability != null)
             {
@@ -191,7 +196,7 @@ namespace Landis.Extension.Output.PnET
             MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass, EstablishmentProbability,
                                                SpeciesWasThere, AnnualPsn, BelowGround, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
                                                WoodyDebris, AgeDistribution, MonthlyFolResp, MonthlyGrossPsn, MonthlyNetPsn, MonthlyMaintResp,
-                                               SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
+                                               MonthlyAverageAlbedo, SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
         }
 
 
@@ -338,6 +343,12 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float[]> monthlyMaintResp = cohorts.GetIsiteVar(site => site.MaintResp);
 
                 WriteMonthlyOutput(monthlyMaintResp, MonthlyMaintResp.MapNameTemplate);
+            }
+            if (MonthlyAverageAlbedo != null)
+            {
+                ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
+
+                WriteMonthlyOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate);
             }
             if (BelowGround != null)
             {
