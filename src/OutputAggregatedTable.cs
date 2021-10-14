@@ -21,8 +21,8 @@ namespace Landis.Extension.Output.PnET
         [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Average Age", Format = "0.00")]
         public double AverageAge { set; get; }
 
-        [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Biomass", Format = "0.00")]
-        public double AverageB { set; get; }
+        [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Total Biomass", Format = "0.00")]
+        public double AverageTotalBio { set; get; }
 
         [DataFieldAttribute(Unit = "m-2", Desc = "Average LAI", Format = "0.00")]
         public double AverageLAI { set; get; }
@@ -57,7 +57,7 @@ namespace Landis.Extension.Output.PnET
             
             FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".csv");
             FileContent = new List<string>();
-            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageB(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm/m)" + ", " + "SubCanopyPAR(W/m2 or mmol/m2/s)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageBelowGround(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
+            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageTotalBio(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm/m)" + ", " + "SubCanopyPAR(W/m2 or mmol/m2/s)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageAboveGround(g/m2)"+", " + "AverageBelowGround(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
         }
         public static void WriteNrOfCohortsBalance()
         {
@@ -65,22 +65,24 @@ namespace Landis.Extension.Output.PnET
             {
 
                 ISiteVar<int> CohortsPerSite = PlugIn.cohorts.GetIsiteVar(x => x.CohortCount);
-                ISiteVar<float> CohortBiom = PlugIn.cohorts.GetIsiteVar(x => x.BiomassSum);
+                ISiteVar<float> TotalBiomass = PlugIn.cohorts.GetIsiteVar(x => x.BiomassSum);
                 ISiteVar<float> CohortWoodySenescence = PlugIn.cohorts.GetIsiteVar(x => x.WoodySenescenceSum);
                 ISiteVar<float> FoliageWoodySenescence = PlugIn.cohorts.GetIsiteVar(x => x.FoliageSenescenceSum);
                 ISiteVar<int> CohortAge = PlugIn.cohorts.GetIsiteVar(x => (x.CohortCount >0) ? x.AverageAge : -1);
                 ISiteVar<float> CohortLAI = PlugIn.cohorts.GetIsiteVar(x => x.CanopyLAImax);
-                ISiteVar<float> WaterPerSite = PlugIn.cohorts.GetIsiteVar(x => x.WaterMax);
+                ISiteVar<float> WaterPerSite = PlugIn.cohorts.GetIsiteVar(x => x.WaterAvg);
                 ISiteVar<float> SubCanopyRAD = PlugIn.cohorts.GetIsiteVar(x => x.SubCanopyParMAX);
                 ISiteVar<double> Litter = PlugIn.cohorts.GetIsiteVar(x => x.Litter);
                 ISiteVar<double> WoodyDebris = PlugIn.cohorts.GetIsiteVar(x => x.WoodyDebris);
-                ISiteVar<uint> BelowGroundBiom = PlugIn.cohorts.GetIsiteVar(x => x.BelowGroundBiomass);
+                ISiteVar<float> AboveGroundBiom = PlugIn.cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
+                ISiteVar<float> BelowGroundBiom = PlugIn.cohorts.GetIsiteVar(x => x.BelowGroundBiomassSum);
                 ISiteVar<float> FoliageBiom = PlugIn.cohorts.GetIsiteVar(x => x.FoliageSum);
                 ISiteVar<float> NSCBiom = PlugIn.cohorts.GetIsiteVar(x => x.NSCSum);
                 ISiteVar<float> AET = PlugIn.cohorts.GetIsiteVar(x => x.AETSum);
 
                 double Water_SUM = 0;
-                double CohortBiom_SUM = 0;
+                double TotalBiom_SUM = 0;
+                double AboveGroundBiom_SUM = 0;
                 double BelowGroundBiom_SUM = 0;
                 double FoliageBiom_SUM = 0;
                 double NSCBiom_SUM = 0;
@@ -97,7 +99,8 @@ namespace Landis.Extension.Output.PnET
                 {
                     siteCount++;
                     CohortCount += CohortsPerSite[site];
-                    CohortBiom_SUM += CohortBiom[site];
+                    TotalBiom_SUM += TotalBiomass[site];
+                    AboveGroundBiom_SUM += AboveGroundBiom[site];
                     BelowGroundBiom_SUM += BelowGroundBiom[site];
                     FoliageBiom_SUM += FoliageBiom[site];
                     NSCBiom_SUM += NSCBiom[site];
@@ -117,7 +120,8 @@ namespace Landis.Extension.Output.PnET
 
                 string c = CohortCount.ToString();
                 string CohortAge_av = (CohortAge_SUM / (float)siteCount).ToString();
-                string CohortBiom_av = (CohortBiom_SUM / (float)siteCount).ToString();
+                string TotalBiom_av = (TotalBiom_SUM / (float)siteCount).ToString();
+                string AboveGroundBiom_av = (AboveGroundBiom_SUM / (float)siteCount).ToString();
                 string BelowGroundBiom_av = (BelowGroundBiom_SUM / (float)siteCount).ToString();
                 string FoliageBiom_av = (FoliageBiom_SUM / (float)siteCount).ToString();
                 string NSCBiom_av = (NSCBiom_SUM / (float)siteCount).ToString();
@@ -128,7 +132,7 @@ namespace Landis.Extension.Output.PnET
                 string Woody_debris_ave = (Woody_debris_SUM / (float)siteCount).ToString();
                 string AET_ave = (AET_SUM / (float)siteCount).ToString();
 
-                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + ", " + c + ", " + CohortAge_av + ", " + CohortBiom_av + ", " + LAI_av + ", " + Water_av + ", " + SubCanopyRad_av + ", " + Litter_av + ", " + Woody_debris_ave + ", " + BelowGroundBiom_av + ", " + FoliageBiom_av + ", " + NSCBiom_av + ", "+ AET_ave);
+                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + ", " + c + ", " + CohortAge_av + ", " + TotalBiom_av + ", " + LAI_av + ", " + Water_av + ", " + SubCanopyRad_av + ", " + Litter_av + ", " + Woody_debris_ave + ", " + AboveGroundBiom_av + ", " + BelowGroundBiom_av + ", " + FoliageBiom_av + ", " + NSCBiom_av + ", " + AET_ave);
 
                 System.IO.File.WriteAllLines(FileName, FileContent.ToArray());
                  
