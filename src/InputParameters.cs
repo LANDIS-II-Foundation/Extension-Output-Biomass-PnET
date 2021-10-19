@@ -41,26 +41,20 @@ namespace Landis.Extension.Output.PnET
         public string SpeciesEst;
 
         public string MonthlyNetPsn;
-
-
         public string MonthlyFolResp;
         public string MonthlyGrossPsn;
-        public string MonthlyMaintResp;
-
-           
+        public string MonthlyMaintResp; 
+        public string MonthlyAverageAlbedo;
 
         public string LeafAreaIndex;
-
 
         public string Water;
 
         public string SpeciesBiom;
         public string SpeciesAbovegroundBiom;
+
         public string SpeciesWoodySenescence;
         public string SpeciesFoliageSenescence;
-        public string AETAvg;
-         
-       
-        
+        public string AETAvg;   
     }
 }
