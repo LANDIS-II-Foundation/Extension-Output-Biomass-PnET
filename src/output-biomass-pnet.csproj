@@ -5,7 +5,7 @@
     <AssemblyName>Landis.Extension.Output.PnET-v4</AssemblyName>
     <AssemblyTitle>Landis.Extension.Output.PnET-v4</AssemblyTitle>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
-    <AssemblyVersion>4.0</AssemblyVersion>
+    <AssemblyVersion>4.1</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET</RepositoryUrl>
@@ -16,11 +16,11 @@
     <Authors>Brian Miranda, Arjan de Bruijn</Authors>
     <Product>Landis.Extension.Output.PnET</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>4.0</Version>
+    <Version>4.1</Version>
     <PackageTags>LANDIS-II;Landis;Extension;output;PnET</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>4.0</FileVersion>
+    <FileVersion>4.1</FileVersion>
     <Company>USDA Forest Service</Company>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
