@@ -41,8 +41,10 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
-        public OutputMapSiteVar(string FileName, ISiteVar<float> values)
+        public OutputMapSiteVar(string FileName, ISiteVar<float> values, bool convertToPercentage = false)
         {
+            int multiplier = convertToPercentage ? 100 : 1;
+
             try
             {
                 using (IOutputRaster<FloatPixel> outputRaster = PlugIn.ModelCore.CreateRaster<FloatPixel>(FileName, PlugIn.ModelCore.Landscape.Dimensions))
@@ -53,7 +55,7 @@ namespace Landis.Extension.Output.PnET
                         {
                             try
                             {
-                                outputRaster.BufferPixel.MapCode.Value = values[site];// int.Parse(values[site].ToString());
+                                outputRaster.BufferPixel.MapCode.Value = values[site] * multiplier;// int.Parse(values[site].ToString());
                             }
                             catch (System.Exception e)
                             {

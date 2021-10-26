@@ -348,7 +348,7 @@ namespace Landis.Extension.Output.PnET
             {
                 ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
-                WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate);
+                WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, true);
             }
             if (BelowGround != null)
             {
@@ -574,7 +574,7 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
-        private static void WriteMonthlyDecimalOutput(ISiteVar<float[]> monthly, string MapNameTemplate)
+        private static void WriteMonthlyDecimalOutput(ISiteVar<float[]> monthly, string MapNameTemplate, bool convertToPercentage = false)
         {
             string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
@@ -591,7 +591,7 @@ namespace Landis.Extension.Output.PnET
 
                 FileName = System.IO.Path.ChangeExtension(FileName, null) + months[mo] + System.IO.Path.GetExtension(FileName);
 
-                new OutputMapSiteVar<float, float>(FileName, monthlyValue);
+                new OutputMapSiteVar<float, float>(FileName, monthlyValue, convertToPercentage);
             }
         }
 
