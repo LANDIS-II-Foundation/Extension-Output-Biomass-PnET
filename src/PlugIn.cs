@@ -265,25 +265,23 @@ namespace Landis.Extension.Output.PnET
 
                 AbovegroundBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, AGBiomass_site);
             }
+            if (BelowGround != null)
+            {
+                System.Console.WriteLine("Updating output variable: BelowGround");
+
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.BelowGroundBiomassSum);
+
+                string FileName = FileNames.ReplaceTemplateVars(BelowGround.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+
+                new OutputMapSiteVar<float, float>(FileName, values, o => o);
+
+            }
             if (WoodySenescence != null)
             {
                 System.Console.WriteLine("Updating output variable: Woody Senescence");
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> Senes = cohorts.GetIsiteVar(o => o.WoodySenescencePerSpecies);
-                /*
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
-                {
-                    ISiteVar<int> Senes_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
-                    {
-                        Senes_spc[site] = Senes[site][spc];
-                       
-                    }
-
-                    new OutputMapSpecies(Senes_spc, spc, WoodySenescence.MapNameTemplate);
-                }
-                */
                 OutputFilePerTStepPerSpecies.Write<int>(WoodySenescence.MapNameTemplate, WoodySenescence.units, PlugIn.ModelCore.CurrentTime, Senes);
 
                 ISiteVar<float> Senescence_site = cohorts.GetIsiteVar(x => x.WoodySenescenceSum);
@@ -296,18 +294,6 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> Senes = cohorts.GetIsiteVar(o => o.FoliageSenescencePerSpecies);
 
-                /*foreach (ISpecies spc in PlugIn.SelectedSpecies)
-                {
-                    ISiteVar<int> Senes_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
-                    {
-                        Senes_spc[site] = Senes[site][spc];
-                    }
-
-                    new OutputMapSpecies(Senes_spc, spc, FoliageSenescence.MapNameTemplate);
-                }
-                */
                 OutputFilePerTStepPerSpecies.Write<int>(FoliageSenescence.MapNameTemplate, FoliageSenescence.units, PlugIn.ModelCore.CurrentTime, Senes);
 
                 ISiteVar<float> Senescence_site = cohorts.GetIsiteVar(x => x.FoliageSenescenceSum);
@@ -349,17 +335,6 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
                 WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, true);
-            }
-            if (BelowGround != null)
-            {
-                System.Console.WriteLine("Updating output variable: BelowGround");
-
-                ISiteVar<uint> values = cohorts.GetIsiteVar(o => o.BelowGroundBiomass);
-
-                string FileName = FileNames.ReplaceTemplateVars(BelowGround.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
-
-                new OutputMapSiteVar<uint, uint>(FileName, values, o => o);
-
             }
             if (CohortsPerSpc != null)
             {
@@ -473,7 +448,7 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: Water");
 
-                ISiteVar<float> Water_site = cohorts.GetIsiteVar(x => x.WaterMax);
+                ISiteVar<float> Water_site = cohorts.GetIsiteVar(x => x.WaterAvg * 100);
 
                 string FileName = FileNames.ReplaceTemplateVars(Water.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 

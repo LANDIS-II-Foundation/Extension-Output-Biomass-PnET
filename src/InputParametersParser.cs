@@ -186,7 +186,6 @@ namespace Landis.Extension.Output.PnET
                     parameters.MonthlyAverageAlbedo = MonthlyAverageAlbedo.Value;
                     continue;
                 }
-
                 if (ReadOptionalVar(LeafAreaIndex))
                 {
                     parameters.LeafAreaIndex = LeafAreaIndex.Value;
