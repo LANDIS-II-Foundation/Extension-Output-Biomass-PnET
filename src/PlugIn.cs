@@ -332,9 +332,10 @@ namespace Landis.Extension.Output.PnET
             }
             if (MonthlyAverageAlbedo != null)
             {
+                System.Console.WriteLine("Updating output variable: Monthly Average Albedo");
                 ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
-                WriteMonthlyOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate);
+                WriteMonthlyOutputTimes100(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate);
             }
             if (CohortsPerSpc != null)
             {
@@ -548,7 +549,26 @@ namespace Landis.Extension.Output.PnET
                 new OutputMapSiteVar<int, int>(FileName, monthlyValue, o => o);
             }
         }
+        private static void WriteMonthlyOutputTimes100(ISiteVar<float[]> monthly, string MapNameTemplate)
+        {
+            string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
+            for (int mo = 0; mo < months.Count(); mo++)
+            {
+                ISiteVar<int> monthlyValue = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
+
+                foreach (Site site in PlugIn.modelCore.Landscape.AllSites)
+                {
+                    monthlyValue[site] = site.IsActive ? (int)(monthly[site][mo]*100) : 0;
+                }
+
+                string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+
+                FileName = System.IO.Path.ChangeExtension(FileName, null) + months[mo] + System.IO.Path.GetExtension(FileName);
+
+                new OutputMapSiteVar<int, int>(FileName, monthlyValue, o => o);
+            }
+        }
 
     }
 
