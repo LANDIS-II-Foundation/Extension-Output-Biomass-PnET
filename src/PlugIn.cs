@@ -559,7 +559,7 @@ namespace Landis.Extension.Output.PnET
 
                 foreach (Site site in PlugIn.modelCore.Landscape.AllSites)
                 {
-                    monthlyValue[site] = site.IsActive? (float)monthly[site][mo] : -1;
+                    monthlyValue[site] = (float)monthly[site][mo];
                 }
 
                 string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);

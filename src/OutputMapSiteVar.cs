@@ -51,14 +51,18 @@ namespace Landis.Extension.Output.PnET
                 {
                     foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                     {
-                        try
+                        if (site.IsActive)
                         {
-                            outputRaster.BufferPixel.MapCode.Value = values[site] * multiplier;// int.Parse(values[site].ToString());
+                            try
+                            {
+                                outputRaster.BufferPixel.MapCode.Value = values[site] * multiplier;// int.Parse(values[site].ToString());
+                            }
+                            catch (System.Exception e)
+                            {
+                                System.Console.WriteLine("Cannot write " + FileName + " for site " + site.Location.ToString() + " " + e.Message);
+                            }
                         }
-                        catch (System.Exception e)
-                        {
-                            System.Console.WriteLine("Cannot write " + FileName + " for site " + site.Location.ToString() + " " + e.Message);
-                        }
+                        else outputRaster.BufferPixel.MapCode.Value = 0;
 
                         outputRaster.WriteBufferPixel();
                     }
