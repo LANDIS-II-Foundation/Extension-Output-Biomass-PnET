@@ -212,7 +212,7 @@ namespace Landis.Extension.Output.PnET
 
                 string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
-                new OutputMapSiteVar<float, float>(FileName, values, o => o);
+                new OutputMapSiteVar<float, float>(FileName, values, false);
 
                 // Values per species each time step
                 LAI.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, values);
