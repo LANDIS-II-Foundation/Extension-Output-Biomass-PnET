@@ -332,10 +332,11 @@ namespace Landis.Extension.Output.PnET
             }
             if (MonthlyAverageAlbedo != null)
             {
+                System.Console.WriteLine("Updating output variable: Monthly Average Albedo");
                 ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
                 WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, true);
-            //}
+            }
             if (CohortsPerSpc != null)
             {
                 System.Console.WriteLine("Updating output variable: CohortsPerSpc");
