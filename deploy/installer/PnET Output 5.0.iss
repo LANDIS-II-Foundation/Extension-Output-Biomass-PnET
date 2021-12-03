@@ -6,7 +6,7 @@
 #define AppURL "http://www.landis-ii.org/"
 
 ; Build directory
-#define BuildDir "..\..\src\bin\Release"
+#define BuildDir "..\..\src\bin\Debug"
 ;#define BuildDir ".."
 
 ; LANDIS-II installation directories
