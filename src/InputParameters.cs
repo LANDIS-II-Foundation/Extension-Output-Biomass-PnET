@@ -51,6 +51,7 @@ namespace Landis.Extension.Output.PnET
         public string Water;
 
         public string SpeciesBiom;
+        public string SpeciesWoodBiom;
         public string SpeciesAbovegroundBiom;
 
         public string SpeciesWoodySenescence;

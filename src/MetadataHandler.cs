@@ -16,7 +16,7 @@ namespace Landis.Extension.Output.PnET
 
         public static ExtensionMetadata Extension { get; set; }
 
-        public static void InitializeMetadata(int Timestep, OutputVariable LAI, OutputVariable Biomass, OutputVariable AbovegroundBiomass, OutputVariable EstablishmentProbability, ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere, OutputVariable AnnualPsn, OutputVariable BelowGround, OutputVariable CohortsPerSpc, OutputVariable Water, OutputVariable SubCanopyPAR, OutputVariable NonWoodyDebris, OutputVariable WoodyDebris, OutputVariable AgeDistribution, OutputVariable MonthlyFolResp, OutputVariable MonthlyGrossPsn, OutputVariable MonthlyNetPsn, OutputVariable MonthlyMaintResp, OutputVariable MonthlyAverageAlbedo, OutputVariable SpeciesEstablishment, ISiteVar<Library.Parameters.Species.AuxParm<int>> LastBiom, OutputAggregatedTable overalloutputs, string OutputTableMap)
+        public static void InitializeMetadata(int Timestep, OutputVariable LAI, OutputVariable Biomass, OutputVariable AbovegroundBiomass, OutputVariable WoodBiomass, OutputVariable EstablishmentProbability, ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere, OutputVariable AnnualPsn, OutputVariable BelowGround, OutputVariable CohortsPerSpc, OutputVariable Water, OutputVariable SubCanopyPAR, OutputVariable NonWoodyDebris, OutputVariable WoodyDebris, OutputVariable AgeDistribution, OutputVariable MonthlyFolResp, OutputVariable MonthlyGrossPsn, OutputVariable MonthlyNetPsn, OutputVariable MonthlyMaintResp, OutputVariable MonthlyAverageAlbedo, OutputVariable SpeciesEstablishment, ISiteVar<Library.Parameters.Species.AuxParm<int>> LastBiom, OutputAggregatedTable overalloutputs, string OutputTableMap)
         {
 
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata()
@@ -109,7 +109,23 @@ namespace Landis.Extension.Output.PnET
                     Extension.OutputMetadatas.Add(mapOut_AbvBiomass);
                 }
             }
-            if(MonthlyFolResp != null)
+            if (WoodBiomass != null)
+            {
+                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                {
+                    OutputMetadata mapOut_WoodBiomass = new OutputMetadata()
+                    {
+                        Type = OutputType.Map,
+                        Name = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, spc.Name),
+                        FilePath = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, spc.Name),
+                        Map_DataType = MapDataType.Continuous,
+                        Visualize = true,
+                        //Map_Unit = "categorical",
+                    };
+                    Extension.OutputMetadatas.Add(mapOut_WoodBiomass);
+                }
+            }
+            if (MonthlyFolResp != null)
             {
                 OutputMetadata mapOut_Monthly = new OutputMetadata()
                 {

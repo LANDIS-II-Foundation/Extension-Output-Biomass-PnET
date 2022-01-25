@@ -37,6 +37,7 @@ namespace Landis.Extension.Output.PnET
 
         static IEnumerable<ISpecies> selectedspecies;
         static  OutputVariable Biomass;
+        static OutputVariable WoodBiomass;
         static OutputVariable AbovegroundBiomass;
         static OutputVariable WoodySenescence;
         static OutputVariable FoliageSenescence;
@@ -118,6 +119,11 @@ namespace Landis.Extension.Output.PnET
                 Biomass = new OutputVariable(parameters.SpeciesBiom, "g/m2");
                 Biomass.output_table_ecoregions = new OutputTableEcoregions(Biomass.MapNameTemplate);
             }
+            if (parameters.SpeciesWoodBiom != null)
+            {
+                WoodBiomass = new OutputVariable(parameters.SpeciesWoodBiom, "g/m2");
+                WoodBiomass.output_table_ecoregions = new OutputTableEcoregions(WoodBiomass.MapNameTemplate);
+            }
             if (parameters.SpeciesAbovegroundBiom != null)
             {
                 AbovegroundBiomass = new OutputVariable(parameters.SpeciesAbovegroundBiom, "g/m2");
@@ -193,7 +199,7 @@ namespace Landis.Extension.Output.PnET
             if (parameters.MortalityTable != null) mortalityTable = new OutputMortalityTable(parameters.MortalityTable);
 
 
-            MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass, EstablishmentProbability,
+            MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass,WoodBiomass, EstablishmentProbability,
                                                SpeciesWasThere, AnnualPsn, BelowGround, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
                                                WoodyDebris, AgeDistribution, MonthlyFolResp, MonthlyGrossPsn, MonthlyNetPsn, MonthlyMaintResp,
                                                MonthlyAverageAlbedo, SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
@@ -264,6 +270,16 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float> AGBiomass_site = cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
 
                 AbovegroundBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, AGBiomass_site);
+            }
+            if(WoodBiomass != null)
+            {
+                System.Console.WriteLine("Updating output variable: WoodBiomass");
+
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.WoodBiomassSum);
+
+                string FileName = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+
+                new OutputMapSiteVar<float, float>(FileName, values, o => o);
             }
             if (BelowGround != null)
             {
