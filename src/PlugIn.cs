@@ -275,11 +275,25 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: WoodBiomass");
 
-                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.WoodBiomassSum);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodBiom = cohorts.GetIsiteVar(o => o.WoodBiomassPerSpecies);
 
-                string FileName = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                {
+                    ISiteVar<int> WoodBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                new OutputMapSiteVar<float, float>(FileName, values, o => o);
+                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    {
+                        WoodBiom_spc[site] = WoodBiom[site][spc];
+                    }
+
+                    new OutputMapSpecies(WoodBiom_spc, spc, WoodBiomass.MapNameTemplate);
+                }
+
+                OutputFilePerTStepPerSpecies.Write<int>(WoodBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, WoodBiom);
+
+                ISiteVar<float> WoodBiomass_site = cohorts.GetIsiteVar(x => x.WoodBiomassSum);
+
+                WoodBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, WoodBiomass_site);
             }
             if (BelowGround != null)
             {
