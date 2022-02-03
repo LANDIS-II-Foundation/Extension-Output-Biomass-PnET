@@ -244,7 +244,8 @@ namespace Landis.Extension.Output.PnET
                 OutputFilePerTStepPerSpecies.Write<int>(Biomass.MapNameTemplate, Biomass.units, PlugIn.ModelCore.CurrentTime, Biom);
 
                 ISiteVar<float> Biomass_site = cohorts.GetIsiteVar(x => x.BiomassSum);
-
+                string FileName = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<float, float>(FileName, Biomass_site, o => o);
                 Biomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, Biomass_site);
             }
             if (AbovegroundBiomass != null)
@@ -268,7 +269,8 @@ namespace Landis.Extension.Output.PnET
                 OutputFilePerTStepPerSpecies.Write<int>(AbovegroundBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, AGBiom);
 
                 ISiteVar<float> AGBiomass_site = cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
-
+                string FileName = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<float, float>(FileName, AGBiomass_site, o => o);
                 AbovegroundBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, AGBiomass_site);
             }
             if(WoodBiomass != null)
@@ -292,7 +294,8 @@ namespace Landis.Extension.Output.PnET
                 OutputFilePerTStepPerSpecies.Write<int>(WoodBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, WoodBiom);
 
                 ISiteVar<float> WoodBiomass_site = cohorts.GetIsiteVar(x => x.WoodBiomassSum);
-
+                string FileName = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<float, float>(FileName, WoodBiomass_site, o => o);
                 WoodBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, WoodBiomass_site);
             }
             if (BelowGround != null)
@@ -473,7 +476,7 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<int> annualNetPsn = cohorts.GetIsiteVar(site => (int)site.NetPsnSum);
                 string FileName = FileNames.ReplaceTemplateVars(AnnualPsn.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<int, int>(FileName, annualNetPsn, o => o);
-                            }
+            }
 
             if (Water != null)
             {
