@@ -45,6 +45,8 @@ namespace Landis.Extension.Output.PnET
         public string MonthlyGrossPsn;
         public string MonthlyMaintResp; 
         public string MonthlyAverageAlbedo;
+        public string MonthlyActiveLayerDepth;
+        public string MonthlyFrostDepth;
 
         public string LeafAreaIndex;
 

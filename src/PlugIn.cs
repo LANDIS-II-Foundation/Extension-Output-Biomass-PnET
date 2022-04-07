@@ -56,6 +56,8 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable MonthlyGrossPsn;
         static OutputVariable MonthlyMaintResp;
         static OutputVariable MonthlyAverageAlbedo;
+        static OutputVariable MonthlyActiveLayerDepth;
+        static OutputVariable MonthlyFrostDepth;
         static  OutputVariable Water;
         static  OutputVariable SubCanopyPAR;
         static OutputAggregatedTable overalloutputs;
@@ -173,6 +175,14 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyAverageAlbedo = new OutputVariable(parameters.MonthlyAverageAlbedo, "ratio_W/m2");
             }
+            if (parameters.MonthlyActiveLayerDepth != null)
+            {
+                MonthlyActiveLayerDepth = new OutputVariable(parameters.MonthlyActiveLayerDepth, "cm/mo");
+            }
+            if (parameters.MonthlyFrostDepth != null)
+            {
+                MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm/mo");
+            }
 
             if (parameters.EstablishmentProbability != null)
             {
@@ -202,7 +212,7 @@ namespace Landis.Extension.Output.PnET
             MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass,WoodBiomass, EstablishmentProbability,
                                                SpeciesWasThere, AnnualPsn, BelowGround, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
                                                WoodyDebris, AgeDistribution, MonthlyFolResp, MonthlyGrossPsn, MonthlyNetPsn, MonthlyMaintResp,
-                                               MonthlyAverageAlbedo, SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
+                                               MonthlyAverageAlbedo, MonthlyActiveLayerDepth, MonthlyFrostDepth, SpeciesEstablishment, LastBiom, overalloutputs, parameters.CohortBalance);
         }
 
 
@@ -218,7 +228,7 @@ namespace Landis.Extension.Output.PnET
 
                 string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
-                new OutputMapSiteVar<float, float>(FileName, values, false);
+                new OutputMapSiteVar<float, float>(FileName, values);
 
                 // Values per species each time step
                 LAI.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, values);
@@ -368,7 +378,29 @@ namespace Landis.Extension.Output.PnET
                 System.Console.WriteLine("Updating output variable: Monthly Average Albedo");
                 ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
-                WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, true);
+                WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, 100);
+            }
+            if (MonthlyActiveLayerDepth != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                // Only interested in summer months for this output
+                bool[] monthsToOutput = new bool[] { false, false, false, false, true, true, true, true, false, false, false, false};
+
+                System.Console.WriteLine("Updating output variable: Monthly Active Layer Depth");
+                ISiteVar<float[]> monthlyActiveLayerDepth = cohorts.GetIsiteVar(site => site.ActiveLayerDepth);
+
+                WriteMonthlyDecimalOutput(monthlyActiveLayerDepth, MonthlyActiveLayerDepth.MapNameTemplate, 100, -1, 
+                    monthsToOutput);
+            }
+            if (MonthlyFrostDepth != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                // Only interested in winter months for this output
+                bool[] monthsToOutput = new bool[] { true, true, true, false, false, false, false, false, false, false, false, true };
+
+                System.Console.WriteLine("Updating output variable: Monthly Frost Depth");
+                ISiteVar<float[]> monthlyFrostDepth = cohorts.GetIsiteVar(site => site.FrostDepth);
+
+                WriteMonthlyDecimalOutput(monthlyFrostDepth, MonthlyFrostDepth.MapNameTemplate, 100, -1,
+                    monthsToOutput);
             }
             if (CohortsPerSpc != null)
             {
@@ -562,12 +594,20 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
-        private static void WriteMonthlyOutput(ISiteVar<float[]> monthly, string MapNameTemplate)
+        private static void WriteMonthlyOutput(ISiteVar<float[]> monthly, string MapNameTemplate, double multiplier = 1, int inactiveValue = 0, bool[] monthsToOutput = null)
         {
+            // The default is to output all months
+            monthsToOutput = monthsToOutput ?? new bool[] { true, true, true, true, true, true, true, true, true, true, true, true};
+
             string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
             for (int mo = 0; mo < months.Count(); mo++)
             {
+                // Do not report months that are not included
+                if (!monthsToOutput[mo])
+                {
+                    continue;
+                }
                 ISiteVar<int> monthlyValue = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
 
                 foreach (ActiveSite site in PlugIn.modelCore.Landscape)
@@ -579,28 +619,36 @@ namespace Landis.Extension.Output.PnET
 
                 FileName = System.IO.Path.ChangeExtension(FileName, null) + months[mo] + System.IO.Path.GetExtension(FileName);
 
-                new OutputMapSiteVar<int, int>(FileName, monthlyValue, o => o);
+                new OutputMapSiteVar<int, int>(FileName, monthlyValue, o => o, multiplier, inactiveValue);
             }
         }
 
-        private static void WriteMonthlyDecimalOutput(ISiteVar<float[]> monthly, string MapNameTemplate, bool convertToPercentage = false)
+        private static void WriteMonthlyDecimalOutput(ISiteVar<float[]> monthly, string MapNameTemplate, double multiplier = 1, float inactiveValue = 0, bool[] monthsToOutput = null)
         {
+            // The default is to output all months
+            monthsToOutput = monthsToOutput ?? new bool[] { true, true, true, true, true, true, true, true, true, true, true, true };
+
             string[] months = new string[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
             for (int mo = 0; mo < months.Count(); mo++)
             {
+                // Do not report months that are not included
+                if (!monthsToOutput[mo])
+                {
+                    continue;
+                }
                 ISiteVar<float> monthlyValue = PlugIn.ModelCore.Landscape.NewSiteVar<float>();
 
-                foreach (Site site in PlugIn.modelCore.Landscape.AllSites)
+                foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                 {
-                    monthlyValue[site] = site.IsActive? (float)monthly[site][mo] : 0;
+                    monthlyValue[site] = monthly[site][mo];
                 }
 
                 string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 FileName = System.IO.Path.ChangeExtension(FileName, null) + months[mo] + System.IO.Path.GetExtension(FileName);
 
-                new OutputMapSiteVar<float, float>(FileName, monthlyValue, convertToPercentage);
+                new OutputMapSiteVar<float, float>(FileName, monthlyValue, multiplier, inactiveValue);
             }
         }
 

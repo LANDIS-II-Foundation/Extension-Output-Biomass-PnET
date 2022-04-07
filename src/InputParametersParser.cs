@@ -55,6 +55,8 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyGrossPsn = new InputVar<string>("MonthlyGrossPsn");
             InputVar<string> MonthlyMaintResp = new InputVar<string>("MonthlyMaintResp");
             InputVar<string> MonthlyAverageAlbedo = new InputVar<string>("MonthlyAverageAlbedo");
+            InputVar<string> MonthlyActiveLayerDepth = new InputVar<string>("MonthlyActiveLayerDepth");
+            InputVar<string> MonthlyFrostDepth = new InputVar<string>("MonthlyFrostDepth");
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
             InputVar<string> BelowgroundBiomass = new InputVar<string>("BelowgroundBiomass");
@@ -82,6 +84,8 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyGrossPsn.Name);
             OutputList.Add(MonthlyMaintResp.Name);
             OutputList.Add(MonthlyAverageAlbedo.Name);
+            OutputList.Add(MonthlyActiveLayerDepth.Name);
+            OutputList.Add(MonthlyFrostDepth.Name);
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
             OutputList.Add(BelowgroundBiomass.Name);
@@ -191,6 +195,16 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(MonthlyAverageAlbedo))
                 {
                     parameters.MonthlyAverageAlbedo = MonthlyAverageAlbedo.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyActiveLayerDepth))
+                {
+                    parameters.MonthlyActiveLayerDepth = MonthlyActiveLayerDepth.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyFrostDepth))
+                {
+                    parameters.MonthlyFrostDepth = MonthlyFrostDepth.Value;
                     continue;
                 }
                 if (ReadOptionalVar(LeafAreaIndex))
