@@ -69,7 +69,8 @@ namespace Landis.Extension.Output.PnET
                     else
                     {
                         ulong numeric = ulong.Parse(Values[site][spc].ToString());
-                        Values_spc[spc] += numeric;
+                        if (!double.IsNaN((double)numeric))
+                            Values_spc[spc] += numeric;
                     }
 
                     Values_cnt[spc]++;
@@ -117,7 +118,8 @@ namespace Landis.Extension.Output.PnET
                     else
                     {
                         ulong numeric = ulong.Parse(Values[site][spc].ToString());
-                        Values_spc[spc] += numeric;
+                        if (!double.IsNaN((double)numeric))
+                            Values_spc[spc] += numeric;
                     }
                 }
             }
