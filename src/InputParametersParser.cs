@@ -41,12 +41,13 @@ namespace Landis.Extension.Output.PnET
             //      Species
             //      MapNames
             InputVar<string> speciesName = new InputVar<string>("Species");
-            InputVar<string> biomass = new InputVar<string>("Biomass");
-            InputVar<string> abovegroundBiomass = new InputVar<string>("AbovegroundBiomass");
+            InputVar<string> Biomass = new InputVar<string>("Wood-RootBiomass");
+            InputVar<string> abovegroundBiomass = new InputVar<string>("Wood-FoliageBiomass");
             InputVar<string> woodBiomass = new InputVar<string>("WoodBiomass");
             InputVar<string> woodySenescence = new InputVar<string>("WoodySenescence");
             InputVar<string> foliageSenescence = new InputVar<string>("FoliageSenescence");
-            InputVar<string> aetAvg = new InputVar<string>("AET");
+            InputVar<string> aet = new InputVar<string>("AET");
+            InputVar<string> aetAvg = new InputVar<string>("AETAvg");
             InputVar<string> LeafAreaIndex = new InputVar<string>("LeafAreaIndex");
             InputVar<string> Establishment = new InputVar<string>("Establishment");
             InputVar<string> EstablishmentProbability = new InputVar<string>("EstablishmentProbability");
@@ -59,7 +60,8 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyFrostDepth = new InputVar<string>("MonthlyFrostDepth");
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
-            InputVar<string> BelowgroundBiomass = new InputVar<string>("BelowgroundBiomass");
+            InputVar<string> BelowgroundBiomass = new InputVar<string>("RootBiomass");
+            InputVar<string> FoliageBiomass = new InputVar<string>("FoliageBiomass");
             InputVar<string> CohortsPerSpecies = new InputVar<string>("CohortsPerSpecies");
             InputVar<string> AnnualPsn = new InputVar<string>("AnnualPsn");
             InputVar<string> WoodyDebris = new InputVar<string>("WoodyDebris");
@@ -68,13 +70,16 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> CohortBalance = new InputVar<string>("CohortBalance");
             InputVar<string> EstablishmentTable = new InputVar<string>("EstablishmentTable");
             InputVar<string> MortalityTable = new InputVar<string>("MortalityTable");
+            InputVar<string> NSC = new InputVar<string>("NSC");
+            InputVar<string> PET = new InputVar<string>("PET");
 
             List<string> OutputList = new List<string>();
-            OutputList.Add(biomass.Name);
+            OutputList.Add(Biomass.Name);
             OutputList.Add(abovegroundBiomass.Name);
             OutputList.Add(woodBiomass.Name);
             OutputList.Add(woodySenescence.Name);
             OutputList.Add(foliageSenescence.Name);
+            OutputList.Add(aet.Name);
             OutputList.Add(aetAvg.Name);
             OutputList.Add(LeafAreaIndex.Name);
             OutputList.Add(Establishment.Name);
@@ -89,6 +94,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
             OutputList.Add(BelowgroundBiomass.Name);
+            OutputList.Add(FoliageBiomass.Name);
             OutputList.Add(CohortsPerSpecies.Name);
             OutputList.Add(AnnualPsn.Name);
             OutputList.Add(WoodyDebris.Name);
@@ -97,6 +103,8 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(CohortBalance.Name);
             OutputList.Add(EstablishmentTable.Name);
             OutputList.Add(MortalityTable.Name);
+            OutputList.Add(NSC.Name);
+            OutputList.Add(PET.Name);
 
             int lineNumber = LineNumber;
             ReadVar(speciesName);
@@ -141,9 +149,9 @@ namespace Landis.Extension.Output.PnET
             while (!AtEndOfInput)
             {
 
-                if (ReadOptionalVar(biomass))
+                if (ReadOptionalVar(Biomass))
                 {
-                    parameters.SpeciesBiom = biomass.Value;
+                    parameters.SpeciesBiom = Biomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(abovegroundBiomass))
@@ -164,6 +172,11 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(foliageSenescence))
                 {
                     parameters.SpeciesFoliageSenescence = foliageSenescence.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(aet))
+                {
+                    parameters.AET = aet.Value;
                     continue;
                 }
                 if (ReadOptionalVar(aetAvg))
@@ -245,7 +258,12 @@ namespace Landis.Extension.Output.PnET
                 }
                 if (ReadOptionalVar(BelowgroundBiomass))
                 {
-                    parameters.BelowgroundBiomass = BelowgroundBiomass.Value;
+                    parameters.BelowgroundBiom = BelowgroundBiomass.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(FoliageBiomass))
+                {
+                    parameters.FoliageBiom = FoliageBiomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(WoodyDebris))
@@ -276,6 +294,16 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(MortalityTable))
                 {
                     parameters.MortalityTable = MortalityTable.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(NSC))
+                {
+                    parameters.NSC = NSC.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(PET))
+                {
+                    parameters.PET = PET.Value;
                     continue;
                 }
 

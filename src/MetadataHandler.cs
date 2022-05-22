@@ -16,7 +16,7 @@ namespace Landis.Extension.Output.PnET
 
         public static ExtensionMetadata Extension { get; set; }
 
-        public static void InitializeMetadata(int Timestep, OutputVariable LAI, OutputVariable Biomass, OutputVariable AbovegroundBiomass, OutputVariable WoodBiomass, OutputVariable EstablishmentProbability, ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere, OutputVariable AnnualPsn, OutputVariable BelowGround, OutputVariable CohortsPerSpc, OutputVariable Water, OutputVariable SubCanopyPAR, OutputVariable NonWoodyDebris, OutputVariable WoodyDebris, OutputVariable AgeDistribution, OutputVariable MonthlyFolResp, OutputVariable MonthlyGrossPsn, OutputVariable MonthlyNetPsn, OutputVariable MonthlyMaintResp, OutputVariable MonthlyAverageAlbedo, OutputVariable MonthlyActiveLayerDepth, OutputVariable MonthlyFrostDepth, OutputVariable SpeciesEstablishment, ISiteVar<Library.Parameters.Species.AuxParm<int>> LastBiom, OutputAggregatedTable overalloutputs, string OutputTableMap)
+        public static void InitializeMetadata(int Timestep, OutputVariable LAI, OutputVariable Biomass, OutputVariable AbovegroundBiomass, OutputVariable WoodBiomass, OutputVariable EstablishmentProbability, ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> SpeciesWasThere, OutputVariable AnnualPsn, OutputVariable BelowGround, OutputVariable FoliageBiomass, OutputVariable CohortsPerSpc, OutputVariable Water, OutputVariable SubCanopyPAR, OutputVariable NonWoodyDebris, OutputVariable WoodyDebris, OutputVariable AgeDistribution, OutputVariable MonthlyFolResp, OutputVariable MonthlyGrossPsn, OutputVariable MonthlyNetPsn, OutputVariable MonthlyMaintResp, OutputVariable MonthlyAverageAlbedo, OutputVariable MonthlyActiveLayerDepth, OutputVariable MonthlyFrostDepth, OutputVariable SpeciesEstablishment, OutputVariable NSC, OutputVariable PET, ISiteVar<Library.Parameters.Species.AuxParm<int>> LastBiom, OutputAggregatedTable overalloutputs, string OutputTableMap)
         {
 
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata()
@@ -231,7 +231,20 @@ namespace Landis.Extension.Output.PnET
                 };
                 Extension.OutputMetadatas.Add(mapOut_BelowGround);
             }
-            if(CohortsPerSpc != null)
+            if (FoliageBiomass != null)
+            {
+                OutputMetadata mapOut_FoliageBiomass = new OutputMetadata()
+                {
+                    Type = OutputType.Map,
+                    Name = FileNames.ReplaceTemplateVars(FoliageBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    FilePath = FileNames.ReplaceTemplateVars(FoliageBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    Map_DataType = MapDataType.Continuous,
+                    Visualize = true,
+                    //Map_Unit = "categorical",
+                };
+                Extension.OutputMetadatas.Add(mapOut_FoliageBiomass);
+            }
+            if (CohortsPerSpc != null)
             {
                 foreach(ISpecies spc in PlugIn.ModelCore.Species)
                 {
@@ -376,6 +389,32 @@ namespace Landis.Extension.Output.PnET
                     //Map_Unit = "categorical",
                 };
                 Extension.OutputMetadatas.Add(mapOut_AgeDistribution);
+            }
+            if (NSC != null)
+            {
+                OutputMetadata mapOut_NSC = new OutputMetadata()
+                {
+                    Type = OutputType.Map,
+                    Name = FileNames.ReplaceTemplateVars(NSC.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    FilePath = FileNames.ReplaceTemplateVars(NSC.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    Map_DataType = MapDataType.Continuous,
+                    Visualize = true,
+                    //Map_Unit = "categorical",
+                };
+                Extension.OutputMetadatas.Add(mapOut_NSC);
+            }
+            if (PET != null)
+            {
+                OutputMetadata mapOut_PET = new OutputMetadata()
+                {
+                    Type = OutputType.Map,
+                    Name = FileNames.ReplaceTemplateVars(PET.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    FilePath = FileNames.ReplaceTemplateVars(PET.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                    Map_DataType = MapDataType.Continuous,
+                    Visualize = true,
+                    //Map_Unit = "categorical",
+                };
+                Extension.OutputMetadatas.Add(mapOut_PET);
             }
 
             //---------------------------------------
