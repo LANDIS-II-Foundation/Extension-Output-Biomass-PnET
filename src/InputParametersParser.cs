@@ -57,6 +57,9 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyAverageAlbedo = new InputVar<string>("MonthlyAverageAlbedo");
             InputVar<string> MonthlyActiveLayerDepth = new InputVar<string>("MonthlyActiveLayerDepth");
             InputVar<string> MonthlyFrostDepth = new InputVar<string>("MonthlyFrostDepth");
+            InputVar<string> MonthlyAvgSnowPack = new InputVar<string>("MonthlyAvgSnowPack");
+            InputVar<string> MonthlyAvgWater = new InputVar<string>("MonthlyAvgWater");
+            InputVar<string> MonthlyAvgLAI = new InputVar<string>("MonthlyAvgLAI");
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
             InputVar<string> BelowgroundBiomass = new InputVar<string>("BelowgroundBiomass");
@@ -86,6 +89,9 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyAverageAlbedo.Name);
             OutputList.Add(MonthlyActiveLayerDepth.Name);
             OutputList.Add(MonthlyFrostDepth.Name);
+            OutputList.Add(MonthlyAvgSnowPack.Name);
+            OutputList.Add(MonthlyAvgWater.Name);
+            OutputList.Add(MonthlyAvgLAI.Name);
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
             OutputList.Add(BelowgroundBiomass.Name);
@@ -205,6 +211,21 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(MonthlyFrostDepth))
                 {
                     parameters.MonthlyFrostDepth = MonthlyFrostDepth.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgSnowPack))
+                {
+                    parameters.MonthlyAvgSnowPack = MonthlyAvgSnowPack.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgWater))
+                {
+                    parameters.MonthlyAvgWater = MonthlyAvgWater.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgLAI))
+                {
+                    parameters.MonthlyAvgLAI = MonthlyAvgLAI.Value;
                     continue;
                 }
                 if (ReadOptionalVar(LeafAreaIndex))

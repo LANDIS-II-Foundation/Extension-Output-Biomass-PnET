@@ -58,7 +58,10 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable MonthlyAverageAlbedo;
         static OutputVariable MonthlyActiveLayerDepth;
         static OutputVariable MonthlyFrostDepth;
-        static  OutputVariable Water;
+        static OutputVariable MonthlyAvgSnowPack;
+        static OutputVariable MonthlyAvgWater;
+        static OutputVariable MonthlyAvgLAI;
+        static OutputVariable Water;
         static  OutputVariable SubCanopyPAR;
         static OutputAggregatedTable overalloutputs;
         static OutputEstablishmentTable establishmentTable;
@@ -183,7 +186,18 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm/mo");
             }
-
+            if (parameters.MonthlyAvgSnowPack != null)
+            {
+                MonthlyAvgSnowPack = new OutputVariable(parameters.MonthlyAvgSnowPack, "mm water equivalent");
+            }
+            if (parameters.MonthlyAvgWater != null)
+            {
+                MonthlyAvgWater = new OutputVariable(parameters.MonthlyAvgWater, "mm water equivalent");
+            }
+            if (parameters.MonthlyAvgLAI != null)
+            {
+                MonthlyAvgLAI = new OutputVariable(parameters.MonthlyAvgLAI, "mm water equivalent");
+            }
             if (parameters.EstablishmentProbability != null)
             {
                 EstablishmentProbability = new OutputVariable(parameters.EstablishmentProbability, "");
@@ -401,6 +415,27 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyDecimalOutput(monthlyFrostDepth, MonthlyFrostDepth.MapNameTemplate, 100, -1,
                     monthsToOutput);
+            }
+            if(MonthlyAvgSnowPack != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Avg Snow Pack");
+                ISiteVar<float[]> monthlyAvgSnowPack = cohorts.GetIsiteVar(site => site.MonthlyAvgSnowPack);
+
+                WriteMonthlyOutput(monthlyAvgSnowPack, MonthlyAvgSnowPack.MapNameTemplate);
+            }
+            if (MonthlyAvgWater != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Avg Water");
+                ISiteVar<float[]> monthlyAvgWater = cohorts.GetIsiteVar(site => site.MonthlyAvgWater);
+
+                WriteMonthlyOutput(monthlyAvgWater, MonthlyAvgWater.MapNameTemplate);
+            }
+            if (MonthlyAvgLAI != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Avg LAI");
+                ISiteVar<float[]> monthlyAvgLAI = cohorts.GetIsiteVar(site => site.MonthlyAvgLAI);
+
+                WriteMonthlyOutput(monthlyAvgLAI, MonthlyAvgLAI.MapNameTemplate);
             }
             if (CohortsPerSpc != null)
             {
