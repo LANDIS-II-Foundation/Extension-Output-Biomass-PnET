@@ -32,8 +32,6 @@ namespace Landis.Extension.Output.PnET
  
         public string Litter;
          
-        public string BelowgroundBiomass;
-         
         public string SubCanopyPAR;
          
         public string EstablishmentProbability;
@@ -58,9 +56,15 @@ namespace Landis.Extension.Output.PnET
         public string SpeciesBiom;
         public string SpeciesWoodBiom;
         public string SpeciesAbovegroundBiom;
+        public string FoliageBiom;
+        public string BelowgroundBiom;
 
         public string SpeciesWoodySenescence;
         public string SpeciesFoliageSenescence;
-        public string AETAvg;   
+        public string AET;
+        public string AETAvg;
+
+        public string NSC;
+        public string PET;
     }
 }
