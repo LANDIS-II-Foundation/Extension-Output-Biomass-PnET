@@ -27,7 +27,7 @@ namespace Landis.Extension.Output.PnET
         {
             this.NameTemplate = NameTemplate;
             this.units = units;
-            this.header = "Timestep\t" + variableName + " " + units;
+            this.header = "Timestep,\t" + variableName + "_(" + units + ")";
 
             if (!NameTemplate.Contains(".csv")) throw new System.Exception("NameTemplate " + NameTemplate + " does not have an extension '.csv'");
             if (NameTemplate.Length == 0) throw new System.Exception("Error initializing output CSV, no template name available");
@@ -51,7 +51,7 @@ namespace Landis.Extension.Output.PnET
 
             float average = sum / PlugIn.ModelCore.Landscape.ActiveSiteCount;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(this.NameTemplate, true);
-            sw.WriteLine(TStep + "\t" + average);
+            sw.WriteLine(TStep + ",\t" + average);
             sw.Close();
         }
     }

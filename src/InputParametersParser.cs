@@ -41,8 +41,8 @@ namespace Landis.Extension.Output.PnET
             //      Species
             //      MapNames
             InputVar<string> speciesName = new InputVar<string>("Species");
-            InputVar<string> Biomass = new InputVar<string>("Wood-RootBiomass");
-            InputVar<string> abovegroundBiomass = new InputVar<string>("Wood-FoliageBiomass");
+            InputVar<string> WoodRootBiomass = new InputVar<string>("Wood-RootBiomass");
+            InputVar<string> WoodFoliageBiomass = new InputVar<string>("Wood-FoliageBiomass");
             InputVar<string> woodBiomass = new InputVar<string>("WoodBiomass");
             InputVar<string> woodySenescence = new InputVar<string>("WoodySenescence");
             InputVar<string> foliageSenescence = new InputVar<string>("FoliageSenescence");
@@ -55,7 +55,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyFolResp = new InputVar<string>("MonthlyFolResp");
             InputVar<string> MonthlyGrossPsn = new InputVar<string>("MonthlyGrossPsn");
             InputVar<string> MonthlyMaintResp = new InputVar<string>("MonthlyMaintResp");
-            InputVar<string> MonthlyAverageAlbedo = new InputVar<string>("MonthlyAverageAlbedo");
+            InputVar<string> Albedo = new InputVar<string>("Albedo");
             InputVar<string> MonthlyActiveLayerDepth = new InputVar<string>("MonthlyActiveLayerDepth");
             InputVar<string> MonthlyFrostDepth = new InputVar<string>("MonthlyFrostDepth");
             InputVar<string> MonthlyAvgSnowPack = new InputVar<string>("MonthlyAvgSnowPack");
@@ -63,7 +63,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyAvgLAI = new InputVar<string>("MonthlyAvgLAI");
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
-            InputVar<string> BelowgroundBiomass = new InputVar<string>("RootBiomass");
+            InputVar<string> RootBiomass = new InputVar<string>("RootBiomass");
             InputVar<string> FoliageBiomass = new InputVar<string>("FoliageBiomass");
             InputVar<string> CohortsPerSpecies = new InputVar<string>("CohortsPerSpecies");
             InputVar<string> AnnualPsn = new InputVar<string>("AnnualPsn");
@@ -77,8 +77,8 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> PET = new InputVar<string>("PET");
 
             List<string> OutputList = new List<string>();
-            OutputList.Add(Biomass.Name);
-            OutputList.Add(abovegroundBiomass.Name);
+            OutputList.Add(WoodRootBiomass.Name);
+            OutputList.Add(WoodFoliageBiomass.Name);
             OutputList.Add(woodBiomass.Name);
             OutputList.Add(woodySenescence.Name);
             OutputList.Add(foliageSenescence.Name);
@@ -91,7 +91,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyFolResp.Name);
             OutputList.Add(MonthlyGrossPsn.Name);
             OutputList.Add(MonthlyMaintResp.Name);
-            OutputList.Add(MonthlyAverageAlbedo.Name);
+            OutputList.Add(Albedo.Name);
             OutputList.Add(MonthlyActiveLayerDepth.Name);
             OutputList.Add(MonthlyFrostDepth.Name);
             OutputList.Add(MonthlyAvgSnowPack.Name);
@@ -99,7 +99,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyAvgLAI.Name);
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
-            OutputList.Add(BelowgroundBiomass.Name);
+            OutputList.Add(RootBiomass.Name);
             OutputList.Add(FoliageBiomass.Name);
             OutputList.Add(CohortsPerSpecies.Name);
             OutputList.Add(AnnualPsn.Name);
@@ -155,14 +155,14 @@ namespace Landis.Extension.Output.PnET
             while (!AtEndOfInput)
             {
 
-                if (ReadOptionalVar(Biomass))
+                if (ReadOptionalVar(WoodRootBiomass))
                 {
-                    parameters.SpeciesBiom = Biomass.Value;
+                    parameters.SpeciesWoodRootBiom = WoodRootBiomass.Value;
                     continue;
                 }
-                if (ReadOptionalVar(abovegroundBiomass))
+                if (ReadOptionalVar(WoodFoliageBiomass))
                 {
-                    parameters.SpeciesAbovegroundBiom = abovegroundBiomass.Value;
+                    parameters.SpeciesWoodFoliageBiom = WoodFoliageBiomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(woodBiomass))
@@ -211,9 +211,9 @@ namespace Landis.Extension.Output.PnET
                     parameters.MonthlyMaintResp = MonthlyMaintResp.Value;
                     continue;
                 }
-                if (ReadOptionalVar(MonthlyAverageAlbedo))
+                if (ReadOptionalVar(Albedo))
                 {
-                    parameters.MonthlyAverageAlbedo = MonthlyAverageAlbedo.Value;
+                    parameters.Albedo = Albedo.Value;
                     continue;
                 }
                 if (ReadOptionalVar(MonthlyActiveLayerDepth))
@@ -277,9 +277,9 @@ namespace Landis.Extension.Output.PnET
                     parameters.CohortsPerSpecies = CohortsPerSpecies.Value;
                     continue;
                 }
-                if (ReadOptionalVar(BelowgroundBiomass))
+                if (ReadOptionalVar(RootBiomass))
                 {
-                    parameters.BelowgroundBiom = BelowgroundBiomass.Value;
+                    parameters.RootBiom = RootBiomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(FoliageBiomass))

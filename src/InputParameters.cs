@@ -42,7 +42,7 @@ namespace Landis.Extension.Output.PnET
         public string MonthlyFolResp;
         public string MonthlyGrossPsn;
         public string MonthlyMaintResp; 
-        public string MonthlyAverageAlbedo;
+        public string Albedo;
         public string MonthlyActiveLayerDepth;
         public string MonthlyFrostDepth;
         public string MonthlyAvgSnowPack;
@@ -53,11 +53,11 @@ namespace Landis.Extension.Output.PnET
 
         public string Water;
 
-        public string SpeciesBiom;
+        public string SpeciesWoodRootBiom;
         public string SpeciesWoodBiom;
-        public string SpeciesAbovegroundBiom;
+        public string SpeciesWoodFoliageBiom;
         public string FoliageBiom;
-        public string BelowgroundBiom;
+        public string RootBiom;
 
         public string SpeciesWoodySenescence;
         public string SpeciesFoliageSenescence;

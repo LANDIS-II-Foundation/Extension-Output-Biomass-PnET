@@ -36,9 +36,9 @@ namespace Landis.Extension.Output.PnET
         static ICore modelCore;
 
         static IEnumerable<ISpecies> selectedspecies;
-        static  OutputVariable Biomass;
+        static  OutputVariable WoodRootBiomass;
         static OutputVariable WoodBiomass;
-        static OutputVariable AbovegroundBiomass;
+        static OutputVariable WoodFoliageBiomass;
         static OutputVariable WoodySenescence;
         static OutputVariable FoliageSenescence;
         static OutputVariable AET;
@@ -48,7 +48,7 @@ namespace Landis.Extension.Output.PnET
         static  OutputVariable WoodyDebris;
         static  OutputVariable AgeDistribution;
         static OutputVariable AnnualPsn;
-        static  OutputVariable BelowGroundBiomass;
+        static  OutputVariable RootBiomass;
         static OutputVariable FoliageBiomass;
         static  OutputVariable LAI;
         static  OutputVariable SpeciesEstablishment;
@@ -57,12 +57,12 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable MonthlyFolResp;
         static OutputVariable MonthlyGrossPsn;
         static OutputVariable MonthlyMaintResp;
-        static OutputVariable MonthlyAverageAlbedo;
+        static OutputVariable Albedo;
         static OutputVariable MonthlyActiveLayerDepth;
         static OutputVariable MonthlyFrostDepth;
-        static OutputCSV AverageAlbedoCSV;
-        static OutputCSV AverageActiveLayerCSV;
-        static OutputCSV AverageFrostDepthCSV;
+        static OutputMonthlyDetailCSV AverageAlbedoCSV;
+        static OutputMonthlyDetailCSV AverageActiveLayerCSV;
+        static OutputMonthlyDetailCSV AverageFrostDepthCSV;
         static OutputVariable MonthlyAvgSnowPack;
         static OutputVariable MonthlyAvgWater;
         static OutputVariable MonthlyAvgLAI;
@@ -126,20 +126,20 @@ namespace Landis.Extension.Output.PnET
             {
                 CohortsPerSpc = new OutputVariable(parameters.CohortsPerSpecies, "#");
             }
-            if (parameters.SpeciesBiom != null)
+            if (parameters.SpeciesWoodRootBiom != null)
             {
-                Biomass = new OutputVariable(parameters.SpeciesBiom, "g/m2");
-                Biomass.output_table_ecoregions = new OutputTableEcoregions(Biomass.MapNameTemplate);
+                WoodRootBiomass = new OutputVariable(parameters.SpeciesWoodRootBiom, "g/m2");
+                WoodRootBiomass.output_table_ecoregions = new OutputTableEcoregions(WoodRootBiomass.MapNameTemplate);
             }
             if (parameters.SpeciesWoodBiom != null)
             {
                 WoodBiomass = new OutputVariable(parameters.SpeciesWoodBiom, "g/m2");
                 WoodBiomass.output_table_ecoregions = new OutputTableEcoregions(WoodBiomass.MapNameTemplate);
             }
-            if (parameters.SpeciesAbovegroundBiom != null)
+            if (parameters.SpeciesWoodFoliageBiom != null)
             {
-                AbovegroundBiomass = new OutputVariable(parameters.SpeciesAbovegroundBiom, "g/m2");
-                AbovegroundBiomass.output_table_ecoregions = new OutputTableEcoregions(AbovegroundBiomass.MapNameTemplate);
+                WoodFoliageBiomass = new OutputVariable(parameters.SpeciesWoodFoliageBiom, "g/m2");
+                WoodFoliageBiomass.output_table_ecoregions = new OutputTableEcoregions(WoodFoliageBiomass.MapNameTemplate);
             }
             if (parameters.SpeciesWoodySenescence != null)
             {
@@ -156,9 +156,9 @@ namespace Landis.Extension.Output.PnET
                 AET = new OutputVariable(parameters.AET, "");
                 AET.output_table_ecoregions = new OutputTableEcoregions(AET.MapNameTemplate);
             }
-            if (parameters.BelowgroundBiom != null)
+            if (parameters.RootBiom != null)
             {
-                BelowGroundBiomass = new OutputVariable(parameters.BelowgroundBiom, "g/m2");
+                RootBiomass = new OutputVariable(parameters.RootBiom, "g/m2");
             }
             if (parameters.FoliageBiom != null)
             {
@@ -185,21 +185,21 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyNetPsn = new OutputVariable(parameters.MonthlyNetPsn, "gC/mo");
             }
-            if (parameters.MonthlyAverageAlbedo != null)
+            if (parameters.Albedo != null)
             {
-                MonthlyAverageAlbedo = new OutputVariable(parameters.MonthlyAverageAlbedo, "ratio_W/m2");
-                AverageAlbedoCSV = new OutputCSV(parameters.MonthlyAverageAlbedo.Replace("_{timestep}.img", ".csv"), "ratio_W/m2", "Average Albedo");
+                Albedo = new OutputVariable(parameters.Albedo, "ratio_W/m2");
+                AverageAlbedoCSV = new OutputMonthlyDetailCSV(parameters.Albedo.Replace("_{timestep}.img", ".csv"), "ratio_W/m2");
             }
             if (parameters.MonthlyActiveLayerDepth != null)
             {
                 MonthlyActiveLayerDepth = new OutputVariable(parameters.MonthlyActiveLayerDepth, "cm/mo");
-                AverageActiveLayerCSV = new OutputCSV(parameters.MonthlyActiveLayerDepth.Replace("_{timestep}.img", ".csv"), 
-                    "cm/mo", "Average Active Layer Depth");
+                AverageActiveLayerCSV = new OutputMonthlyDetailCSV(parameters.MonthlyActiveLayerDepth.Replace("_{timestep}.img", ".csv"), 
+                    "cm");
             }
             if (parameters.MonthlyFrostDepth != null)
             {
                 MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm/mo");
-                AverageFrostDepthCSV = new OutputCSV(parameters.MonthlyFrostDepth.Replace("_{timestep}.img", ".csv"), "cm/mo", "Average Frost Depth");
+                AverageFrostDepthCSV = new OutputMonthlyDetailCSV(parameters.MonthlyFrostDepth.Replace("_{timestep}.img", ".csv"), "cm");
             }
             if (parameters.MonthlyAvgSnowPack != null)
             {
@@ -228,8 +228,7 @@ namespace Landis.Extension.Output.PnET
                 Water = new OutputVariable(parameters.Water, "mm");
                 Water.output_table_ecoregions = new OutputTableEcoregions(Water.MapNameTemplate);
             }
-
-            if (parameters.NSC != null) NSC = new OutputVariable(parameters.NSC, "g/m2");
+            if (parameters.NSC != null) NSC = new OutputVariable(parameters.NSC, "gC/m2");
             if (parameters.PET != null) PET = new OutputVariable(parameters.PET, "mm/mo");
             if (parameters.AETAvg != null) AETAvg = new OutputVariable(parameters.AETAvg, "mm/mo");
             if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR,  "W/m2 or mmol/m2");
@@ -242,10 +241,10 @@ namespace Landis.Extension.Output.PnET
             if (parameters.MortalityTable != null) mortalityTable = new OutputMortalityTable(parameters.MortalityTable);
 
 
-            MetadataHandler.InitializeMetadata(Timestep, LAI, Biomass, AbovegroundBiomass,WoodBiomass, EstablishmentProbability,
-                                               SpeciesWasThere, AnnualPsn, BelowGroundBiomass, FoliageBiomass, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
+            MetadataHandler.InitializeMetadata(Timestep, LAI, WoodRootBiomass, WoodFoliageBiomass,WoodBiomass, EstablishmentProbability,
+                                               SpeciesWasThere, AnnualPsn, RootBiomass, FoliageBiomass, CohortsPerSpc, Water, SubCanopyPAR, NonWoodyDebris,
                                                WoodyDebris, AgeDistribution, MonthlyFolResp, MonthlyGrossPsn, MonthlyNetPsn, MonthlyMaintResp,
-                                               MonthlyAverageAlbedo, MonthlyActiveLayerDepth, MonthlyFrostDepth, SpeciesEstablishment, NSC, PET, LastBiom, overalloutputs, parameters.CohortBalance);
+                                               Albedo, MonthlyActiveLayerDepth, MonthlyFrostDepth, SpeciesEstablishment, NSC, PET, LastBiom, overalloutputs, parameters.CohortBalance);
         }
 
 
@@ -255,66 +254,79 @@ namespace Landis.Extension.Output.PnET
             if (LAI != null)
             {
                 System.Console.WriteLine("Updating output variable: LAI");
-                // Total LAI per site 
 
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> LAIPerSite = cohorts.GetIsiteVar(o => o.LAIPerSpecies);
+
+                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                {
+                    ISiteVar<int> LAI_spc = modelCore.Landscape.NewSiteVar<int>();
+
+                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    {
+                        LAI_spc[site] = LAIPerSite[site][spc];
+                    }
+
+                    new OutputMapSpecies(LAI_spc, spc, LAI.MapNameTemplate);
+                }
+
+                OutputFilePerTStepPerSpecies.Write<int>(LAI.MapNameTemplate, LAI.units, PlugIn.ModelCore.CurrentTime, LAIPerSite);
+
+                // Total LAI per site
                 ISiteVar<float> values = cohorts.GetIsiteVar(o => o.CanopyLAImax);
-
                 string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
-
                 new OutputMapSiteVar<float, float>(FileName, values);
-
                 // Values per species each time step
                 LAI.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, values);
             }
-            if (Biomass != null)
+            if (WoodRootBiomass != null)
             {
-                System.Console.WriteLine("Updating output variable: Biomass");
+                System.Console.WriteLine("Updating output variable: Wood-Root Biomass");
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> Biom = cohorts.GetIsiteVar(o => o.BiomassPerSpecies);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodRootBiom = cohorts.GetIsiteVar(o => o.BiomassPerSpecies);
 
                 foreach (ISpecies spc in PlugIn.SelectedSpecies)
                 {
-                    ISiteVar<int> Biom_spc = modelCore.Landscape.NewSiteVar<int>();
+                    ISiteVar<int> WoodRootBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
                     foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                     {
-                        Biom_spc[site] = Biom[site][spc];
+                        WoodRootBiom_spc[site] = WoodRootBiom[site][spc];
                     }
 
-                    new OutputMapSpecies(Biom_spc, spc, Biomass.MapNameTemplate);
+                    new OutputMapSpecies(WoodRootBiom_spc, spc, WoodRootBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(Biomass.MapNameTemplate, Biomass.units, PlugIn.ModelCore.CurrentTime, Biom);
+                OutputFilePerTStepPerSpecies.Write<int>(WoodRootBiomass.MapNameTemplate, WoodRootBiomass.units, PlugIn.ModelCore.CurrentTime, WoodRootBiom);
 
-                ISiteVar<float> Biomass_site = cohorts.GetIsiteVar(x => x.BiomassSum);
-                string FileName = FileNames.ReplaceTemplateVars(Biomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
-                new OutputMapSiteVar<float, float>(FileName, Biomass_site, o => o);
-                Biomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, Biomass_site);
+                ISiteVar<float> WoodRootBiomass_site = cohorts.GetIsiteVar(x => x.BiomassSum);
+                string FileName = FileNames.ReplaceTemplateVars(WoodRootBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<float, float>(FileName, WoodRootBiomass_site, o => o);
+                WoodRootBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, WoodRootBiomass_site);
             }
-            if (AbovegroundBiomass != null)
+            if (WoodFoliageBiomass != null)
             {
-                System.Console.WriteLine("Updating output variable: Aboveground Biomass");
+                System.Console.WriteLine("Updating output variable: Wood-Foliage Biomass");
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> AGBiom = cohorts.GetIsiteVar(o => o.AbovegroundBiomassPerSpecies);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodFoliageBiom = cohorts.GetIsiteVar(o => o.AbovegroundBiomassPerSpecies);
 
                 foreach (ISpecies spc in PlugIn.SelectedSpecies)
                 {
-                    ISiteVar<int> AGBiom_spc = modelCore.Landscape.NewSiteVar<int>();
+                    ISiteVar<int> WoodFoliageBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
                     foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                     {
-                        AGBiom_spc[site] = AGBiom[site][spc];
+                        WoodFoliageBiom_spc[site] = WoodFoliageBiom[site][spc];
                     }
 
-                    new OutputMapSpecies(AGBiom_spc, spc, AbovegroundBiomass.MapNameTemplate);
+                    new OutputMapSpecies(WoodFoliageBiom_spc, spc, WoodFoliageBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(AbovegroundBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, AGBiom);
+                OutputFilePerTStepPerSpecies.Write<int>(WoodFoliageBiomass.MapNameTemplate, WoodFoliageBiomass.units, PlugIn.ModelCore.CurrentTime, WoodFoliageBiom);
 
-                ISiteVar<float> AGBiomass_site = cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
-                string FileName = FileNames.ReplaceTemplateVars(AbovegroundBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
-                new OutputMapSiteVar<float, float>(FileName, AGBiomass_site, o => o);
-                AbovegroundBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, AGBiomass_site);
+                ISiteVar<float> WoodFoliageBiomass_site = cohorts.GetIsiteVar(x => x.AbovegroundBiomassSum);
+                string FileName = FileNames.ReplaceTemplateVars(WoodFoliageBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
+                new OutputMapSiteVar<float, float>(FileName, WoodFoliageBiomass_site, o => o);
+                WoodFoliageBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, WoodFoliageBiomass_site);
             }
             if (WoodBiomass != null)
             {
@@ -334,16 +346,16 @@ namespace Landis.Extension.Output.PnET
                     new OutputMapSpecies(WoodBiom_spc, spc, WoodBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(WoodBiomass.MapNameTemplate, AbovegroundBiomass.units, PlugIn.ModelCore.CurrentTime, WoodBiom);
+                OutputFilePerTStepPerSpecies.Write<int>(WoodBiomass.MapNameTemplate, WoodBiomass.units, PlugIn.ModelCore.CurrentTime, WoodBiom);
 
                 ISiteVar<float> WoodBiomass_site = cohorts.GetIsiteVar(x => x.WoodBiomassSum);
                 string FileName = FileNames.ReplaceTemplateVars(WoodBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<float, float>(FileName, WoodBiomass_site, o => o);
                 WoodBiomass.output_table_ecoregions.WriteUpdate<float>(PlugIn.ModelCore.CurrentTime, WoodBiomass_site);
             }
-            if (BelowGroundBiomass != null)
+            if (RootBiomass != null)
             {
-                System.Console.WriteLine("Updating output variable: BelowGroundBiomass");
+                System.Console.WriteLine("Updating output variable: Root Biomass");
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> RootBiom = cohorts.GetIsiteVar(o => o.BelowGroundBiomassPerSpecies);
 
@@ -356,47 +368,61 @@ namespace Landis.Extension.Output.PnET
                         RootBiom_spc[site] = RootBiom[site][spc];
                     }
 
-                    new OutputMapSpecies(RootBiom_spc, spc, BelowGroundBiomass.MapNameTemplate);
+                    new OutputMapSpecies(RootBiom_spc, spc, RootBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(BelowGroundBiomass.MapNameTemplate, BelowGroundBiomass.units, PlugIn.ModelCore.CurrentTime, RootBiom);
+                OutputFilePerTStepPerSpecies.Write<int>(RootBiomass.MapNameTemplate, RootBiomass.units, PlugIn.ModelCore.CurrentTime, RootBiom);
 
                 ISiteVar<float> values = cohorts.GetIsiteVar(o => o.BelowGroundBiomassSum);
-                string FileName = FileNames.ReplaceTemplateVars(BelowGroundBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+                string FileName = FileNames.ReplaceTemplateVars(RootBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
             }
             if (FoliageBiomass != null)
             {
                 System.Console.WriteLine("Updating output variable: FoliageBiomass");
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> FolBiom = cohorts.GetIsiteVar(o => o.FoliageBiomassPerSpecies);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> MaxFolBiom = cohorts.GetIsiteVar(o => o.MaxFoliageYearPerSpecies);
 
                 foreach (ISpecies spc in PlugIn.SelectedSpecies)
                 {
-                    ISiteVar<int> FolBiom_spc = modelCore.Landscape.NewSiteVar<int>();
+                    ISiteVar<int> MaxFolBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
                     foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                     {
-                        FolBiom_spc[site] = FolBiom[site][spc];
+                        MaxFolBiom_spc[site] = MaxFolBiom[site][spc];
                     }
 
-                    new OutputMapSpecies(FolBiom_spc, spc, FoliageBiomass.MapNameTemplate);
+                    new OutputMapSpecies(MaxFolBiom_spc, spc, FoliageBiomass.MapNameTemplate);
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(FoliageBiomass.MapNameTemplate, FoliageBiomass.units, PlugIn.ModelCore.CurrentTime, FolBiom);
+                OutputFilePerTStepPerSpecies.Write<int>(FoliageBiomass.MapNameTemplate, FoliageBiomass.units, PlugIn.ModelCore.CurrentTime, MaxFolBiom);
 
                 ISiteVar<float> values = cohorts.GetIsiteVar(o => o.FoliageSum);
-                string FileName = FileNames.ReplaceTemplateVars(FoliageBiomass.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+                string FileName = FileNames.ReplaceTemplateVars(FoliageBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
             }
             if (NSC != null)
             {
                 System.Console.WriteLine("Updating output variable: NSC");
 
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> NSCPerSpecies = cohorts.GetIsiteVar(o => o.NSCPerSpecies);
+
+                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                {
+                    ISiteVar<int> NSC_spc = modelCore.Landscape.NewSiteVar<int>();
+
+                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    {
+                        NSC_spc[site] = NSCPerSpecies[site][spc];
+                    }
+
+                    new OutputMapSpecies(NSC_spc, spc, NSC.MapNameTemplate);
+                }
+
+                OutputFilePerTStepPerSpecies.Write<int>(NSC.MapNameTemplate, NSC.units, PlugIn.ModelCore.CurrentTime, NSCPerSpecies);
+
                 ISiteVar<float> values = cohorts.GetIsiteVar(o => o.NSCSum);
-
-                string FileName = FileNames.ReplaceTemplateVars(NSC.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
-
+                string FileName = FileNames.ReplaceTemplateVars(NSC.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
             }
             if (PET != null)
@@ -443,7 +469,7 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: AETAvg");
 
-                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.AETSum / (float)PlugIn.modelCore?.Landscape?.SiteCount);
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.AETSum / 12);
 
                 string FileName = FileNames.ReplaceTemplateVars(AETAvg.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
@@ -466,6 +492,7 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float[]> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsn);
 
                 WriteMonthlyOutput(monthlyNetPsn, MonthlyNetPsn.MapNameTemplate);
+                AverageAlbedoCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyNetPsn);
             }
             if (MonthlyMaintResp != null)
             {
@@ -473,13 +500,13 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyOutput(monthlyMaintResp, MonthlyMaintResp.MapNameTemplate);
             }
-            if (MonthlyAverageAlbedo != null)
+            if (Albedo != null)
             {
-                System.Console.WriteLine("Updating output variable: Monthly Average Albedo");
-                ISiteVar<float[]> monthlyAverageAlbedo = cohorts.GetIsiteVar(site => site.AverageAlbedo);
+                System.Console.WriteLine("Updating output variable: Albedo");
+                ISiteVar<float[]> albedoAvg = cohorts.GetIsiteVar(site => site.AverageAlbedo);
 
-                WriteMonthlyDecimalOutput(monthlyAverageAlbedo, MonthlyAverageAlbedo.MapNameTemplate, 100);
-                AverageAlbedoCSV.WriteAverageFromMonthly(PlugIn.ModelCore.CurrentTime, monthlyAverageAlbedo);
+                WriteMonthlyDecimalOutput(albedoAvg, Albedo.MapNameTemplate, 100);
+                AverageAlbedoCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, albedoAvg);
             }
             if (MonthlyActiveLayerDepth != null && PlugIn.ModelCore.CurrentTime != 0)
             {
@@ -491,7 +518,7 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyDecimalOutput(monthlyActiveLayerDepth, MonthlyActiveLayerDepth.MapNameTemplate, 100, -1, 
                     monthsToOutput);
-                AverageActiveLayerCSV.WriteAverageFromMonthly(PlugIn.ModelCore.CurrentTime, monthlyActiveLayerDepth);
+                AverageActiveLayerCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyActiveLayerDepth, 100);
             }
             if (MonthlyFrostDepth != null && PlugIn.ModelCore.CurrentTime != 0)
             {
@@ -503,7 +530,7 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyDecimalOutput(monthlyFrostDepth, MonthlyFrostDepth.MapNameTemplate, 100, -1,
                     monthsToOutput);
-                AverageFrostDepthCSV.WriteAverageFromMonthly(PlugIn.ModelCore.CurrentTime, monthlyFrostDepth);
+                AverageFrostDepthCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyFrostDepth);
             }
             if(MonthlyAvgSnowPack != null && PlugIn.ModelCore.CurrentTime != 0)
             {
@@ -593,29 +620,35 @@ namespace Landis.Extension.Output.PnET
 
                         // map label text
                         //m.PrintLabels(SpeciesEstablishment.MapNameTemplate, spc);
-
-
                     }
                 }
                 else
                 {
                     SpeciesWasThere = modelCore.Landscape.NewSiteVar<Landis.Library.Parameters.Species.AuxParm<bool>>();
 
+                    // First initialize each site
                     foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                     {
                         SpeciesWasThere[site] = new Library.Parameters.Species.AuxParm<bool>(PlugIn.modelCore.Species);
                     }
-                }
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<bool>> Established_spc = cohorts.GetIsiteVar(x => x.SpeciesPresent);
+                    // Now map the correct values for the next step
+                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    {
+                        foreach (ISpecies spc in PlugIn.modelCore.Species)
+                        {
+                            SpeciesWasThere[site][spc] = SpeciesIsThere[site][spc];
+                        }
+                    }
+                }
 
                 Landis.Library.Parameters.Species.AuxParm<int> Est_Sum = new Landis.Library.Parameters.Species.AuxParm<int>(PlugIn.modelCore.Species);
 
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-                    {
+                {
                     foreach (ISpecies spc in PlugIn.modelCore.Species)
-                        {
-                        if (Established_spc[site][spc] == true)
+                    {
+                        if (SpeciesIsThere[site][spc] == true)
                         {
                             Est_Sum[spc]++;
                         }
@@ -691,7 +724,13 @@ namespace Landis.Extension.Output.PnET
 
                 new OutputHistogramCohort<ushort>(AgeDistribution.MapNameTemplate, "NrOfCohortsAtAge", 10).WriteOutputHist(values);
 
+                ISiteVar<int> numCohorts = cohorts.GetIsiteVar(x => x.CohortCount);
 
+                string FileName = FileNames.ReplaceTemplateVars(AgeDistribution.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+
+                new OutputMapSiteVar<int, int>(FileName, numCohorts, o => o);
+
+                /*
                 System.Console.WriteLine("Updating output variable: MaxAges");
 
                 ISiteVar<int> maxage = cohorts.GetIsiteVar(x => x.AgeMax);
@@ -699,6 +738,7 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(AgeDistribution.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<int, int>(FileName, maxage, o => o);
+                */
 
             }
             if (overalloutputs != null)
