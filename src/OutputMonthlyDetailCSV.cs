@@ -16,10 +16,10 @@ namespace Landis.Extension.Output.PnET
         {
             this.NameTemplate = NameTemplate;
             this.units = units;
-            this.header = "Timestep,\t" + "January" + "_(" + units + "),\t" + "February" + "_(" + units + "),\t" + "March" + "_(" + units + "),\t"
-                + "April" + "_(" + units + "),\t" + "May" + "_(" + units + "),\t" + "June" + "_(" + units + "),\t" + "July" + "_(" + units + "),\t"
-                + "August" + "_(" + units + "),\t" + "September" + "_(" + units + "),\t" + "October" + "_(" + units + "),\t"
-                + "November" + "_(" + units + "),\t" + "December" + "_(" + units + ")";
+            this.header = "Time,\t" + "January" + "_" + units + ",\t" + "February" + "_" + units + ",\t" + "March" + "_" + units + ",\t"
+                + "April" + "_" + units + ",\t" + "May" + "_" + units + ",\t" + "June" + "_" + units + ",\t" + "July" + "_" + units + ",\t"
+                + "August" + "_" + units + ",\t" + "September" + "_" + units + ",\t" + "October" + "_" + units + ",\t"
+                + "November" + "_" + units + ",\t" + "December" + "_" + units;
 
             if (!NameTemplate.Contains(".csv")) throw new System.Exception("NameTemplate " + NameTemplate + " does not have an extension '.csv'");
             if (NameTemplate.Length == 0) throw new System.Exception("Error initializing output CSV, no template name available");

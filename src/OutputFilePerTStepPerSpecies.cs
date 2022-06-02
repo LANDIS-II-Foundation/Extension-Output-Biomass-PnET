@@ -13,7 +13,7 @@ namespace Landis.Extension.Output.PnET
             string hdr = "Time";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                hdr += ", " + spc.Name + units;
+                hdr += ", " + spc.Name + "_" + units;
             }
             return hdr;
             

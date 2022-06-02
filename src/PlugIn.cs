@@ -63,6 +63,9 @@ namespace Landis.Extension.Output.PnET
         static OutputMonthlyDetailCSV AverageAlbedoCSV;
         static OutputMonthlyDetailCSV AverageActiveLayerCSV;
         static OutputMonthlyDetailCSV AverageFrostDepthCSV;
+        static OutputCSV AverageAETCSV;
+        static OutputCSV AverageAnnualPsnCSV;
+        static OutputCSV AveragePETCSV;
         static OutputVariable MonthlyAvgSnowPack;
         static OutputVariable MonthlyAvgWater;
         static OutputVariable MonthlyAvgLAI;
@@ -188,18 +191,20 @@ namespace Landis.Extension.Output.PnET
             if (parameters.Albedo != null)
             {
                 Albedo = new OutputVariable(parameters.Albedo, "ratio_W/m2");
-                AverageAlbedoCSV = new OutputMonthlyDetailCSV(parameters.Albedo.Replace("_{timestep}.img", ".csv"), "ratio_W/m2");
+                AverageAlbedoCSV = new OutputMonthlyDetailCSV(parameters.Albedo.Replace("_{timestep}.img", 
+                    ".csv").Replace("-{timestep}.img", ".csv"), "ratio_W/m2");
             }
             if (parameters.MonthlyActiveLayerDepth != null)
             {
                 MonthlyActiveLayerDepth = new OutputVariable(parameters.MonthlyActiveLayerDepth, "cm/mo");
-                AverageActiveLayerCSV = new OutputMonthlyDetailCSV(parameters.MonthlyActiveLayerDepth.Replace("_{timestep}.img", ".csv"), 
-                    "cm");
+                AverageActiveLayerCSV = new OutputMonthlyDetailCSV(parameters.MonthlyActiveLayerDepth.Replace("_{timestep}.img", 
+                    ".csv").Replace("-{timestep}.img", ".csv"), "cm");
             }
             if (parameters.MonthlyFrostDepth != null)
             {
                 MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm/mo");
-                AverageFrostDepthCSV = new OutputMonthlyDetailCSV(parameters.MonthlyFrostDepth.Replace("_{timestep}.img", ".csv"), "cm");
+                AverageFrostDepthCSV = new OutputMonthlyDetailCSV(parameters.MonthlyFrostDepth.Replace("_{timestep}.img", 
+                    ".csv").Replace("-{timestep}.img", ".csv"), "cm");
             }
             if (parameters.MonthlyAvgSnowPack != null)
             {
@@ -216,26 +221,40 @@ namespace Landis.Extension.Output.PnET
             if (parameters.EstablishmentProbability != null)
             {
                 EstablishmentProbability = new OutputVariable(parameters.EstablishmentProbability, "");
-
             }
             if (parameters.SpeciesEst != null)
             {
                 SpeciesEstablishment = new OutputVariable(parameters.SpeciesEst, "");
-
             }
             if (parameters.Water != null)
             {
                 Water = new OutputVariable(parameters.Water, "mm");
                 Water.output_table_ecoregions = new OutputTableEcoregions(Water.MapNameTemplate);
             }
+            if (parameters.PET != null)
+            {
+                PET = new OutputVariable(parameters.PET, "mm/mo");
+                AveragePETCSV = new OutputCSV(parameters.PET.Replace("_{timestep}.img", ".csv").Replace("-{timestep}.img", ".csv"), 
+                    "mm/mo", "PET");
+            }
+            if (parameters.AETAvg != null)
+            {
+                AETAvg = new OutputVariable(parameters.AETAvg, "mm/mo");
+                AverageAETCSV = new OutputCSV(parameters.AETAvg.Replace("_{timestep}.img", ".csv").Replace("-{timestep}.img", ".csv"), 
+                    "mm/mo", "AETAverage");
+            }
+            if (parameters.AnnualPsn != null)
+            {
+                AnnualPsn = new OutputVariable(parameters.AnnualPsn, "g/m2");
+                AverageAnnualPsnCSV = new OutputCSV(parameters.AnnualPsn.Replace("_{timestep}.img", ".csv").Replace("-{timestep}.img", ".csv"), 
+                    "g/m2", "AnnualPsn");
+            }
+
             if (parameters.NSC != null) NSC = new OutputVariable(parameters.NSC, "gC/m2");
-            if (parameters.PET != null) PET = new OutputVariable(parameters.PET, "mm/mo");
-            if (parameters.AETAvg != null) AETAvg = new OutputVariable(parameters.AETAvg, "mm/mo");
             if (parameters.SubCanopyPAR != null) SubCanopyPAR = new OutputVariable(parameters.SubCanopyPAR,  "W/m2 or mmol/m2");
             if (parameters.Litter != null) NonWoodyDebris = new OutputVariable(parameters.Litter, "g/m2");
             if (parameters.WoodyDebris != null) WoodyDebris = new OutputVariable(parameters.WoodyDebris,  "g/m2");
             if (parameters.AgeDistribution != null) AgeDistribution = new OutputVariable(parameters.AgeDistribution, "yr");
-            if (parameters.AnnualPsn != null) AnnualPsn = new OutputVariable(parameters.AnnualPsn, "g/m2");
             if (parameters.CohortBalance != null) overalloutputs = new OutputAggregatedTable(parameters.CohortBalance);
             if (parameters.EstablishmentTable != null) establishmentTable = new OutputEstablishmentTable(parameters.EstablishmentTable);
             if (parameters.MortalityTable != null) mortalityTable = new OutputMortalityTable(parameters.MortalityTable);
@@ -434,6 +453,8 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(PET.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
+
+                AveragePETCSV.WriteAverageFromSiteVar(PlugIn.modelCore.CurrentTime, values);
             }
             if (WoodySenescence != null)
             {
@@ -474,6 +495,8 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(AETAvg.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
+
+                AverageAETCSV.WriteAverageFromSiteVar(PlugIn.ModelCore.CurrentTime, values);
             }
             if (MonthlyFolResp != null)
             {
@@ -589,6 +612,8 @@ namespace Landis.Extension.Output.PnET
                     new OutputMapSpecies(_pest, spc, EstablishmentProbability.MapNameTemplate);
                 }
 
+                OutputFilePerTStepPerSpecies.Write<byte>(EstablishmentProbability.MapNameTemplate, EstablishmentProbability.units, PlugIn.ModelCore.CurrentTime, pest);
+
             }
             if (SpeciesEstablishment != null)
             {
@@ -665,6 +690,7 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<int> annualNetPsn = cohorts.GetIsiteVar(site => (int)site.NetPsnSum);
                 string FileName = FileNames.ReplaceTemplateVars(AnnualPsn.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<int, int>(FileName, annualNetPsn, o => o);
+                AverageAnnualPsnCSV.WriteAverageFromSiteVar(PlugIn.modelCore.CurrentTime, annualNetPsn);
             }
 
             if (Water != null)
@@ -729,17 +755,6 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(AgeDistribution.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<int, int>(FileName, numCohorts, o => o);
-
-                /*
-                System.Console.WriteLine("Updating output variable: MaxAges");
-
-                ISiteVar<int> maxage = cohorts.GetIsiteVar(x => x.AgeMax);
-
-                string FileName = FileNames.ReplaceTemplateVars(AgeDistribution.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
-
-                new OutputMapSiteVar<int, int>(FileName, maxage, o => o);
-                */
-
             }
             if (overalloutputs != null)
             {
