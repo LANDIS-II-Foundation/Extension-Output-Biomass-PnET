@@ -63,6 +63,7 @@ namespace Landis.Extension.Output.PnET
         static OutputMonthlyDetailCSV AverageAlbedoCSV;
         static OutputMonthlyDetailCSV AverageActiveLayerCSV;
         static OutputMonthlyDetailCSV AverageFrostDepthCSV;
+        static OutputMonthlyDetailCSV MonthlyNetPsnCSV;
         static OutputVariable MonthlyAvgSnowPack;
         static OutputVariable MonthlyAvgWater;
         static OutputVariable MonthlyAvgLAI;
@@ -184,6 +185,7 @@ namespace Landis.Extension.Output.PnET
             if (parameters.MonthlyNetPsn != null)
             {
                 MonthlyNetPsn = new OutputVariable(parameters.MonthlyNetPsn, "gC/mo");
+                MonthlyNetPsnCSV = new OutputMonthlyDetailCSV(parameters.MonthlyNetPsn.Replace("_{timestep}.img", ".csv"), "gC/mo");
             }
             if (parameters.Albedo != null)
             {
@@ -273,7 +275,7 @@ namespace Landis.Extension.Output.PnET
 
                 // Total LAI per site
                 ISiteVar<float> values = cohorts.GetIsiteVar(o => o.CanopyLAImax);
-                string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+                string FileName = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
                 new OutputMapSiteVar<float, float>(FileName, values);
                 // Values per species each time step
                 LAI.output_table_ecoregions.WriteUpdate(PlugIn.ModelCore.CurrentTime, values);
@@ -492,7 +494,7 @@ namespace Landis.Extension.Output.PnET
                 ISiteVar<float[]> monthlyNetPsn = cohorts.GetIsiteVar(site => site.NetPsn);
 
                 WriteMonthlyOutput(monthlyNetPsn, MonthlyNetPsn.MapNameTemplate);
-                AverageAlbedoCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyNetPsn);
+                MonthlyNetPsnCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyNetPsn);
             }
             if (MonthlyMaintResp != null)
             {
