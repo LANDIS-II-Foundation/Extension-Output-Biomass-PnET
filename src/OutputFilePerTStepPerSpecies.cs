@@ -13,8 +13,9 @@ namespace Landis.Extension.Output.PnET
             string hdr = "Time";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                hdr += ", " + spc.Name + units;
+                hdr += ", " + spc.Name + "_" + units;
             }
+            hdr += ", " + "AllSpp_" + units;
             return hdr;
             
         }
@@ -29,12 +30,13 @@ namespace Landis.Extension.Output.PnET
             }
 
             string line = TStep.ToString();
-
+            float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
                 line += ", " + Values[spc];
+                valueSum += float.Parse(Values[spc].ToString());
             }
-
+            line += ", " + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
@@ -52,8 +54,9 @@ namespace Landis.Extension.Output.PnET
                 System.IO.File.WriteAllLines(FileName, new string[] { Header(units) });
             }
 
-            AuxParm<ulong> Values_spc = new AuxParm<ulong>(PlugIn.ModelCore.Species);
-            AuxParm<ulong> Values_cnt = new AuxParm<ulong>(PlugIn.ModelCore.Species);
+            AuxParm<float> Values_spc = new AuxParm<float>(PlugIn.ModelCore.Species);
+            AuxParm<uint> Values_cnt = new AuxParm<uint>(PlugIn.ModelCore.Species);
+          
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
@@ -68,7 +71,7 @@ namespace Landis.Extension.Output.PnET
                     }
                     else
                     {
-                        ulong numeric = ulong.Parse(Values[site][spc].ToString());
+                        float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
                             Values_spc[spc] += numeric;
                     }
@@ -78,12 +81,13 @@ namespace Landis.Extension.Output.PnET
             }
 
             string line = TStep.ToString() ;
-
+            float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
                 line += ", " + (Values_spc[spc] / (float)Values_cnt[spc]);
+                valueSum += (Values_spc[spc] / (float)Values_cnt[spc]);
             }
-
+            line += ", " + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
@@ -102,7 +106,7 @@ namespace Landis.Extension.Output.PnET
                 System.IO.File.WriteAllLines(FileName, new string[] { Header(units) });
             }
 
-            AuxParm<ulong> Values_spc = new AuxParm<ulong>(PlugIn.ModelCore.Species);
+            AuxParm<float> Values_spc = new AuxParm<float>(PlugIn.ModelCore.Species);
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
@@ -117,7 +121,7 @@ namespace Landis.Extension.Output.PnET
                     }
                     else
                     {
-                        ulong numeric = ulong.Parse(Values[site][spc].ToString());
+                        float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
                             Values_spc[spc] += numeric;
                     }
@@ -125,12 +129,13 @@ namespace Landis.Extension.Output.PnET
             }
 
             string line = TStep.ToString() ;
-
+            float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
                 line += ", " + Values_spc[spc];
+                valueSum += float.Parse(Values_spc[spc].ToString());
             }
-
+            line += ", " + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();

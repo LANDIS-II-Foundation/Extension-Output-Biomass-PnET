@@ -61,18 +61,21 @@ namespace Landis.Extension.Output.PnET
 
             if(LAI != null)
             {
-                OutputMetadata mapOut_LAI = new OutputMetadata()
+                foreach (ISpecies spc in PlugIn.SelectedSpecies)
                 {
-                    Type = OutputType.Map,
-                    //Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
-                    Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate),
-                    //FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
-                    FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate),
-                    Map_DataType = MapDataType.Continuous,
-                    Visualize = true,
-                    //Map_Unit = "categorical",
-                };
-                Extension.OutputMetadatas.Add(mapOut_LAI);
+                    OutputMetadata mapOut_LAI = new OutputMetadata()
+                    {
+                        Type = OutputType.Map,
+                        //Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                        Name = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, spc.Name),
+                        //FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime),
+                        FilePath = FileNames.ReplaceTemplateVars(LAI.MapNameTemplate, spc.Name),
+                        Map_DataType = MapDataType.Continuous,
+                        Visualize = true,
+                        //Map_Unit = "categorical",
+                    };
+                    Extension.OutputMetadatas.Add(mapOut_LAI);
+                }
             }
 
             if(WoodRootBiomass != null)
