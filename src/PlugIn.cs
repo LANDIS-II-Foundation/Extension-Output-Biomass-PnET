@@ -63,6 +63,7 @@ namespace Landis.Extension.Output.PnET
         static OutputMonthlyDetailCSV AverageAlbedoCSV;
         static OutputMonthlyDetailCSV AverageActiveLayerCSV;
         static OutputMonthlyDetailCSV AverageFrostDepthCSV;
+        static OutputMonthlyDetailCSV AverageMonthlyNetPsnCSV;
         static OutputCSV AverageAETCSV;
         static OutputCSV AverageAnnualPsnCSV;
         static OutputCSV AveragePETCSV;
@@ -189,13 +190,13 @@ namespace Landis.Extension.Output.PnET
             {
                 MonthlyNetPsn = new OutputVariable(parameters.MonthlyNetPsn, "gC/mo");
                 MonthlyNetPsnCSV = new OutputMonthlyDetailCSV(parameters.MonthlyNetPsn.Replace("_{timestep}.img",
-                    ".csv").Replace("-{timestep}.img", ".csv"), "ratio_W/m2");
+                    ".csv").Replace("-{timestep}.img", ".csv"), "gC/mo");
             }
             if (parameters.Albedo != null)
             {
                 Albedo = new OutputVariable(parameters.Albedo, "ratio_W/m2");
                 AverageAlbedoCSV = new OutputMonthlyDetailCSV(parameters.Albedo.Replace("_{timestep}.img", 
-                    ".csv").Replace("-{timestep}.img", ".csv"), "ratio_W/m2");
+                    ".csv").Replace("-{timestep}.img", ".csv"), "DHR");
             }
             if (parameters.MonthlyActiveLayerDepth != null)
             {
@@ -291,7 +292,10 @@ namespace Landis.Extension.Output.PnET
                         LAI_sum[site] += LAI_spc[site];
                     }
 
-                    new OutputMapSpecies(LAI_spc, spc, LAI.MapNameTemplate);
+                    if (AreSpeciesOutputsEnabled(LAI.MapNameTemplate))
+                    {
+                        new OutputMapSpecies(LAI_spc, spc, LAI.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<float>(LAI.MapNameTemplate, LAI.units, PlugIn.ModelCore.CurrentTime, LAIPerSite);
@@ -309,16 +313,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodRootBiom = cohorts.GetIsiteVar(o => o.BiomassPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(WoodRootBiomass.MapNameTemplate))
                 {
-                    ISiteVar<int> WoodRootBiom_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        WoodRootBiom_spc[site] = WoodRootBiom[site][spc];
-                    }
+                        ISiteVar<int> WoodRootBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(WoodRootBiom_spc, spc, WoodRootBiomass.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            WoodRootBiom_spc[site] = WoodRootBiom[site][spc];
+                        }
+
+                        new OutputMapSpecies(WoodRootBiom_spc, spc, WoodRootBiomass.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(WoodRootBiomass.MapNameTemplate, WoodRootBiomass.units, PlugIn.ModelCore.CurrentTime, WoodRootBiom);
@@ -334,16 +341,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodFoliageBiom = cohorts.GetIsiteVar(o => o.AbovegroundBiomassPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(WoodFoliageBiomass.MapNameTemplate))
                 {
-                    ISiteVar<int> WoodFoliageBiom_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        WoodFoliageBiom_spc[site] = WoodFoliageBiom[site][spc];
-                    }
+                        ISiteVar<int> WoodFoliageBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(WoodFoliageBiom_spc, spc, WoodFoliageBiomass.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            WoodFoliageBiom_spc[site] = WoodFoliageBiom[site][spc];
+                        }
+
+                        new OutputMapSpecies(WoodFoliageBiom_spc, spc, WoodFoliageBiomass.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(WoodFoliageBiomass.MapNameTemplate, WoodFoliageBiomass.units, PlugIn.ModelCore.CurrentTime, WoodFoliageBiom);
@@ -359,16 +369,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> WoodBiom = cohorts.GetIsiteVar(o => o.WoodBiomassPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(WoodBiomass.MapNameTemplate))
                 {
-                    ISiteVar<int> WoodBiom_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        WoodBiom_spc[site] = WoodBiom[site][spc];
-                    }
+                        ISiteVar<int> WoodBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(WoodBiom_spc, spc, WoodBiomass.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            WoodBiom_spc[site] = WoodBiom[site][spc];
+                        }
+
+                        new OutputMapSpecies(WoodBiom_spc, spc, WoodBiomass.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(WoodBiomass.MapNameTemplate, WoodBiomass.units, PlugIn.ModelCore.CurrentTime, WoodBiom);
@@ -384,16 +397,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> RootBiom = cohorts.GetIsiteVar(o => o.BelowGroundBiomassPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(RootBiomass.MapNameTemplate))
                 {
-                    ISiteVar<int> RootBiom_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        RootBiom_spc[site] = RootBiom[site][spc];
-                    }
+                        ISiteVar<int> RootBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(RootBiom_spc, spc, RootBiomass.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            RootBiom_spc[site] = RootBiom[site][spc];
+                        }
+
+                        new OutputMapSpecies(RootBiom_spc, spc, RootBiomass.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(RootBiomass.MapNameTemplate, RootBiomass.units, PlugIn.ModelCore.CurrentTime, RootBiom);
@@ -408,16 +424,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> MaxFolBiom = cohorts.GetIsiteVar(o => o.MaxFoliageYearPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(FoliageBiomass.MapNameTemplate))
                 {
-                    ISiteVar<int> MaxFolBiom_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        MaxFolBiom_spc[site] = MaxFolBiom[site][spc];
-                    }
+                        ISiteVar<int> MaxFolBiom_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(MaxFolBiom_spc, spc, FoliageBiomass.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            MaxFolBiom_spc[site] = MaxFolBiom[site][spc];
+                        }
+
+                        new OutputMapSpecies(MaxFolBiom_spc, spc, FoliageBiomass.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(FoliageBiomass.MapNameTemplate, FoliageBiomass.units, PlugIn.ModelCore.CurrentTime, MaxFolBiom);
@@ -432,16 +451,19 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> NSCPerSpecies = cohorts.GetIsiteVar(o => o.NSCPerSpecies);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(NSC.MapNameTemplate))
                 {
-                    ISiteVar<int> NSC_spc = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        NSC_spc[site] = NSCPerSpecies[site][spc];
-                    }
+                        ISiteVar<int> NSC_spc = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(NSC_spc, spc, NSC.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            NSC_spc[site] = NSCPerSpecies[site][spc];
+                        }
+
+                        new OutputMapSpecies(NSC_spc, spc, NSC.MapNameTemplate);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.Write<int>(NSC.MapNameTemplate, NSC.units, PlugIn.ModelCore.CurrentTime, NSCPerSpecies);
@@ -591,11 +613,14 @@ namespace Landis.Extension.Output.PnET
 
                 new OutputHistogramCohort<int>(CohortsPerSpc.MapNameTemplate, "CohortsPerSpcPerSite", 10).WriteOutputHist(cps);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(CohortsPerSpc.MapNameTemplate))
                 {
-                    string FileName = FileNames.ReplaceTemplateVars(CohortsPerSpc.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime);
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                    {
+                        string FileName = FileNames.ReplaceTemplateVars(CohortsPerSpc.MapNameTemplate, spc.Name, PlugIn.ModelCore.CurrentTime);
 
-                    new OutputMapSiteVar<Landis.Library.Parameters.Species.AuxParm<int>, int>(FileName, cps, o => o[spc]);
+                        new OutputMapSiteVar<Landis.Library.Parameters.Species.AuxParm<int>, int>(FileName, cps, o => o[spc]);
+                    }
                 }
 
                 OutputFilePerTStepPerSpecies.WriteSum<int>(CohortsPerSpc.MapNameTemplate, CohortsPerSpc.units, PlugIn.ModelCore.CurrentTime, cps);
@@ -606,19 +631,22 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<byte>> pest = (ISiteVar<Landis.Library.Parameters.Species.AuxParm<byte>>)cohorts.GetIsiteVar(o => o.EstablishmentProbability.Probability);
 
-                foreach (ISpecies spc in PlugIn.SelectedSpecies)
+                if (AreSpeciesOutputsEnabled(EstablishmentProbability.MapNameTemplate))
                 {
-                    ISiteVar<int> _pest = modelCore.Landscape.NewSiteVar<int>();
-
-                    foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                    foreach (ISpecies spc in PlugIn.SelectedSpecies)
                     {
-                        _pest[site] = pest[site][spc];
-                    }
+                        ISiteVar<int> _pest = modelCore.Landscape.NewSiteVar<int>();
 
-                    new OutputMapSpecies(_pest, spc, EstablishmentProbability.MapNameTemplate);
+                        foreach (ActiveSite site in PlugIn.modelCore.Landscape)
+                        {
+                            _pest[site] = pest[site][spc];
+                        }
+
+                        new OutputMapSpecies(_pest, spc, EstablishmentProbability.MapNameTemplate);
+                    }
                 }
 
-                OutputFilePerTStepPerSpecies.Write<byte>(EstablishmentProbability.MapNameTemplate, EstablishmentProbability.units, PlugIn.ModelCore.CurrentTime, pest);
+                OutputFilePerTStepPerSpecies.Write<byte>(EstablishmentProbability.MapNameTemplate, EstablishmentProbability.units, PlugIn.ModelCore.CurrentTime, pest, 0.01);
 
             }
             if (SpeciesEstablishment != null)
@@ -646,8 +674,10 @@ namespace Landis.Extension.Output.PnET
                             SpeciesWasThere[site][spc] = SpeciesIsThere[site][spc];
                         }
 
-
-                        OutputMapSpecies output_map =  new OutputMapSpecies(comp, spc, SpeciesEstablishment.MapNameTemplate);
+                        if (AreSpeciesOutputsEnabled(SpeciesEstablishment.MapNameTemplate))
+                        {
+                            OutputMapSpecies output_map = new OutputMapSpecies(comp, spc, SpeciesEstablishment.MapNameTemplate);
+                        }
 
                         // map label text
                         //m.PrintLabels(SpeciesEstablishment.MapNameTemplate, spc);
@@ -686,7 +716,8 @@ namespace Landis.Extension.Output.PnET
                     }
                 }
 
-                OutputFilePerTStepPerSpecies.Write<int>(SpeciesEstablishment.MapNameTemplate, SpeciesEstablishment.units, PlugIn.ModelCore.CurrentTime, Est_Sum);
+                OutputFilePerTStepPerSpecies.Write<int>(SpeciesEstablishment.MapNameTemplate.Replace("{timestep}", "AllYears"), 
+                    SpeciesEstablishment.units, PlugIn.ModelCore.CurrentTime, Est_Sum);
 
             }
             if (AnnualPsn != null)
@@ -777,6 +808,11 @@ namespace Landis.Extension.Output.PnET
                 System.Console.WriteLine("Updating output variable: MortalityTable");
                 OutputMortalityTable.WriteMortalityTable();
             }
+        }
+
+        private bool AreSpeciesOutputsEnabled(string mapNameTemplate)
+        {
+            return !string.IsNullOrEmpty(mapNameTemplate) && mapNameTemplate.Contains("{species}");
         }
 
         private static void WriteMonthlyOutput(ISiteVar<float[]> monthly, string MapNameTemplate, double multiplier = 1, int inactiveValue = 0, bool[] monthsToOutput = null)
