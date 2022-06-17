@@ -44,7 +44,7 @@ namespace Landis.Extension.Output.PnET
         }
 
         // Average values across sites
-        public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values)
+        public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values, double multiplier = 1)
         {
             string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}","AllYears");
 
@@ -73,7 +73,7 @@ namespace Landis.Extension.Output.PnET
                     {
                         float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
-                            Values_spc[spc] += numeric;
+                            Values_spc[spc] += (ulong)(numeric * multiplier);
                     }
 
                     Values_cnt[spc]++;
@@ -91,8 +91,6 @@ namespace Landis.Extension.Output.PnET
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
-             
-   
         }
 
         // Sum values across sites
