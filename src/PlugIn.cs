@@ -566,21 +566,21 @@ namespace Landis.Extension.Output.PnET
                 System.Console.WriteLine("Updating output variable: Monthly Avg Snow Pack");
                 ISiteVar<float[]> monthlyAvgSnowPack = cohorts.GetIsiteVar(site => site.MonthlyAvgSnowPack);
 
-                WriteMonthlyOutput(monthlyAvgSnowPack, MonthlyAvgSnowPack.MapNameTemplate);
+                WriteMonthlyDecimalOutput(monthlyAvgSnowPack, MonthlyAvgSnowPack.MapNameTemplate);
             }
             if (MonthlyAvgWater != null && PlugIn.ModelCore.CurrentTime != 0)
             {
                 System.Console.WriteLine("Updating output variable: Monthly Avg Water");
                 ISiteVar<float[]> monthlyAvgWater = cohorts.GetIsiteVar(site => site.MonthlyAvgWater);
 
-                WriteMonthlyOutput(monthlyAvgWater, MonthlyAvgWater.MapNameTemplate);
+                WriteMonthlyDecimalOutput(monthlyAvgWater, MonthlyAvgWater.MapNameTemplate);
             }
             if (MonthlyAvgLAI != null && PlugIn.ModelCore.CurrentTime != 0)
             {
                 System.Console.WriteLine("Updating output variable: Monthly Avg LAI");
                 ISiteVar<float[]> monthlyAvgLAI = cohorts.GetIsiteVar(site => site.MonthlyAvgLAI);
 
-                WriteMonthlyOutput(monthlyAvgLAI, MonthlyAvgLAI.MapNameTemplate);
+                WriteMonthlyDecimalOutput(monthlyAvgLAI, MonthlyAvgLAI.MapNameTemplate);
             }
             if (CohortsPerSpc != null)
             {
