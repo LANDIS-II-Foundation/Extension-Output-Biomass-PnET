@@ -298,7 +298,7 @@ namespace Landis.Extension.Output.PnET
                     }
                 }
 
-                OutputFilePerTStepPerSpecies.Write<float>(LAI.MapNameTemplate, LAI.units, PlugIn.ModelCore.CurrentTime, LAIPerSite);
+                OutputFilePerTStepPerSpecies.Write<float>(LAI.MapNameTemplate, LAI.units, PlugIn.ModelCore.CurrentTime, LAIPerSite, 1, false);
 
                 // Total LAI per site
                 //ISiteVar<float> values = cohorts.GetIsiteVar(o => o.CanopyLAImax);
@@ -607,7 +607,7 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyDecimalOutput(monthlyFrostDepth, MonthlyFrostDepth.MapNameTemplate, 100, -1,
                     monthsToOutput);
-                AverageFrostDepthCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyFrostDepth);
+                AverageFrostDepthCSV.WriteMonthlyDetail(PlugIn.ModelCore.CurrentTime, monthlyFrostDepth, 100);
             }
             if(MonthlyAvgSnowPack != null && PlugIn.ModelCore.CurrentTime != 0)
             {
@@ -655,7 +655,7 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: EstablishmentProbability");
 
-                ISiteVar<Landis.Library.Parameters.Species.AuxParm<byte>> pest = (ISiteVar<Landis.Library.Parameters.Species.AuxParm<byte>>)cohorts.GetIsiteVar(o => o.EstablishmentProbability.Probability);
+                ISiteVar<Landis.Library.Parameters.Species.AuxParm<float>> pest = (ISiteVar<Landis.Library.Parameters.Species.AuxParm<float>>)cohorts.GetIsiteVar(o => o.EstablishmentProbability.Probability);
 
                 if (AreSpeciesOutputsEnabled(EstablishmentProbability.MapNameTemplate))
                 {
@@ -665,14 +665,14 @@ namespace Landis.Extension.Output.PnET
 
                         foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                         {
-                            _pest[site] = pest[site][spc];
+                            _pest[site] = (int)(pest[site][spc] * 100);
                         }
 
                         new OutputMapSpecies(_pest, spc, EstablishmentProbability.MapNameTemplate);
                     }
                 }
 
-                OutputFilePerTStepPerSpecies.Write<byte>(EstablishmentProbability.MapNameTemplate, EstablishmentProbability.units, PlugIn.ModelCore.CurrentTime, pest, 0.01);
+                OutputFilePerTStepPerSpecies.Write<float>(EstablishmentProbability.MapNameTemplate, EstablishmentProbability.units, PlugIn.ModelCore.CurrentTime, pest, 100);
 
             }
             if (SpeciesEstablishment != null)
@@ -773,13 +773,11 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: SubCanopyPAR");
 
-                ISiteVar<float> SubCanopyRadiation = cohorts.GetIsiteVar(x => x.SubCanopyParMAX);
+                ISiteVar<float> SubCanopyRadiation = cohorts.GetIsiteVar(x => x.SubCanopyPar);
 
                 string FileName = FileNames.ReplaceTemplateVars(SubCanopyPAR.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<float, float>(FileName, SubCanopyRadiation, o => o);
-
-
             }
             if (NonWoodyDebris != null)
             {

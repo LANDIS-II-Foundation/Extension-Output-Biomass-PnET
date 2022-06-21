@@ -44,7 +44,7 @@ namespace Landis.Extension.Output.PnET
         }
 
         // Average values across sites
-        public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values, double multiplier = 1)
+        public static void Write<T>(string MapNameTemplate, string units, int TStep, ISiteVar<Landis.Library.Parameters.Species.AuxParm<T>> Values, double multiplier = 1, bool includeZeroValueSitesInAverage = true)
         {
             string FileName = FileNames.ReplaceTemplateVars(MapNameTemplate).Replace(".img", ".csv").Replace("{timestep}","AllYears");
 
@@ -61,29 +61,47 @@ namespace Landis.Extension.Output.PnET
             {
                 foreach (ISpecies spc in PlugIn.ModelCore.Species)
                 {
+                    bool nonZeroSite = false;
 
                     if (typeof(T) == typeof(bool))
                     {
                         if (Values[site][spc].ToString() == bool.TrueString)
                         {
                             Values_spc[spc] ++;
+                            nonZeroSite = true;
                         }
                     }
                     else
                     {
                         float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
+                        {
                             Values_spc[spc] += (ulong)(numeric * multiplier);
+
+                            if ((numeric * multiplier) != 0)
+                            {
+                                nonZeroSite = true;
+                            }
+                        }
                     }
 
-                    Values_cnt[spc]++;
+                    if (nonZeroSite || includeZeroValueSitesInAverage)
+                    {
+                        Values_cnt[spc]++;
+                    }
                 }
             }
 
-            string line = TStep.ToString() ;
+            string line = TStep.ToString();
             float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
+                // Avoid divide by zero if all values are zero
+                if ((float)Values_cnt[spc] == 0)
+                {
+                    Values_cnt[spc] = 1;
+                }
+
                 line += ", " + (Values_spc[spc] / (float)Values_cnt[spc]);
                 valueSum += (Values_spc[spc] / (float)Values_cnt[spc]);
             }
