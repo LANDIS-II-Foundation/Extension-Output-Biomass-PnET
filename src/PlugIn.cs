@@ -200,13 +200,13 @@ namespace Landis.Extension.Output.PnET
             }
             if (parameters.MonthlyActiveLayerDepth != null)
             {
-                MonthlyActiveLayerDepth = new OutputVariable(parameters.MonthlyActiveLayerDepth, "cm/mo");
+                MonthlyActiveLayerDepth = new OutputVariable(parameters.MonthlyActiveLayerDepth, "cm");
                 AverageActiveLayerCSV = new OutputMonthlyDetailCSV(parameters.MonthlyActiveLayerDepth.Replace("_{timestep}.img", 
                     ".csv").Replace("-{timestep}.img", ".csv"), "cm");
             }
             if (parameters.MonthlyFrostDepth != null)
             {
-                MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm/mo");
+                MonthlyFrostDepth = new OutputVariable(parameters.MonthlyFrostDepth, "cm");
                 AverageFrostDepthCSV = new OutputMonthlyDetailCSV(parameters.MonthlyFrostDepth.Replace("_{timestep}.img", 
                     ".csv").Replace("-{timestep}.img", ".csv"), "cm");
             }
@@ -773,7 +773,7 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: SubCanopyPAR");
 
-                ISiteVar<float> SubCanopyRadiation = cohorts.GetIsiteVar(x => x.SubCanopyPar);
+                ISiteVar<float> SubCanopyRadiation = cohorts.GetIsiteVar(x => x.JulySubCanopyPar);
 
                 string FileName = FileNames.ReplaceTemplateVars(SubCanopyPAR.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
