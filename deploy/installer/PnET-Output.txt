@@ -1,7 +1,11 @@
 LandisData   Extension
 
 Name         "Output-PnET"
+<<<<<<< HEAD
 Version      "5.0 (release candidate 4)"
+=======
+Version      "5.0 (release candidate 3)"
+>>>>>>> e2c5467d714a242a95e8c6fa187813d0e5742551
 Type         output
 Assembly     Landis.Extension.Output.PnET-v5
 Class        Landis.Extension.Output.PnET.PlugIn
