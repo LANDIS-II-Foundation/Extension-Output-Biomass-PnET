@@ -778,6 +778,9 @@ namespace Landis.Extension.Output.PnET
                 string FileName = FileNames.ReplaceTemplateVars(SubCanopyPAR.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
                 new OutputMapSiteVar<float, float>(FileName, SubCanopyRadiation, o => o);
+
+
+
             }
             if (NonWoodyDebris != null)
             {
