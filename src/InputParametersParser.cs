@@ -75,6 +75,7 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MortalityTable = new InputVar<string>("MortalityTable");
             InputVar<string> NSC = new InputVar<string>("NSC");
             InputVar<string> PET = new InputVar<string>("PET");
+            InputVar<string> SiteMossDepth = new InputVar<string>("SiteMossDepth");
 
             List<string> OutputList = new List<string>();
             OutputList.Add(WoodRootBiomass.Name);
@@ -111,6 +112,7 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MortalityTable.Name);
             OutputList.Add(NSC.Name);
             OutputList.Add(PET.Name);
+            OutputList.Add(SiteMossDepth.Name);
 
             int lineNumber = LineNumber;
             ReadVar(speciesName);
@@ -325,6 +327,12 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(PET))
                 {
                     parameters.PET = PET.Value;
+                    continue;
+                }
+
+                if (ReadOptionalVar(SiteMossDepth))
+                {
+                    parameters.SiteMossDepth = SiteMossDepth.Value;
                     continue;
                 }
 

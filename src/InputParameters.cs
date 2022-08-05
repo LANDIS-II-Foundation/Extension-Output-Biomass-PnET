@@ -66,5 +66,6 @@ namespace Landis.Extension.Output.PnET
 
         public string NSC;
         public string PET;
+        public string SiteMossDepth;
     }
 }

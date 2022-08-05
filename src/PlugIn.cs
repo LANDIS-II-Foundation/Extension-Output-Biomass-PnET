@@ -75,6 +75,7 @@ namespace Landis.Extension.Output.PnET
         static  OutputVariable SubCanopyPAR;
         static OutputVariable NSC;
         static OutputVariable PET;
+        static OutputVariable SiteMossDepth;
         static OutputAggregatedTable overalloutputs;
         static OutputEstablishmentTable establishmentTable;
         static OutputMortalityTable mortalityTable;
@@ -259,6 +260,7 @@ namespace Landis.Extension.Output.PnET
             if (parameters.Litter != null) NonWoodyDebris = new OutputVariable(parameters.Litter, "g/m2");
             if (parameters.WoodyDebris != null) WoodyDebris = new OutputVariable(parameters.WoodyDebris,  "g/m2");
             if (parameters.AgeDistribution != null) AgeDistribution = new OutputVariable(parameters.AgeDistribution, "yr");
+            if (parameters.SiteMossDepth != null) SiteMossDepth = new OutputVariable(parameters.SiteMossDepth, "m");
             if (parameters.CohortBalance != null) overalloutputs = new OutputAggregatedTable(parameters.CohortBalance);
             if (parameters.EstablishmentTable != null) establishmentTable = new OutputEstablishmentTable(parameters.EstablishmentTable);
             if (parameters.MortalityTable != null) mortalityTable = new OutputMortalityTable(parameters.MortalityTable);
@@ -483,6 +485,16 @@ namespace Landis.Extension.Output.PnET
                 new OutputMapSiteVar<float, float>(FileName, values, o => o);
 
                 AveragePETCSV.WriteAverageFromSiteVar(PlugIn.modelCore.CurrentTime, values);
+            }
+            if (SiteMossDepth != null)
+            {
+                System.Console.WriteLine("Updating output variable: SiteMossDepth");
+
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.SiteMossDepth);
+
+                string FileName = FileNames.ReplaceTemplateVars(SiteMossDepth.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
+
+                new OutputMapSiteVar<float, float>(FileName, values, o => o);
             }
             if (WoodySenescence != null)
             {
