@@ -490,11 +490,11 @@ namespace Landis.Extension.Output.PnET
             {
                 System.Console.WriteLine("Updating output variable: SiteMossDepth");
 
-                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.SiteMossDepth);
+                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.SiteMossDepth * (float)100);// convert m to cm
 
                 string FileName = FileNames.ReplaceTemplateVars(SiteMossDepth.MapNameTemplate, "", PlugIn.ModelCore.CurrentTime);
 
-                new OutputMapSiteVar<float, float>(FileName, values, o => o);
+                new OutputMapSiteVar<float, float>(FileName, values, o => o ); 
             }
             if (WoodySenescence != null)
             {
