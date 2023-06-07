@@ -71,6 +71,15 @@ namespace Landis.Extension.Output.PnET
         static OutputVariable MonthlyAvgSnowPack;
         static OutputVariable MonthlyAvgWater;
         static OutputVariable MonthlyAvgLAI;
+        static OutputVariable MonthlyEvap;
+        static OutputVariable MonthlyInterception;
+        static OutputVariable MonthlyActualTrans;
+        static OutputVariable MonthlyLeakage;
+        static OutputVariable MonthlyRunoff;
+        static OutputVariable MonthlyAET;
+        static OutputVariable MonthlyPotentialEvap;
+        static OutputVariable MonthlyPotentialTrans;
+
         static OutputVariable Water;
         static  OutputVariable SubCanopyPAR;
         static OutputVariable NSC;
@@ -217,11 +226,43 @@ namespace Landis.Extension.Output.PnET
             }
             if (parameters.MonthlyAvgWater != null)
             {
-                MonthlyAvgWater = new OutputVariable(parameters.MonthlyAvgWater, "mm water equivalent");
+                MonthlyAvgWater = new OutputVariable(parameters.MonthlyAvgWater, "water proportion");
             }
             if (parameters.MonthlyAvgLAI != null)
             {
-                MonthlyAvgLAI = new OutputVariable(parameters.MonthlyAvgLAI, "mm water equivalent");
+                MonthlyAvgLAI = new OutputVariable(parameters.MonthlyAvgLAI, "index");
+            }
+            if (parameters.MonthlyEvap != null)
+            {
+                MonthlyEvap = new OutputVariable(parameters.MonthlyEvap, "mm water");
+            }
+            if (parameters.MonthlyInterception != null)
+            {
+                MonthlyInterception = new OutputVariable(parameters.MonthlyInterception, "mm water");
+            }
+            if (parameters.MonthlyActualTrans != null)
+            {
+                MonthlyActualTrans = new OutputVariable(parameters.MonthlyActualTrans, "mm water");
+            }
+            if (parameters.MonthlyLeakage != null)
+            {
+                MonthlyLeakage = new OutputVariable(parameters.MonthlyLeakage, "mm water");
+            }
+            if (parameters.MonthlyRunoff != null)
+            {
+                MonthlyRunoff = new OutputVariable(parameters.MonthlyRunoff, "mm water");
+            }
+            if (parameters.MonthlyAET != null)
+            {
+                MonthlyAET = new OutputVariable(parameters.MonthlyAET, "mm water");
+            }
+            if (parameters.MonthlyPotentialEvap != null)
+            {
+                MonthlyPotentialEvap = new OutputVariable(parameters.MonthlyPotentialEvap, "mm water");
+            }
+            if (parameters.MonthlyPotentialTrans != null)
+            {
+                MonthlyPotentialTrans = new OutputVariable(parameters.MonthlyPotentialTrans, "mm water");
             }
             if (parameters.EstablishmentProbability != null)
             {
@@ -642,6 +683,63 @@ namespace Landis.Extension.Output.PnET
 
                 WriteMonthlyDecimalOutput(monthlyAvgLAI, MonthlyAvgLAI.MapNameTemplate);
             }
+            if (MonthlyEvap != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Evaporation");
+                ISiteVar<float[]> monthlyEvap = cohorts.GetIsiteVar(site => site.MonthlyEvap);
+
+                WriteMonthlyDecimalOutput(monthlyEvap, MonthlyEvap.MapNameTemplate);
+            }
+            if (MonthlyInterception != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Interception");
+                ISiteVar<float[]> monthlyInterception = cohorts.GetIsiteVar(site => site.MonthlyInterception);
+
+                WriteMonthlyDecimalOutput(monthlyInterception, MonthlyInterception.MapNameTemplate);
+            }
+            if (MonthlyActualTrans != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Actual Transpiration");
+                ISiteVar<float[]> monthlyTranspiration = cohorts.GetIsiteVar(site => site.MonthlyActualTrans);
+
+                WriteMonthlyDecimalOutput(monthlyTranspiration, MonthlyActualTrans.MapNameTemplate);
+            }
+            if (MonthlyLeakage != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Leakage");
+                ISiteVar<float[]> monthlyLeakage = cohorts.GetIsiteVar(site => site.MonthlyLeakage);
+
+                WriteMonthlyDecimalOutput(monthlyLeakage, MonthlyLeakage.MapNameTemplate);
+            }
+            if (MonthlyRunoff != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Runoff");
+                ISiteVar<float[]> monthlyRunoff = cohorts.GetIsiteVar(site => site.MonthlyRunoff);
+
+                WriteMonthlyDecimalOutput(monthlyRunoff, MonthlyRunoff.MapNameTemplate);
+            }
+            if (MonthlyAET != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly AET");
+                ISiteVar<float[]> monthlyAET = cohorts.GetIsiteVar(site => site.MonthlyAET);
+
+                WriteMonthlyDecimalOutput(monthlyAET, MonthlyAET.MapNameTemplate);
+            }
+            if (MonthlyPotentialEvap != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Potential Evaporation");
+                ISiteVar<float[]> monthlyPotentialEvap = cohorts.GetIsiteVar(site => site.MonthlyPotentialEvap);
+
+                WriteMonthlyDecimalOutput(monthlyPotentialEvap, MonthlyPotentialEvap.MapNameTemplate);
+            }
+            if (MonthlyPotentialTrans != null && PlugIn.ModelCore.CurrentTime != 0)
+            {
+                System.Console.WriteLine("Updating output variable: Monthly Potential Transpiration");
+                ISiteVar<float[]> monthlyPotentialTrans = cohorts.GetIsiteVar(site => site.MonthlyPotentialTrans);
+
+                WriteMonthlyDecimalOutput(monthlyPotentialTrans, MonthlyPotentialTrans.MapNameTemplate);
+            }
+
             if (CohortsPerSpc != null)
             {
                 System.Console.WriteLine("Updating output variable: CohortsPerSpc");

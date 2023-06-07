@@ -48,6 +48,14 @@ namespace Landis.Extension.Output.PnET
         public string MonthlyAvgSnowPack;
         public string MonthlyAvgWater;
         public string MonthlyAvgLAI;
+        public string MonthlyEvap;
+        public string MonthlyInterception;
+        public string MonthlyActualTrans;
+        public string MonthlyLeakage;
+        public string MonthlyRunoff;
+        public string MonthlyAET;
+        public string MonthlyPotentialTrans;
+        public string MonthlyPotentialEvap;
 
         public string LeafAreaIndex;
 

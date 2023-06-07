@@ -61,6 +61,15 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyAvgSnowPack = new InputVar<string>("MonthlyAvgSnowPack");
             InputVar<string> MonthlyAvgWater = new InputVar<string>("MonthlyAvgWater");
             InputVar<string> MonthlyAvgLAI = new InputVar<string>("MonthlyAvgLAI");
+            InputVar<string> MonthlyEvap = new InputVar<string>("MonthlyEvap");
+            InputVar<string> MonthlyInterception = new InputVar<string>("MonthlyInterception");
+            InputVar<string> MonthlyActualTrans = new InputVar<string>("MonthlyActualTrans");
+            InputVar<string> MonthlyLeakage = new InputVar<string>("MonthlyLeakage");
+            InputVar<string> MonthlyRunoff = new InputVar<string>("MonthlyRunoff");
+            InputVar<string> MonthlyAET = new InputVar<string>("MonthlyAET");
+            InputVar<string> MonthlyPotentialEvap = new InputVar<string>("MonthlyPotentialEvap");
+            InputVar<string> MonthlyPotentialTrans = new InputVar<string>("MonthlyPotentialTrans");
+
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
             InputVar<string> RootBiomass = new InputVar<string>("RootBiomass");
@@ -98,6 +107,15 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyAvgSnowPack.Name);
             OutputList.Add(MonthlyAvgWater.Name);
             OutputList.Add(MonthlyAvgLAI.Name);
+            OutputList.Add(MonthlyEvap.Name);
+            OutputList.Add(MonthlyInterception.Name);
+            OutputList.Add(MonthlyActualTrans.Name);
+            OutputList.Add(MonthlyLeakage.Name);
+            OutputList.Add(MonthlyRunoff.Name);
+            OutputList.Add(MonthlyAET.Name);
+            OutputList.Add(MonthlyPotentialEvap.Name);
+            OutputList.Add(MonthlyPotentialTrans.Name);
+
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
             OutputList.Add(RootBiomass.Name);
@@ -241,6 +259,46 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(MonthlyAvgLAI))
                 {
                     parameters.MonthlyAvgLAI = MonthlyAvgLAI.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyEvap))
+                {
+                    parameters.MonthlyEvap = MonthlyEvap.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyInterception))
+                {
+                    parameters.MonthlyInterception = MonthlyInterception.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyActualTrans))
+                {
+                    parameters.MonthlyActualTrans = MonthlyActualTrans.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyLeakage))
+                {
+                    parameters.MonthlyLeakage = MonthlyLeakage.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyRunoff))
+                {
+                    parameters.MonthlyRunoff = MonthlyRunoff.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAET))
+                {
+                    parameters.MonthlyAET = MonthlyAET.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyPotentialEvap))
+                {
+                    parameters.MonthlyPotentialEvap = MonthlyPotentialEvap.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyPotentialTrans))
+                {
+                    parameters.MonthlyPotentialTrans = MonthlyPotentialTrans.Value;
                     continue;
                 }
                 if (ReadOptionalVar(LeafAreaIndex))
