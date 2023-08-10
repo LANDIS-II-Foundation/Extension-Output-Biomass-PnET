@@ -31,7 +31,7 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\deploy\</OutputPath>
+    <OutputPath>..\deploy\libs\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,8 +52,8 @@
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>..\..\..\Support-Library-Dlls-v7\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Biomass-v2">
-      <HintPath>..\..\..\brmiranda\Core-Model-v7\Tool-Console\src\bin\extensions\Landis.Library.Biomass-v2.dll</HintPath>
+    <Reference Include="Landis.Library.Biomass-v2.1">
+      <HintPath>..\..\..\brmiranda\Core-Model-v7\Tool-Console\src\bin\extensions\Landis.Library.Biomass-v2.1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassCohorts-v4">
       <HintPath>..\..\..\brmiranda\Core-Model-v7\Tool-Console\src\bin\extensions\Landis.Library.BiomassCohorts-v4.dll</HintPath>
