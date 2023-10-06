@@ -35,8 +35,29 @@ namespace Landis.Extension.Output.PnET
                 }
             }
         }
-       
-        
+        public OutputMapSpecies(ISiteVar<float> values, ISpecies species, string MapNameTemplate)
+        {
+
+            FileName = FileNames.ReplaceTemplateVars(MapNameTemplate, species.Name, PlugIn.ModelCore.CurrentTime);
+
+            Console.WriteLine("   Writing {0} map to {1} ...", species.Name, FileName);
+
+            using (IOutputRaster<FloatPixel> outputRaster = PlugIn.ModelCore.CreateRaster<FloatPixel>(FileName, PlugIn.ModelCore.Landscape.Dimensions))
+            {
+                FloatPixel pixel = outputRaster.BufferPixel;
+                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                {
+                    if (site.IsActive)
+                    {
+                        pixel.MapCode.Value = values[site];
+                    }
+                    else pixel.MapCode.Value = 0;
+
+                    outputRaster.WriteBufferPixel();
+                }
+            }
+        }
+
     }
 }
 

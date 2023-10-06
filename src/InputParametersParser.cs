@@ -41,11 +41,13 @@ namespace Landis.Extension.Output.PnET
             //      Species
             //      MapNames
             InputVar<string> speciesName = new InputVar<string>("Species");
-            InputVar<string> biomass = new InputVar<string>("Biomass");
-            InputVar<string> abovegroundBiomass = new InputVar<string>("AbovegroundBiomass");
+            InputVar<string> WoodRootBiomass = new InputVar<string>("Wood-RootBiomass");
+            InputVar<string> WoodFoliageBiomass = new InputVar<string>("Wood-FoliageBiomass");
+            InputVar<string> woodBiomass = new InputVar<string>("WoodBiomass");
             InputVar<string> woodySenescence = new InputVar<string>("WoodySenescence");
             InputVar<string> foliageSenescence = new InputVar<string>("FoliageSenescence");
-            InputVar<string> aetAvg = new InputVar<string>("AET");
+            InputVar<string> aet = new InputVar<string>("AET");
+            InputVar<string> aetAvg = new InputVar<string>("AETAvg");
             InputVar<string> LeafAreaIndex = new InputVar<string>("LeafAreaIndex");
             InputVar<string> Establishment = new InputVar<string>("Establishment");
             InputVar<string> EstablishmentProbability = new InputVar<string>("EstablishmentProbability");
@@ -53,9 +55,25 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> MonthlyFolResp = new InputVar<string>("MonthlyFolResp");
             InputVar<string> MonthlyGrossPsn = new InputVar<string>("MonthlyGrossPsn");
             InputVar<string> MonthlyMaintResp = new InputVar<string>("MonthlyMaintResp");
+            InputVar<string> Albedo = new InputVar<string>("Albedo");
+            InputVar<string> MonthlyActiveLayerDepth = new InputVar<string>("MonthlyActiveLayerDepth");
+            InputVar<string> MonthlyFrostDepth = new InputVar<string>("MonthlyFrostDepth");
+            InputVar<string> MonthlyAvgSnowPack = new InputVar<string>("MonthlyAvgSnowPack");
+            InputVar<string> MonthlyAvgWater = new InputVar<string>("MonthlyAvgWater");
+            InputVar<string> MonthlyAvgLAI = new InputVar<string>("MonthlyAvgLAI");
+            InputVar<string> MonthlyEvap = new InputVar<string>("MonthlyEvap");
+            InputVar<string> MonthlyInterception = new InputVar<string>("MonthlyInterception");
+            InputVar<string> MonthlyActualTrans = new InputVar<string>("MonthlyActualTrans");
+            InputVar<string> MonthlyLeakage = new InputVar<string>("MonthlyLeakage");
+            InputVar<string> MonthlyRunoff = new InputVar<string>("MonthlyRunoff");
+            InputVar<string> MonthlyAET = new InputVar<string>("MonthlyAET");
+            InputVar<string> MonthlyPotentialEvap = new InputVar<string>("MonthlyPotentialEvap");
+            InputVar<string> MonthlyPotentialTrans = new InputVar<string>("MonthlyPotentialTrans");
+
             InputVar<string> Water = new InputVar<string>("Water");
             InputVar<string> SubCanopyPAR = new InputVar<string>("SubCanopyPAR");
-            InputVar<string> BelowgroundBiomass = new InputVar<string>("BelowgroundBiomass");
+            InputVar<string> RootBiomass = new InputVar<string>("RootBiomass");
+            InputVar<string> FoliageBiomass = new InputVar<string>("FoliageBiomass");
             InputVar<string> CohortsPerSpecies = new InputVar<string>("CohortsPerSpecies");
             InputVar<string> AnnualPsn = new InputVar<string>("AnnualPsn");
             InputVar<string> WoodyDebris = new InputVar<string>("WoodyDebris");
@@ -64,12 +82,17 @@ namespace Landis.Extension.Output.PnET
             InputVar<string> CohortBalance = new InputVar<string>("CohortBalance");
             InputVar<string> EstablishmentTable = new InputVar<string>("EstablishmentTable");
             InputVar<string> MortalityTable = new InputVar<string>("MortalityTable");
+            InputVar<string> NSC = new InputVar<string>("NSC");
+            InputVar<string> PET = new InputVar<string>("PET");
+            InputVar<string> SiteMossDepth = new InputVar<string>("SiteMossDepth");
 
             List<string> OutputList = new List<string>();
-            OutputList.Add(biomass.Name);
-            OutputList.Add(abovegroundBiomass.Name);
+            OutputList.Add(WoodRootBiomass.Name);
+            OutputList.Add(WoodFoliageBiomass.Name);
+            OutputList.Add(woodBiomass.Name);
             OutputList.Add(woodySenescence.Name);
             OutputList.Add(foliageSenescence.Name);
+            OutputList.Add(aet.Name);
             OutputList.Add(aetAvg.Name);
             OutputList.Add(LeafAreaIndex.Name);
             OutputList.Add(Establishment.Name);
@@ -78,9 +101,25 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(MonthlyFolResp.Name);
             OutputList.Add(MonthlyGrossPsn.Name);
             OutputList.Add(MonthlyMaintResp.Name);
+            OutputList.Add(Albedo.Name);
+            OutputList.Add(MonthlyActiveLayerDepth.Name);
+            OutputList.Add(MonthlyFrostDepth.Name);
+            OutputList.Add(MonthlyAvgSnowPack.Name);
+            OutputList.Add(MonthlyAvgWater.Name);
+            OutputList.Add(MonthlyAvgLAI.Name);
+            OutputList.Add(MonthlyEvap.Name);
+            OutputList.Add(MonthlyInterception.Name);
+            OutputList.Add(MonthlyActualTrans.Name);
+            OutputList.Add(MonthlyLeakage.Name);
+            OutputList.Add(MonthlyRunoff.Name);
+            OutputList.Add(MonthlyAET.Name);
+            OutputList.Add(MonthlyPotentialEvap.Name);
+            OutputList.Add(MonthlyPotentialTrans.Name);
+
             OutputList.Add(Water.Name);
             OutputList.Add(SubCanopyPAR.Name);
-            OutputList.Add(BelowgroundBiomass.Name);
+            OutputList.Add(RootBiomass.Name);
+            OutputList.Add(FoliageBiomass.Name);
             OutputList.Add(CohortsPerSpecies.Name);
             OutputList.Add(AnnualPsn.Name);
             OutputList.Add(WoodyDebris.Name);
@@ -89,6 +128,9 @@ namespace Landis.Extension.Output.PnET
             OutputList.Add(CohortBalance.Name);
             OutputList.Add(EstablishmentTable.Name);
             OutputList.Add(MortalityTable.Name);
+            OutputList.Add(NSC.Name);
+            OutputList.Add(PET.Name);
+            OutputList.Add(SiteMossDepth.Name);
 
             int lineNumber = LineNumber;
             ReadVar(speciesName);
@@ -133,14 +175,19 @@ namespace Landis.Extension.Output.PnET
             while (!AtEndOfInput)
             {
 
-                if (ReadOptionalVar(biomass))
+                if (ReadOptionalVar(WoodRootBiomass))
                 {
-                    parameters.SpeciesBiom = biomass.Value;
+                    parameters.SpeciesWoodRootBiom = WoodRootBiomass.Value;
                     continue;
                 }
-                if (ReadOptionalVar(abovegroundBiomass))
+                if (ReadOptionalVar(WoodFoliageBiomass))
                 {
-                    parameters.SpeciesAbovegroundBiom = abovegroundBiomass.Value;
+                    parameters.SpeciesWoodFoliageBiom = WoodFoliageBiomass.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(woodBiomass))
+                {
+                    parameters.SpeciesWoodBiom = woodBiomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(woodySenescence))
@@ -151,6 +198,11 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(foliageSenescence))
                 {
                     parameters.SpeciesFoliageSenescence = foliageSenescence.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(aet))
+                {
+                    parameters.AET = aet.Value;
                     continue;
                 }
                 if (ReadOptionalVar(aetAvg))
@@ -179,7 +231,76 @@ namespace Landis.Extension.Output.PnET
                     parameters.MonthlyMaintResp = MonthlyMaintResp.Value;
                     continue;
                 }
-       
+                if (ReadOptionalVar(Albedo))
+                {
+                    parameters.Albedo = Albedo.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyActiveLayerDepth))
+                {
+                    parameters.MonthlyActiveLayerDepth = MonthlyActiveLayerDepth.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyFrostDepth))
+                {
+                    parameters.MonthlyFrostDepth = MonthlyFrostDepth.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgSnowPack))
+                {
+                    parameters.MonthlyAvgSnowPack = MonthlyAvgSnowPack.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgWater))
+                {
+                    parameters.MonthlyAvgWater = MonthlyAvgWater.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAvgLAI))
+                {
+                    parameters.MonthlyAvgLAI = MonthlyAvgLAI.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyEvap))
+                {
+                    parameters.MonthlyEvap = MonthlyEvap.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyInterception))
+                {
+                    parameters.MonthlyInterception = MonthlyInterception.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyActualTrans))
+                {
+                    parameters.MonthlyActualTrans = MonthlyActualTrans.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyLeakage))
+                {
+                    parameters.MonthlyLeakage = MonthlyLeakage.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyRunoff))
+                {
+                    parameters.MonthlyRunoff = MonthlyRunoff.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyAET))
+                {
+                    parameters.MonthlyAET = MonthlyAET.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyPotentialEvap))
+                {
+                    parameters.MonthlyPotentialEvap = MonthlyPotentialEvap.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(MonthlyPotentialTrans))
+                {
+                    parameters.MonthlyPotentialTrans = MonthlyPotentialTrans.Value;
+                    continue;
+                }
                 if (ReadOptionalVar(LeafAreaIndex))
                 {
                     parameters.LeafAreaIndex = LeafAreaIndex.Value;
@@ -216,9 +337,14 @@ namespace Landis.Extension.Output.PnET
                     parameters.CohortsPerSpecies = CohortsPerSpecies.Value;
                     continue;
                 }
-                if (ReadOptionalVar(BelowgroundBiomass))
+                if (ReadOptionalVar(RootBiomass))
                 {
-                    parameters.BelowgroundBiomass = BelowgroundBiomass.Value;
+                    parameters.RootBiom = RootBiomass.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(FoliageBiomass))
+                {
+                    parameters.FoliageBiom = FoliageBiomass.Value;
                     continue;
                 }
                 if (ReadOptionalVar(WoodyDebris))
@@ -249,6 +375,22 @@ namespace Landis.Extension.Output.PnET
                 if (ReadOptionalVar(MortalityTable))
                 {
                     parameters.MortalityTable = MortalityTable.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(NSC))
+                {
+                    parameters.NSC = NSC.Value;
+                    continue;
+                }
+                if (ReadOptionalVar(PET))
+                {
+                    parameters.PET = PET.Value;
+                    continue;
+                }
+
+                if (ReadOptionalVar(SiteMossDepth))
+                {
+                    parameters.SiteMossDepth = SiteMossDepth.Value;
                     continue;
                 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Landis.Core;
 using Landis.SpatialModeling;
-using Landis.Extension.Succession.BiomassPnET;
+//using Landis.Extension.Succession.BiomassPnET;
 using System.Linq;
 
 namespace Landis.Extension.Output.PnET
@@ -32,6 +32,7 @@ namespace Landis.Extension.Output.PnET
             {
                 int siteCount = 0;
                 Dictionary<ISpecies, int> cohortsBySuccession = new Dictionary<ISpecies, int>();
+                Dictionary<ISpecies, int> cohortsByCold = new Dictionary<ISpecies, int>();
                 Dictionary<ISpecies, int> cohortsByHarvest = new Dictionary<ISpecies, int>();
                 Dictionary<ISpecies, int> cohortsByFire = new Dictionary<ISpecies, int>();
                 Dictionary<ISpecies, int> cohortsByWind = new Dictionary<ISpecies, int>();
@@ -51,6 +52,14 @@ namespace Landis.Extension.Output.PnET
                             cohortsBySuccession[spc] = PlugIn.cohorts[site].CohortsBySuccession[spc.Index];
                         }
 
+                        if (cohortsByCold.ContainsKey(spc))
+                        {
+                            cohortsByCold[spc] = cohortsByCold[spc] + (PlugIn.cohorts[site].CohortsByCold[spc.Index]);
+                        }
+                        else
+                        {
+                            cohortsByCold[spc] = PlugIn.cohorts[site].CohortsByCold[spc.Index];
+                        }
 
                         if (cohortsByHarvest.ContainsKey(spc))
                         {
@@ -91,6 +100,7 @@ namespace Landis.Extension.Output.PnET
 
                     }
                     PlugIn.cohorts[site].CohortsBySuccession = new List<int>(new int[PlugIn.ModelCore.Species.Count()]);
+                    PlugIn.cohorts[site].CohortsByCold = new List<int>(new int[PlugIn.ModelCore.Species.Count()]);
                     PlugIn.cohorts[site].CohortsByHarvest = new List<int>(new int[PlugIn.ModelCore.Species.Count()]);
                     PlugIn.cohorts[site].CohortsByFire = new List<int>(new int[PlugIn.ModelCore.Species.Count()]);
                     PlugIn.cohorts[site].CohortsByWind = new List<int>(new int[PlugIn.ModelCore.Species.Count()]);
@@ -111,6 +121,21 @@ namespace Landis.Extension.Output.PnET
                     }
                 }
                 FileContent.Add(dataString_succession);
+
+                // Report Cold
+                string dataString_cold = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Cold";
+                foreach (ISpecies spc in PlugIn.ModelCore.Species)
+                {
+                    if (cohortsByCold.ContainsKey(spc))
+                    {
+                        dataString_cold = dataString_cold + ", " + cohortsByCold[spc];
+                    }
+                    else
+                    {
+                        dataString_cold = dataString_cold + ", " + "0";
+                    }
+                }
+                FileContent.Add(dataString_cold);
 
                 // Report Harvest
                 string dataString_harvest = PlugIn.ModelCore.CurrentTime.ToString() + ", " + "Harvest";

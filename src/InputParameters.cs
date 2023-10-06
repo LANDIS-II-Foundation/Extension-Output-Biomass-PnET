@@ -32,8 +32,6 @@ namespace Landis.Extension.Output.PnET
  
         public string Litter;
          
-        public string BelowgroundBiomass;
-         
         public string SubCanopyPAR;
          
         public string EstablishmentProbability;
@@ -41,26 +39,41 @@ namespace Landis.Extension.Output.PnET
         public string SpeciesEst;
 
         public string MonthlyNetPsn;
-
-
         public string MonthlyFolResp;
         public string MonthlyGrossPsn;
-        public string MonthlyMaintResp;
-
-           
+        public string MonthlyMaintResp; 
+        public string Albedo;
+        public string MonthlyActiveLayerDepth;
+        public string MonthlyFrostDepth;
+        public string MonthlyAvgSnowPack;
+        public string MonthlyAvgWater;
+        public string MonthlyAvgLAI;
+        public string MonthlyEvap;
+        public string MonthlyInterception;
+        public string MonthlyActualTrans;
+        public string MonthlyLeakage;
+        public string MonthlyRunoff;
+        public string MonthlyAET;
+        public string MonthlyPotentialTrans;
+        public string MonthlyPotentialEvap;
 
         public string LeafAreaIndex;
 
-
         public string Water;
 
-        public string SpeciesBiom;
-        public string SpeciesAbovegroundBiom;
+        public string SpeciesWoodRootBiom;
+        public string SpeciesWoodBiom;
+        public string SpeciesWoodFoliageBiom;
+        public string FoliageBiom;
+        public string RootBiom;
+
         public string SpeciesWoodySenescence;
         public string SpeciesFoliageSenescence;
+        public string AET;
         public string AETAvg;
-         
-       
-        
+
+        public string NSC;
+        public string PET;
+        public string SiteMossDepth;
     }
 }
