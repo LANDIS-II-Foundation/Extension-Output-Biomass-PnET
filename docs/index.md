@@ -6,7 +6,7 @@ The PnET output extension summarizes cohort and site data from PnET-Succession.
 
 - Latest official release: Version 5.1 — September 2023
 - Download the User Guide (combined with PnET-Succession) here: [PnET-Succession v5.1 User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v5.1%20User%20Guide.pdf).
-- Full release details can be found in the User Guide and on [GitHub](https://github.com/LANDIS-II-Foundation/Output-Biomass-PnET).
+- Full release details can be found in the User Guide and on [GitHub](https://github.com/LANDIS-II-Foundation/Extesnsion-Output-Biomass-PnET).
 
 
 # Requirements
