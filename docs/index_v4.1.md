@@ -4,10 +4,9 @@ The PnET output extension summarizes cohort and site data from PnET-Succession.
 
 # Release Notes
 
-- Latest official release: Version 5.1 — September 2023
-- Download the User Guide (combined with PnET-Succession) here: [PnET-Succession v5.1 User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v5.1%20User%20Guide.pdf).
-- Full release details can be found in the User Guide and on [GitHub](https://github.com/LANDIS-II-Foundation/Output-Biomass-PnET).
-
+- Latest official release: Version 4.1 — March 2022
+- [View User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v4.1%20User%20Guide.pdf).
+- Full release details found in the User Guide and on GitHub.
 
 # Requirements
 
@@ -15,10 +14,11 @@ To use PnET Output, you need:
 
 - The [LANDIS-II model v7.0](http://www.landis-ii.org/install) installed on your computer.
 - The [PnET-Succession extension](https://landis-ii-foundation.github.io/Extension-PnET-Succession/) installed.
+- Example files (see below)
 
 # Download
 
-Version 5.1 can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/blob/master/deploy/installer/LANDIS-II-V7%20Output-PnET%205.1-setup.exe). To install it on your computer, launch the installer.
+Version 4.1 can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/blob/master/deploy/installer/LANDIS-II-V7%20Output-PnET%204.1-RC1-setup.exe). To install it on your computer, launch the installer.
 
 # Example Files
 
@@ -28,7 +28,7 @@ Example files are [here](https://github.com/LANDIS-II-Foundation/Extension-Outpu
 
 # Citation
 
-Gustafson, Eric J., Brian R. Sturtevant, Brian R. Miranda, Zaixing Zhou.  2023.  PnET-Succession v 5.1:  Comprehensive description of an ecophysiological succession extension within the LANDIS-II forest landscape model.  Published by the LANDIS-II Foundation.  URL: [https://github.com/LANDIS-II-Foundation/Foundation-Publications/blob/main/Description of PnET-Succession v5.1.pdf](https://github.com/LANDIS-II-Foundation/Foundation-Publications/blob/main/Description%20of%20PnET-Succession%20v5.1.pdf).
+Arjan de Bruijn, Eric J. Gustafson, Brian R. Sturtevant, Jane R. Foster, Brian R. Miranda, Nathanael I. Lichti, Douglass F. Jacobs, Toward more robust projections of forest landscape dynamics under novel environmental conditions: Embedding PnET within LANDIS-II. Ecological Modelling Volume 287, 10 September 2014, Pages 44–57
 
 # Support
 
