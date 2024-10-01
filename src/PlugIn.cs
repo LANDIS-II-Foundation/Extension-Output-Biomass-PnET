@@ -3,6 +3,7 @@
 
 using Landis.Core;
 using Landis.Library.PnETCohorts;
+using Landis.Library.UniversalCohorts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace Landis.Extension.Output.PnET
         public static readonly string ExtensionName = "Output-PnET";
 
 
-        public static ISiteVar<ISiteCohorts> cohorts;
-        public static ISiteVar<Landis.Library.Biomass.Pool> woodyDebris;
-        public static ISiteVar<Landis.Library.Biomass.Pool> litter;
+        public static ISiteVar<Landis.Library.PnETCohorts.ISiteCohorts> cohorts;
+        public static ISiteVar<Pool> woodyDebris;
+        public static ISiteVar<Pool> litter;
 
 
 
@@ -134,8 +135,8 @@ namespace Landis.Extension.Output.PnET
             tstep = parameters.Timestep;
 
             cohorts = PlugIn.ModelCore.GetSiteVar<Landis.Library.PnETCohorts.ISiteCohorts>("Succession.CohortsPnET");
-            woodyDebris = PlugIn.ModelCore.GetSiteVar<Landis.Library.Biomass.Pool>("Succession.WoodyDebris");
-            litter = PlugIn.ModelCore.GetSiteVar<Landis.Library.Biomass.Pool>("Succession.Litter");
+            woodyDebris = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.WoodyDebris");
+            litter = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.Litter");
 
             if (parameters.CohortsPerSpecies != null)
             {
@@ -1010,6 +1011,11 @@ namespace Landis.Extension.Output.PnET
             }
         }
 
+        public override void AddCohortData()
+        {
+            // CUSTOM DYNAMIC PARAMETERS HERE
+            return;
+        }
     }
 
 }
