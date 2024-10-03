@@ -76,7 +76,7 @@ namespace Landis.Extension.Output.PnET
                         float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
                         {
-                            Values_spc[spc] += (ulong)(numeric * multiplier);
+                            Values_spc[spc] += (float)(numeric * multiplier);
 
                             if ((numeric * multiplier) != 0)
                             {
