@@ -468,6 +468,8 @@ namespace Landis.Extension.Output.PnET
 
                 ISiteVar<Landis.Library.Parameters.Species.AuxParm<int>> MaxFolBiom = cohorts.GetIsiteVar(o => o.MaxFoliageYearPerSpecies);
 
+                ISiteVar<float> MaxFolBiom_Sum = modelCore.Landscape.NewSiteVar<float>();
+
                 if (AreSpeciesOutputsEnabled(FoliageBiomass.MapNameTemplate))
                 {
                     foreach (ISpecies spc in PlugIn.SelectedSpecies)
@@ -477,6 +479,7 @@ namespace Landis.Extension.Output.PnET
                         foreach (ActiveSite site in PlugIn.modelCore.Landscape)
                         {
                             MaxFolBiom_spc[site] = MaxFolBiom[site][spc];
+                            MaxFolBiom_Sum[site] += MaxFolBiom_spc[site];
                         }
 
                         new OutputMapSpecies(MaxFolBiom_spc, spc, FoliageBiomass.MapNameTemplate);
@@ -485,9 +488,8 @@ namespace Landis.Extension.Output.PnET
 
                 OutputFilePerTStepPerSpecies.Write<int>(FoliageBiomass.MapNameTemplate, FoliageBiomass.units, PlugIn.ModelCore.CurrentTime, MaxFolBiom);
 
-                ISiteVar<float> values = cohorts.GetIsiteVar(o => o.FoliageSum);
                 string FileName = FileNames.ReplaceTemplateVars(FoliageBiomass.MapNameTemplate, "AllSpecies", PlugIn.ModelCore.CurrentTime);
-                new OutputMapSiteVar<float, float>(FileName, values, o => o);
+                new OutputMapSiteVar<float, float>(FileName, MaxFolBiom_Sum);
             }
             if (NSC != null)
             {
