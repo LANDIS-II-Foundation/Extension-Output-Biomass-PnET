@@ -27,16 +27,16 @@ namespace Landis.Extension.Output.PnET
         [DataFieldAttribute(Unit = "m-2", Desc = "Average LAI", Format = "0.00")]
         public double AverageLAI { set; get; }
 
-        [DataFieldAttribute(Unit = "mm m-1", Desc = "Average Water", Format = "0.00")]
+        [DataFieldAttribute(Unit = "mm_m-1", Desc = "Average Water", Format = "0.00")]
         public double AverageWater { set; get; }
 
-        [DataFieldAttribute(Unit = "W m-2 or mmol m-2)", Desc = "SubcanopyPAR", Format = "0.00")]
+        [DataFieldAttribute(Unit = "W_m-2_or_mmol_m-2)", Desc = "SubcanopyPAR", Format = "0.00")]
         public double SubcanopyPAR { set; get; }
 
-        [DataFieldAttribute(Unit = "kgDW m-2", Desc = "Litter", Format = "0.00")]
+        [DataFieldAttribute(Unit = "kgDW_m-2", Desc = "Litter", Format = "0.00")]
         public double Litter { set; get; }
 
-        [DataFieldAttribute(Unit = "kgDW m-2", Desc = "Woody Debris", Format = "0.00")]
+        [DataFieldAttribute(Unit = "kgDW_m-2", Desc = "Woody Debris", Format = "0.00")]
         public double WoodyDebris { set; get; }
 
         [DataFieldAttribute(Unit = FieldUnits.g_B_m2, Desc = "Average Root Biomass", Format = "0.00")]
@@ -58,9 +58,9 @@ namespace Landis.Extension.Output.PnET
         public OutputAggregatedTable(string Template)
         {
             
-            FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".csv");
+            FileName = FileNames.ReplaceTemplateVars(Template, "Overall", PlugIn.ModelCore.CurrentTime).Replace(".img", ".csv").Replace(".txt", ".csv");
             FileContent = new List<string>();
-            FileContent.Add("Time" + ", " + "#Cohorts" + ", " + "AverageAge" + ", " + "AverageWoodRoot(g/m2)" + ", " + "AverageLAI(m2)" + ", " + "AverageWater(mm/m)" + ", " + "SubCanopyPAR(W/m2 or mmol/m2/s)" + ", " + "Litter(kgDW/m2)" + ", " + "WoodyDebris(kgDW/m2)" + ", " + "AverageWoodFoliage(g/m2)"+ ", " + "AverageRoot(g/m2)" + ", " + "AverageWood(g/m2)" + ", " + "AverageFoliage(g/m2)" + ", " + "AverageNSC(gC/m2)" + ", " + "AverageAET(mm)");
+            FileContent.Add("Time" + "," + "#Cohorts" + "," + "AverageAge" + "," + "AverageWoodRoot(g/m2)" + "," + "AverageLAI(m2)" + "," + "AverageWater(mm/m)" + "," + "SubCanopyPAR(W/m2_or_mmol/m2/s)" + "," + "Litter(kgDW/m2)" + "," + "WoodyDebris(kgDW/m2)" + "," + "AverageWoodFoliage(g/m2)"+ "," + "AverageRoot(g/m2)" + "," + "AverageWood(g/m2)" + "," + "AverageFoliage(g/m2)" + "," + "AverageNSC(gC/m2)" + "," + "AverageAET(mm)");
         }
         public static void WriteNrOfCohortsBalance()
         {
@@ -139,7 +139,7 @@ namespace Landis.Extension.Output.PnET
                 string Woody_debris_ave = (Woody_debris_SUM / (float)siteCount).ToString();
                 string AET_ave = (AET_SUM / (float)siteCount).ToString();
 
-                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + ", " + c + ", " + CohortAge_av + ", " + WoodRootBiom_av + ", " + LAI_av + ", " + Water_av + ", " + SubCanopyRad_av + ", " + Litter_av + ", " + Woody_debris_ave + ", " + WoodFoliageBiom_av + ", " + RootBiom_av + ", " + WoodBiom_av + ", " + FoliageBiom_av + ", " + NSCBiom_av + ", " + AET_ave);
+                FileContent.Add(PlugIn.ModelCore.CurrentTime.ToString() + "," + c + "," + CohortAge_av + "," + WoodRootBiom_av + "," + LAI_av + "," + Water_av + "," + SubCanopyRad_av + "," + Litter_av + "," + Woody_debris_ave + "," + WoodFoliageBiom_av + "," + RootBiom_av + "," + WoodBiom_av + "," + FoliageBiom_av + "," + NSCBiom_av + "," + AET_ave);
 
                 System.IO.File.WriteAllLines(FileName, FileContent.ToArray());
                  
