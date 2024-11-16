@@ -16,10 +16,10 @@ namespace Landis.Extension.Output.PnET
         {
             this.NameTemplate = NameTemplate;
             this.units = units;
-            this.header = "Time, " + "January" + "_" + units + ", " + "February" + "_" + units + ", " + "March" + "_" + units + ", "
-                + "April" + "_" + units + ", " + "May" + "_" + units + ", " + "June" + "_" + units + ", " + "July" + "_" + units + ", "
-                + "August" + "_" + units + ", " + "September" + "_" + units + ", " + "October" + "_" + units + ", "
-                + "November" + "_" + units + ", " + "December" + "_" + units;
+            this.header = "Time," + "January" + "_" + units + "," + "February" + "_" + units + "," + "March" + "_" + units + ","
+                + "April" + "_" + units + "," + "May" + "_" + units + "," + "June" + "_" + units + "," + "July" + "_" + units + ","
+                + "August" + "_" + units + "," + "September" + "_" + units + "," + "October" + "_" + units + ","
+                + "November" + "_" + units + "," + "December" + "_" + units;
 
             if (!NameTemplate.Contains(".csv")) throw new System.Exception("NameTemplate " + NameTemplate + " does not have an extension '.csv'");
             if (NameTemplate.Length == 0) throw new System.Exception("Error initializing output CSV, no template name available");
@@ -44,9 +44,9 @@ namespace Landis.Extension.Output.PnET
                 monthlySums[mo] = (monthlySums[mo] / PlugIn.ModelCore.Landscape.ActiveSiteCount) * multiplier;
             }
             System.IO.StreamWriter sw = new System.IO.StreamWriter(this.NameTemplate, true);
-            sw.WriteLine(TStep + ", " + monthlySums[0] + ", " + monthlySums[1] + ", " + monthlySums[2] + ", " + monthlySums[3] + ", "
-                + monthlySums[4] + ", " + monthlySums[5] + ", " + monthlySums[6] + ", " + monthlySums[7] + ", " + monthlySums[8] + ", "
-                + monthlySums[9] + ", " + monthlySums[10] + ", " + monthlySums[11]);
+            sw.WriteLine(TStep + "," + monthlySums[0] + "," + monthlySums[1] + "," + monthlySums[2] + "," + monthlySums[3] + ","
+                + monthlySums[4] + "," + monthlySums[5] + "," + monthlySums[6] + "," + monthlySums[7] + "," + monthlySums[8] + ","
+                + monthlySums[9] + "," + monthlySums[10] + "," + monthlySums[11]);
             sw.Close();
         }
     }

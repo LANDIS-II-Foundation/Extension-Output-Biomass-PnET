@@ -93,7 +93,7 @@ namespace Landis.Extension.Output.PnET
             string line= HdrExplanation ;
             for (int f = 0; f < running_cat_min.Count;f++ )
             {
-                line += ", " + "[" + running_cat_min[f] + "_" + running_cat_max[f] + "]";
+                line += "," + "[" + running_cat_min[f] + "_" + running_cat_max[f] + "]";
             }
             
             return line;
@@ -156,7 +156,7 @@ namespace Landis.Extension.Output.PnET
 
                 for (int c = 0; c < cat_count.Count(); c++)
                 {
-                    line += ", " + cat_count[c].ToString();
+                    line += "," + cat_count[c].ToString();
                     cat_count[c] = 0;
                 }
 
@@ -165,7 +165,7 @@ namespace Landis.Extension.Output.PnET
             string linetot = "Total";
             for (int c = 0; c < cat_count.Count(); c++)
             {
-                linetot += ", " + cat_count_tot[c].ToString() ;
+                linetot += "," + cat_count_tot[c].ToString() ;
                 cat_count[c] = 0;
             }
             FileContent.Add(linetot);
@@ -208,7 +208,7 @@ namespace Landis.Extension.Output.PnET
 
                 for (int c = 0; c < cat_count.Count();c++ )
                 {
-                    line += ", " + cat_count[c].ToString();
+                    line += "," + cat_count[c].ToString();
                     cat_count[c] = 0;
                 }
                 

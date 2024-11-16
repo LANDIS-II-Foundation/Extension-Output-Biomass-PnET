@@ -19,7 +19,7 @@ namespace Landis.Extension.Output.PnET
             FileNames.MakeFolders(FileName);
 
             string hdr = "Time";
-            foreach ( IEcoregion e in PlugIn.ModelCore.Ecoregions) hdr += ", " + e.Name ;
+            foreach ( IEcoregion e in PlugIn.ModelCore.Ecoregions) hdr += "," + e.Name ;
 
             FileContent.Add(hdr);
         }
@@ -38,7 +38,7 @@ namespace Landis.Extension.Output.PnET
             }
             foreach (IEcoregion e in PlugIn.ModelCore.Ecoregions)
             {
-                line += ", " + avg_values_per_ecoregion[e];
+                line += "," + avg_values_per_ecoregion[e];
             }
 
             FileContent.Add(line);

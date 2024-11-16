@@ -13,9 +13,9 @@ namespace Landis.Extension.Output.PnET
             string hdr = "Time";
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                hdr += ", " + spc.Name + "_" + units;
+                hdr += "," + spc.Name + "_" + units;
             }
-            hdr += ", " + "AllSpp_" + units;
+            hdr += "," + "AllSpp_" + units;
             return hdr;
             
         }
@@ -33,10 +33,10 @@ namespace Landis.Extension.Output.PnET
             float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                line += ", " + Values[spc];
+                line += "," + Values[spc];
                 valueSum += float.Parse(Values[spc].ToString());
             }
-            line += ", " + valueSum;
+            line += "," + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
@@ -76,7 +76,7 @@ namespace Landis.Extension.Output.PnET
                         float numeric = float.Parse(Values[site][spc].ToString());
                         if (!double.IsNaN((double)numeric))
                         {
-                            Values_spc[spc] += (ulong)(numeric * multiplier);
+                            Values_spc[spc] += (float)(numeric * multiplier);
 
                             if ((numeric * multiplier) != 0)
                             {
@@ -102,10 +102,10 @@ namespace Landis.Extension.Output.PnET
                     Values_cnt[spc] = 1;
                 }
 
-                line += ", " + (Values_spc[spc] / (float)Values_cnt[spc]);
+                line += "," + (Values_spc[spc] / (float)Values_cnt[spc]);
                 valueSum += (Values_spc[spc] / (float)Values_cnt[spc]);
             }
-            line += ", " + valueSum;
+            line += "," + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
@@ -148,10 +148,10 @@ namespace Landis.Extension.Output.PnET
             float valueSum = 0;
             foreach (ISpecies spc in PlugIn.ModelCore.Species)
             {
-                line += ", " + Values_spc[spc];
+                line += "," + Values_spc[spc];
                 valueSum += float.Parse(Values_spc[spc].ToString());
             }
-            line += ", " + valueSum;
+            line += "," + valueSum;
             System.IO.StreamWriter sw = new System.IO.StreamWriter(FileName, true);
             sw.WriteLine(line);
             sw.Close();
