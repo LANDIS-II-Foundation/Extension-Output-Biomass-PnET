@@ -19,7 +19,7 @@ namespace Landis.Extension.Output.PnET
         public static readonly string ExtensionName = "Output-PnET";
 
 
-        public static ISiteVar<Landis.Library.PnETCohorts.ISiteCohorts> cohorts;
+        public static ISiteVar<Landis.Library.PnETCohorts.SiteCohorts> cohorts;
         public static ISiteVar<Pool> woodyDebris;
         public static ISiteVar<Pool> litter;
 
@@ -134,7 +134,7 @@ namespace Landis.Extension.Output.PnET
 
             tstep = parameters.Timestep;
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<Landis.Library.PnETCohorts.ISiteCohorts>("Succession.CohortsPnET");
+            cohorts = PlugIn.ModelCore.GetSiteVar<Landis.Library.PnETCohorts.SiteCohorts>("Succession.CohortsPnET");
             woodyDebris = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.WoodyDebris");
             litter = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.Litter");
 
