@@ -4,7 +4,7 @@ The PnET output extension summarizes cohort and site data from PnET-Succession.
 
 # Release Notes
 
-- Latest official release: Version 5.1 — September 2023
+- Latest official release: Version 6.0.3 — January 2026
 - Download the User Guide (combined with PnET-Succession) here: [PnET-Succession v5.1 User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v5.1%20User%20Guide.pdf).
 - Full release details can be found in the User Guide and on [GitHub](https://github.com/LANDIS-II-Foundation/Extesnsion-Output-Biomass-PnET).
 
@@ -13,12 +13,12 @@ The PnET output extension summarizes cohort and site data from PnET-Succession.
 
 To use PnET Output, you need:
 
-- The [LANDIS-II model v7.0](http://www.landis-ii.org/install) installed on your computer.
+- The [LANDIS-II model v8.0](http://www.landis-ii.org/install) installed on your computer.
 - The [PnET-Succession extension](https://landis-ii-foundation.github.io/Extension-PnET-Succession/) installed.
 
 # Download
 
-Version 5.1 can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/blob/master/deploy/installer/LANDIS-II-V7%20Output-PnET%205.1-setup.exe). To install it on your computer, launch the installer.
+Version 6.0.3 can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/blob/master/deploy/installer/LANDIS-II-V8%20Output-PnET%206.0.3-setup.exe). To install it on your computer, launch the installer.
 
 # Example Files
 
