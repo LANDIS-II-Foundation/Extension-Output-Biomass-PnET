@@ -5,7 +5,7 @@ The PnET output extension summarizes cohort and site data from PnET-Succession.
 # Release Notes
 
 - Latest official release: Version 6.0.3 — January 2026
-- Download the User Guide (combined with PnET-Succession) here: [PnET-Succession v5.1 User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v5.1%20User%20Guide.pdf).
+- Download the User Guide (combined with PnET-Succession) here: [PnET-Succession v6.0 User Guide](https://github.com/LANDIS-II-Foundation/Extension-PnET-Succession/blob/master/deploy/docs/LANDIS-II%20PnET-Succession%20v6.0%20User%20Guide%20Jan21%202026.pdf).
 - Full release details can be found in the User Guide and on [GitHub](https://github.com/LANDIS-II-Foundation/Extesnsion-Output-Biomass-PnET).
 
 
@@ -32,14 +32,13 @@ Gustafson, Eric J., Brian R. Sturtevant, Brian R. Miranda, Zaixing Zhou.  2023. 
 
 # Support
 
-If you have a question, please contact Eric Gustafson. 
-You can also ask for help in the [LANDIS-II users group](http://www.landis-ii.org/users).
+If you have a question, please contact Brian Sturtevant. You can also ask for help in the [LANDIS-II users group](http://www.landis-ii.org/users).
 
 If you come across any issue or suspected bug, please post about it in the [issue section of the Github repository](https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET/issues) (GitID required).
 
 # Authors
 
-Arjan de Bruijn, Eric Gustafson, Brian Miranda, USFS and Purdue University
+Arjan de Bruijn: originally Purdue University; Eric Gustafson (emeritus), Brian Miranda, Brian SturtevantUS Forest Service
 
-Mail : eric.gustafson@usda.gov
+Mail : brian.r.sturtevant@usda.gov
 
