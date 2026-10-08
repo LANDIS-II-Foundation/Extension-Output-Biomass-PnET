@@ -5,7 +5,7 @@
     <AssemblyName>Landis.Extension.Output.PnET-v6</AssemblyName>
     <AssemblyTitle>Landis.Extension.Output.PnET-v6</AssemblyTitle>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
-    <AssemblyVersion>6.0.3</AssemblyVersion>
+    <AssemblyVersion>6.1</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Output-Biomass-PnET</RepositoryUrl>
@@ -16,23 +16,26 @@
     <Authors>Brian Miranda, Arjan de Bruijn</Authors>
     <Product>Landis.Extension.Output.PnET</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>6.0.3</Version>
+    <Version>6.1</Version>
     <PackageTags>LANDIS-II;Landis;Extension;output;PnET</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>6.0.3</FileVersion>
+    <FileVersion>6.1</FileVersion>
     <Company>USDA Forest Service</Company>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Remove="lib\**" />
     <Compile Remove="packages\**" />
     <EmbeddedResource Remove="lib\**" />
     <EmbeddedResource Remove="packages\**" />
     <None Remove="lib\**" />
     <None Remove="packages\**" />
-  </ItemGroup>
+  </ItemGroup>-->
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>..\..\Core-Model-v8\Tool-Console\src\bin\extensions</OutputPath>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Landis.Core" Version="3.0.1" />
@@ -46,10 +49,10 @@
       <HintPath>lib\Landis.Library.Parameters-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.PnETCohorts-v2">
-      <HintPath>lib\Landis.Library.PnETCohorts-v2.dll</HintPath>
+		<HintPath>lib\Landis.Library.PnETCohorts-v2.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.UniversalCohorts-v1">
-      <HintPath>lib\Landis.Library.UniversalCohorts-v1.dll</HintPath>
+    <Reference Include="Landis.Library.UniversalCohorts-v2">
+      <HintPath>lib\Landis.Library.UniversalCohorts-v2.dll</HintPath>
     </Reference>
   </ItemGroup>
 
