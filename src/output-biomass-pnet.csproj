@@ -33,6 +33,9 @@
     <None Remove="lib\**" />
     <None Remove="packages\**" />
   </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>..\..\Core-Model-v8\Tool-Console\src\bin\extensions</OutputPath>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Landis.Core" Version="3.0.1" />
@@ -46,7 +49,7 @@
       <HintPath>lib\Landis.Library.Parameters-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.PnETCohorts-v2">
-      <HintPath>lib\Landis.Library.PnETCohorts-v2.dll</HintPath>
+		<HintPath>lib\Landis.Library.PnETCohorts-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.UniversalCohorts-v2">
       <HintPath>lib\Landis.Library.UniversalCohorts-v2.dll</HintPath>
