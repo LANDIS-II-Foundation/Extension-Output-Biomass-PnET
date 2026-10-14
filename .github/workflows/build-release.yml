@@ -1,0 +1,205 @@
+name: Build Extension, Installer, and Release
+
+permissions:
+  contents: write
+  actions: write
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+      notes:
+        type: string
+        required: false
+
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+      notes:
+        type: string
+        required: false
+
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+
+    steps:
+      # --------------------------------------------------------------------
+      # CHECKOUT WITH CREDENTIALS (required for committing updated csproj)
+      # --------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      # --------------------------------------------------------------------
+      # DETERMINE VERSION
+      # --------------------------------------------------------------------
+      - name: Determine version
+        id: version
+        run: |
+          if ("${{ github.event_name }}" -eq "workflow_dispatch" -or "${{ github.event_name }}" -eq "workflow_call") {
+              echo "v=${{ inputs.version }}" >> $env:GITHUB_OUTPUT
+              exit 0
+          }
+
+          if ("${{ github.ref }}".StartsWith("refs/tags/")) {
+              $clean = "${{ github.ref_name }}".TrimStart("v")
+              echo "v=$clean" >> $env:GITHUB_OUTPUT
+              exit 0
+          }
+
+          Write-Error "Unable to determine version source."
+
+      # --------------------------------------------------------------------
+      # UPDATE VERSION IN PROJECT
+      # --------------------------------------------------------------------
+      - name: Update csproj version fields
+        run: |
+          $v = "${{ steps.version.outputs.v }}"
+          $csproj = "./src/output-biomass-pnet.csproj"
+
+          $xml = Get-Content $csproj
+          $xml = $xml -replace '<AssemblyVersion>.*?</AssemblyVersion>', "<AssemblyVersion>$v</AssemblyVersion>"
+          $xml = $xml -replace '<Version>.*?</Version>', "<Version>$v</Version>"
+          $xml = $xml -replace '<FileVersion>.*?</FileVersion>', "<FileVersion>$v</FileVersion>"
+          Set-Content $csproj $xml
+
+      # --------------------------------------------------------------------
+      # INSTALL .NET
+      # --------------------------------------------------------------------
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # --------------------------------------------------------------------
+      # MyGet → Landis.Core
+      # --------------------------------------------------------------------
+      - name: Add MyGet LANDIS-II feed
+        run: dotnet nuget add source "https://www.myget.org/F/landis-ii-v8/api/v3/index.json" --name "LANDIS-II-V8"
+
+      # --------------------------------------------------------------------
+      # DOWNLOAD SUPPORT LIBRARIES (LANDIS-II)
+      # --------------------------------------------------------------------
+      - name: Download LANDIS-II Support Libraries
+        run: |
+          $base = "https://github.com/LANDIS-II-Foundation/Support-Library-Dlls-v8/raw/main/"
+          $dlls = @(
+            "Landis.Library.UniversalCohorts-v2.dll",
+            "Landis.Library.Parameters-v2.dll",
+            "Landis.Library.Metadata-v2.dll"
+          )
+
+          $target = "./src/lib"
+          if (!(Test-Path $target)) { New-Item -ItemType Directory -Path $target | Out-Null }
+
+          foreach ($name in $dlls) {
+              Invoke-WebRequest -Uri ($base + $name) -OutFile "$target/$name"
+          }
+
+      # --------------------------------------------------------------------
+      # DOWNLOAD PnETCohorts FROM LATEST RELEASE
+      # --------------------------------------------------------------------
+      - name: Download PnETCohorts DLL
+        run: |
+          $api = "https://api.github.com/repos/jacobf37/Library-PnET-Cohort/releases/latest"
+          $json = Invoke-WebRequest -UseBasicParsing -Uri $api | ConvertFrom-Json
+          $asset = $json.assets | Where-Object { $_.name -eq "Landis.Library.PnETCohorts-v2.dll" }
+
+          if ($asset -eq $null) { Write-Error "PnETCohorts DLL not found in latest release." }
+
+          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "./src/lib/Landis.Library.PnETCohorts-v2.dll"
+
+      # --------------------------------------------------------------------
+      # RESTORE & BUILD
+      # --------------------------------------------------------------------
+      - name: Restore project
+        run: dotnet restore ./src/output-biomass-pnet.csproj
+
+      - name: Build project
+        run: dotnet build ./src/output-biomass-pnet.csproj --configuration Release
+
+      # --------------------------------------------------------------------
+      # INSTALL INNO SETUP
+      # --------------------------------------------------------------------
+      - name: Install Inno Setup
+        run: choco install innosetup --yes
+
+      # --------------------------------------------------------------------
+      # GENERATE DYNAMIC .ISS
+      # --------------------------------------------------------------------
+      - name: Generate .iss script
+        id: issfile
+        run: |
+          $v = "${{ steps.version.outputs.v }}"
+          $template = "./deploy/installer/PnET-Output-template.iss"
+          $outfile  = "./deploy/installer/PnET_Output_${v}.iss"
+
+          (Get-Content $template) -replace "\{VERSION\}", $v | Set-Content $outfile
+          echo "path=$outfile" >> $env:GITHUB_OUTPUT
+
+      # --------------------------------------------------------------------
+      # BUILD INSTALLER
+      # --------------------------------------------------------------------
+      - name: Build installer
+        run: |
+          $installer = "${{ steps.issfile.outputs.path }}"
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "$installer"
+
+      # --------------------------------------------------------------------
+      # CREATE RELEASE & ATTACH INSTALLER
+      # --------------------------------------------------------------------
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', steps.version.outputs.v) || github.ref_name }}
+          name: "PnET-Output v${{ steps.version.outputs.v }}"
+          body: ${{ inputs.notes }}
+
+          # IMPORTANT: Matches your .iss output EXACTLY
+          files: |
+            deploy/installer/LANDIS-II-V8 Output-PnET ${{ steps.version.outputs.v }}-setup.exe
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --------------------------------------------------------------------
+      # UPDATE METADATA FILE
+      # --------------------------------------------------------------------
+      - name: Update metadata file
+        run: |
+          $v = "${{ steps.version.outputs.v }}"
+          $file = "./deploy/installer/PnET-Output.txt"
+
+          $content = Get-Content $file
+          $content = $content -replace 'Version\s+"[^"]+"',     "Version      `"$v`""
+          $content = $content -replace 'Description\s+"[^"]+"', "Description  `"PnET-Output Version $v`""
+          Set-Content $file $content
+
+      # --------------------------------------------------------------------
+      # COMMIT UPDATED FILES
+      # --------------------------------------------------------------------
+      - name: Commit version updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if (git diff --cached --quiet) {
+              Write-Host "No changes to commit."
+          } else {
+              git commit -m "Finalize PnET-Output release ${{ steps.version.outputs.v }}"
+              git push
+          }
